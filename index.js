@@ -1,3 +1,369 @@
+
+/* =========================================================
+   HERO MOBILE NAV — FAILSAFE BOOT
+   Jalan tanpa GSAP supaya navbar HP tidak pernah hilang.
+========================================================= */
+
+(function(){
+    "use strict";
+
+    const bootMobileHeroNav = () => {
+
+        const hero =
+            document.querySelector(
+                "#hero.hero-reference-style"
+            );
+
+        if(!hero){
+            return;
+        }
+
+        const nav =
+            hero.querySelector(
+                ".hero-nav-wrap"
+            );
+
+        if(!nav){
+            return;
+        }
+
+        let toggle =
+            nav.querySelector(
+                ".hero-mobile-toggle"
+            );
+
+        let menu =
+            nav.querySelector(
+                ".hero-mobile-menu"
+            );
+
+        if(!toggle){
+
+            toggle =
+                document.createElement(
+                    "button"
+                );
+
+            toggle.type =
+                "button";
+
+            toggle.className =
+                "hero-mobile-toggle";
+
+            toggle.setAttribute(
+                "aria-label",
+                "Buka menu"
+            );
+
+            toggle.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+            toggle.innerHTML =
+                "<span></span><span></span>";
+
+            nav.appendChild(
+                toggle
+            );
+        }
+
+        if(!menu){
+
+            menu =
+                document.createElement(
+                    "div"
+                );
+
+            menu.className =
+                "hero-mobile-menu";
+
+            menu.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+            menu.innerHTML =
+                `
+                    <a href="#work">Work</a>
+                    <a href="#about">About</a>
+                    <a href="#stack">Stack</a>
+                    <a href="#life">Life</a>
+                    <a href="#contact">Contact</a>
+                `;
+
+            nav.appendChild(
+                menu
+            );
+        }
+
+        if(
+            nav.dataset.mobileFailsafeReady ===
+            "true"
+        ){
+            return;
+        }
+
+        nav.dataset.mobileFailsafeReady =
+            "true";
+
+        let open =
+            false;
+
+        const sync =
+            () => {
+
+                const isMobile =
+                    window.innerWidth <= 900;
+
+                nav.classList.toggle(
+                    "hero-mobile-active",
+                    isMobile
+                );
+
+                if(!isMobile){
+
+                    open = false;
+
+                    toggle.classList.remove(
+                        "is-open"
+                    );
+
+                    toggle.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                    menu.classList.remove(
+                        "is-open"
+                    );
+
+                    menu.setAttribute(
+                        "aria-hidden",
+                        "true"
+                    );
+
+                    menu.style.removeProperty(
+                        "display"
+                    );
+
+                    return;
+                }
+
+                /* paksa state mobile yang stabil */
+                if(
+                    !open
+                ){
+                    menu.classList.remove(
+                        "is-open"
+                    );
+
+                    menu.setAttribute(
+                        "aria-hidden",
+                        "true"
+                    );
+                }
+            };
+
+        toggle.addEventListener(
+            "click",
+            event => {
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                if(
+                    window.innerWidth >
+                    900
+                ){
+                    return;
+                }
+
+                open =
+                    !open;
+
+                toggle.classList.toggle(
+                    "is-open",
+                    open
+                );
+
+                toggle.setAttribute(
+                    "aria-expanded",
+                    String(open)
+                );
+
+                toggle.setAttribute(
+                    "aria-label",
+                    open
+                        ? "Tutup menu"
+                        : "Buka menu"
+                );
+
+                menu.classList.toggle(
+                    "is-open",
+                    open
+                );
+
+                menu.setAttribute(
+                    "aria-hidden",
+                    String(!open)
+                );
+            }
+        );
+
+        menu.querySelectorAll(
+            "a"
+        ).forEach(
+            link => {
+
+                link.addEventListener(
+                    "click",
+                    () => {
+
+                        open = false;
+
+                        toggle.classList.remove(
+                            "is-open"
+                        );
+
+                        toggle.setAttribute(
+                            "aria-expanded",
+                            "false"
+                        );
+
+                        toggle.setAttribute(
+                            "aria-label",
+                            "Buka menu"
+                        );
+
+                        menu.classList.remove(
+                            "is-open"
+                        );
+
+                        menu.setAttribute(
+                            "aria-hidden",
+                            "true"
+                        );
+                    }
+                );
+            }
+        );
+
+        document.addEventListener(
+            "pointerdown",
+            event => {
+
+                if(
+                    !open ||
+                    window.innerWidth >
+                    900
+                ){
+                    return;
+                }
+
+                if(
+                    !nav.contains(
+                        event.target
+                    )
+                ){
+
+                    open = false;
+
+                    toggle.classList.remove(
+                        "is-open"
+                    );
+
+                    toggle.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                    menu.classList.remove(
+                        "is-open"
+                    );
+
+                    menu.setAttribute(
+                        "aria-hidden",
+                        "true"
+                    );
+                }
+            }
+        );
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if(
+                    event.key === "Escape" &&
+                    open
+                ){
+
+                    open = false;
+
+                    toggle.classList.remove(
+                        "is-open"
+                    );
+
+                    toggle.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                    menu.classList.remove(
+                        "is-open"
+                    );
+
+                    menu.setAttribute(
+                        "aria-hidden",
+                        "true"
+                    );
+                }
+            }
+        );
+
+        window.addEventListener(
+            "resize",
+            sync,
+            {
+                passive:true
+            }
+        );
+
+        window.addEventListener(
+            "orientationchange",
+            sync,
+            {
+                passive:true
+            }
+        );
+
+        sync();
+    };
+
+    if(
+        document.readyState ===
+        "loading"
+    ){
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            bootMobileHeroNav,
+            {
+                once:true
+            }
+        );
+
+    }
+    else{
+
+        bootMobileHeroNav();
+
+    }
+
+})();
+
+
 document.addEventListener("DOMContentLoaded",
 ()=>{
     "use strict";
@@ -749,6 +1115,154 @@ background:#fff !important;
                 }
             );
 
+
+            /*
+             * LIFE dan YANG SAYA SUKA memakai background gelap dengan
+             * gradient yang berbeda. Navbar akan meniru background
+             * section aktif agar terasa menyatu saat masuk section.
+             */
+            const navbarColorSections =
+                qa(
+                    "#life.life-redesign, #love.like-redesign"
+                );
+
+            const matchNavbarToSection =
+                section=>{
+
+                    if(!nav || !section){
+                        return;
+                    }
+
+                    const background =
+                        getComputedStyle(
+                            section
+                        ).background;
+
+                    nav.style.setProperty(
+                        "--nav-section-bg",
+                        background
+                    );
+
+                    nav.classList.add(
+                        "nav-section-match"
+                    );
+
+                    nav.classList.remove(
+                        "nav-dark-mode"
+                    );
+
+                };
+
+            const clearNavbarSectionMatch =
+                ()=>{
+
+                    if(!nav){
+                        return;
+                    }
+
+                    nav.classList.remove(
+                        "nav-section-match"
+                    );
+
+                    nav.style.removeProperty(
+                        "--nav-section-bg"
+                    );
+
+                };
+
+            const syncNavbarSectionColor =
+                ()=>{
+
+                    if(!nav){
+                        return;
+                    }
+
+                    const y =
+                        nav.getBoundingClientRect().bottom;
+
+                    const active =
+                        navbarColorSections.find(
+                            section=>{
+
+                                const rect =
+                                    section.getBoundingClientRect();
+
+                                return (
+                                    rect.top <= y &&
+                                    rect.bottom > y
+                                );
+
+                            }
+                        );
+
+                    if(active){
+
+                        matchNavbarToSection(
+                            active
+                        );
+
+                        return;
+                    }
+
+                    clearNavbarSectionMatch();
+
+                };
+
+            navbarColorSections.forEach(
+                section=>{
+
+                    ScrollTrigger.create({
+
+                        trigger:section,
+
+                        start:"top 85px",
+
+                        end:"bottom 85px",
+
+                        onEnter:()=>{
+                            matchNavbarToSection(
+                                section
+                            );
+                        },
+
+                        onEnterBack:()=>{
+                            matchNavbarToSection(
+                                section
+                            );
+                        },
+
+                        onLeave:()=>{
+                            syncNavbarSectionColor();
+                        },
+
+                        onLeaveBack:()=>{
+                            syncNavbarSectionColor();
+                        }
+
+                    });
+
+                }
+            );
+
+            window.addEventListener(
+                "scroll",
+                ()=>{
+                    syncNavbarSectionColor();
+                },
+                {
+                    passive:true
+                }
+            );
+
+            window.addEventListener(
+                "hashchange",
+                ()=>{
+                    setTimeout(
+                        syncNavbarSectionColor,
+                        120
+                    );
+                }
+            );
 
             const getNavbarWideWidth=
                 ()=>window.innerWidth<=900
@@ -3995,12 +4509,6 @@ document.addEventListener(
         ];
 
 
-        const stage=
-            stackLab.querySelector(
-                "[data-stack-stage]"
-            );
-
-
         const stageLogo=
             stackLab.querySelector(
                 "[data-stack-stage-logo]"
@@ -4066,9 +4574,6 @@ document.addEventListener(
             window.matchMedia(
                 "(pointer: fine)"
             ).matches;
-
-
-        let activeIndex=0;
 
 
         const selectStack=
@@ -4172,10 +4677,6 @@ document.addEventListener(
 
                 stackLab.dataset.difficultyLevel=
                     difficulty;
-
-
-                activeIndex=
-                    index;
 
 
                 if(count){
@@ -4482,12 +4983,6 @@ document.addEventListener(
             const consoleBox=
                 document.querySelector(
                     ".stack-lab-console"
-                );
-
-
-            const directory=
-                document.querySelector(
-                    ".stack-lab-directory"
                 );
 
 
@@ -4951,12 +5446,6 @@ document.addEventListener(
                 const stageTop=
                     stageSection.querySelector(
                         ".stack-stage-top"
-                    );
-
-
-                const frame=
-                    stageSection.querySelector(
-                        ".stack-lab-stage"
                     );
 
 
@@ -5461,1292 +5950,175 @@ document.addEventListener(
 /* =========================================================
    LIFE — TRAVEL + GAMING
 ========================================================= */
+
 function initLifeAnimation(){
 
+    const life =
+        document.querySelector(
+            "#life.life-redesign"
+        );
+
+    const like =
+        document.querySelector(
+            "#love.like-redesign"
+        );
+
     if(
-        typeof gsap==="undefined" ||
-        typeof ScrollTrigger==="undefined"
+        !life &&
+        !like
     ){
         return;
     }
 
 
-    const q =
-        (selector, root=document) =>
-            root.querySelector(selector);
-
-
-    const qa =
-        (selector, root=document) =>
-            [...root.querySelectorAll(selector)];
-
-
-    const reducedMotion =
+    const reduceMotion =
         window.matchMedia(
             "(prefers-reduced-motion: reduce)"
         ).matches;
 
 
-    const mobile =
+    const finePointer =
         window.matchMedia(
-            "(max-width: 900px)"
+            "(hover:hover) and (pointer:fine)"
         ).matches;
 
 
-    const life =
-        q("#life");
-
-
-    if(!life){
-        return;
-    }
-
-
     /* =====================================================
-       LATAR
+       GENERIC REVEAL
     ===================================================== */
 
-    const bgSky =
-        q(".life-bg-sky", life);
+    const revealGroups = [
+        ...(life
+            ? life.querySelectorAll(
+                ".life-reveal"
+            )
+            : []),
+
+        ...(like
+            ? like.querySelectorAll(
+                ".like-reveal"
+            )
+            : [])
+    ];
 
-
-    const bgMountainBack =
-        q(".life-bg-mountain-back", life);
-
-
-    const bgMountainFront =
-        q(".life-bg-mountain-front", life);
-
-
-    const bgWaterfall =
-        q(".life-bg-waterfall", life);
-
-
-    const mistA =
-        q(".life-bg-mist-a", life);
-
-
-    const mistB =
-        q(".life-bg-mist-b", life);
-
-
-    const glowA =
-        q(".life-bg-glow-a", life);
-
-
-    const glowB =
-        q(".life-bg-glow-b", life);
-
-
-    const orbs =
-        qa(".life-bg-orb", life);
-
-
-    const particles =
-        qa(".life-particle", life);
-
-
-    /* =====================================================
-       PEMBUKA
-    ===================================================== */
-
-    const intro =
-        q(".life-intro", life);
-
-
-    const introOrbit =
-        q(".life-orbit", life);
-
-
-    const introTitle =
-        q(".life-intro-title", life);
-
-
-    const introCopy =
-        q(".life-intro-copy", life);
-
-
-    /* =====================================================
-       PERJALANAN
-    ===================================================== */
-
-    const travel =
-        q(".life-travel", life);
-
-
-    const travelHead =
-        q(
-            ".life-travel .life-chapter-head",
-            life
-        );
-
-
-    const route =
-        q(".life-route", life);
-
-
-    const routeLine =
-        q(".life-route-line", life);
-
-
-    const routeDots =
-        qa(".life-route-dot", life);
-
-
-    const travelCards =
-        qa(
-            "[data-travel-card]",
-            life
-        );
-
-
-    const travelNote =
-        q(".life-travel-note", life);
-
-
-    const travelFloatingIcon =
-        q(
-            ".life-travel-floating-icon",
-            life
-        );
-
-
-    const travelDoodles =
-        qa(
-            ".life-travel-doodle",
-            life
-        );
-
-
-    const travelImages =
-        qa(
-            ".life-travel-image img",
-            life
-        );
-
-
-    const ripples =
-        qa(
-            ".life-water-ripple",
-            life
-        );
-
-
-    /* =====================================================
-       PEMISAH
-    ===================================================== */
-
-    const divider =
-        q(
-            ".life-divider",
-            life
-        );
-
-
-    /* =====================================================
-       PERMAINAN
-    ===================================================== */
-
-    const gaming =
-        q(
-            ".life-gaming",
-            life
-        );
-
-
-    const gamingHead =
-        q(
-            ".life-gaming-head",
-            life
-        );
-
-
-    const gameWindow =
-        q(
-            ".life-game-window",
-            life
-        );
-
-
-    const gameTrack =
-        q(
-            "[data-game-track]",
-            life
-        );
-
-
-    const gameCards =
-        qa(
-            "[data-game-card]",
-            life
-        );
-
-
-    const prevButton =
-        q(
-            "[data-game-prev]",
-            life
-        );
-
-
-    const nextButton =
-        q(
-            "[data-game-next]",
-            life
-        );
-
-
-    const progress =
-        q(
-            "[data-game-progress]",
-            life
-        );
-
-
-    const counter =
-        q(
-            "[data-game-counter]",
-            life
-        );
-
-
-    const gameStatusIcon =
-        q(
-            ".life-game-status-icon",
-            life
-        );
-
-
-    /* =====================================================
-       PENUTUP
-    ===================================================== */
-
-    const closing =
-        q(
-            ".life-closing",
-            life
-        );
-
-
-    const closingIcon =
-        q(
-            ".life-closing-icon",
-            life
-        );
-
-
-    const closingTitle =
-        q(
-            ".life-closing h3",
-            life
-        );
-
-
-    const closingText =
-        q(
-            ".life-closing p",
-            life
-        );
-
-
-    /* =====================================================
-       PENGAMAN GAMBAR
-    ===================================================== */
-
-    travelImages.forEach(
-        image => {
-
-            const fallback =
-                image.dataset.lifeFallback;
-
-
-            if(!fallback){
-                return;
-            }
-
-
-            image.addEventListener(
-                "error",
-                () => {
-
-                    if(
-                        image.dataset.fallbackUsed ===
-                        "1"
-                    ){
-                        return;
-                    }
-
-
-                    image.dataset.fallbackUsed =
-                        "1";
-
-
-                    image.src =
-                        fallback;
-
-                }
-            );
-
-        }
-    );
-
-
-    qa(
-        ".life-game-image img",
-        life
-    )
-    .forEach(
-        image => {
-
-            image.addEventListener(
-                "error",
-                () => {
-
-                    if(
-                        image.dataset.lifeFallback &&
-                        image.dataset.fallbackUsed !==
-                        "1"
-                    ){
-
-                        image.dataset.fallbackUsed =
-                            "1";
-
-
-                        image.src =
-                            image.dataset.lifeFallback;
-
-                        return;
-
-                    }
-
-
-                    image.classList.add(
-                        "life-image-missing"
-                    );
-
-                }
-            );
-
-        }
-    );
-
-
-    /* =====================================================
-       STATE AWAL ANIMASI
-    ===================================================== */
-
-    if(!reducedMotion){
-
-        gsap.set(
-            [
-                introOrbit,
-                introTitle,
-                introCopy
-            ]
-            .filter(Boolean),
-            {
-                autoAlpha:0,
-                y:42
-            }
-        );
-
-
-        gsap.set(
-            travelHead,
-            {
-                autoAlpha:0,
-                y:45
-            }
-        );
-
-
-        gsap.set(
-            routeLine,
-            {
-                scaleY:0,
-                transformOrigin:
-                    "top center"
-            }
-        );
-
-
-        gsap.set(
-            routeDots,
-            {
-                autoAlpha:0,
-                scale:.35
-            }
-        );
-
-
-        gsap.set(
-            travelCards,
-            {
-                autoAlpha:0,
-                y:80,
-                scale:.92
-            }
-        );
-
-
-        gsap.set(
-            travelNote,
-            {
-                autoAlpha:0,
-                y:45,
-                rotate:-5,
-                scale:.9
-            }
-        );
-
-
-        gsap.set(
-            travelFloatingIcon,
-            {
-                autoAlpha:0,
-                y:35,
-                scale:.65,
-                rotate:-15
-            }
-        );
-
-
-        gsap.set(
-            travelDoodles,
-            {
-                autoAlpha:0,
-                scale:.5,
-                rotate:-15
-            }
-        );
-
-
-        gsap.set(
-            gamingHead,
-            {
-                autoAlpha:0,
-                y:45
-            }
-        );
-
-
-        gsap.set(
-            gameCards,
-            {
-                autoAlpha:0,
-                y:65,
-                scale:.93
-            }
-        );
-
-
-        gsap.set(
-            gameStatusIcon,
-            {
-                autoAlpha:0,
-                scale:.65
-            }
-        );
-
-
-        gsap.set(
-            closing,
-            {
-                autoAlpha:0,
-                y:45
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       GERAKAN LATAR TERUS-MENERUS
-    ===================================================== */
-
-    if(!reducedMotion){
-
-        if(bgSky){
-
-            gsap.to(
-                bgSky,
-                {
-                    x:18,
-                    y:-8,
-                    scale:1.04,
-                    duration:11,
-                    repeat:-1,
-                    yoyo:true,
-                    ease:"sine.inOut"
-                }
-            );
-
-        }
-
-
-        if(bgMountainBack){
-
-            gsap.to(
-                bgMountainBack,
-                {
-                    x:28,
-                    y:-8,
-                    duration:13,
-                    repeat:-1,
-                    yoyo:true,
-                    ease:"sine.inOut"
-                }
-            );
-
-        }
-
-
-        if(bgMountainFront){
-
-            gsap.to(
-                bgMountainFront,
-                {
-                    x:-18,
-                    y:5,
-                    duration:15,
-                    repeat:-1,
-                    yoyo:true,
-                    ease:"sine.inOut"
-                }
-            );
-
-        }
-
-
-        if(bgWaterfall){
-
-            gsap.to(
-                bgWaterfall,
-                {
-                    x:8,
-                    skewX:-2,
-                    opacity:.34,
-                    duration:4.5,
-                    repeat:-1,
-                    yoyo:true,
-                    ease:"sine.inOut"
-                }
-            );
-
-        }
-
-
-        if(mistA){
-
-            gsap.to(
-                mistA,
-                {
-                    x:90,
-                    y:-22,
-                    scale:1.1,
-                    duration:10,
-                    repeat:-1,
-                    yoyo:true,
-                    ease:"sine.inOut"
-                }
-            );
-
-        }
-
-
-        if(mistB){
-
-            gsap.to(
-                mistB,
-                {
-                    x:-110,
-                    y:20,
-                    scale:1.13,
-                    duration:13,
-                    repeat:-1,
-                    yoyo:true,
-                    ease:"sine.inOut",
-                    delay:1.4
-                }
-            );
-
-        }
-
-
-        if(glowA){
-
-            gsap.to(
-                glowA,
-                {
-                    scale:1.15,
-                    opacity:.75,
-                    duration:6,
-                    repeat:-1,
-                    yoyo:true,
-                    ease:"sine.inOut"
-                }
-            );
-
-        }
-
-
-        if(glowB){
-
-            gsap.to(
-                glowB,
-                {
-                    scale:.9,
-                    opacity:.7,
-                    duration:7,
-                    repeat:-1,
-                    yoyo:true,
-                    ease:"sine.inOut",
-                    delay:1.2
-                }
-            );
-
-        }
-
-
-        orbs.forEach(
-            (
-                orb,
-                index
-            ) => {
-
-                gsap.to(
-                    orb,
-                    {
-                        x:
-                            index === 0
-                                ? 45
-                                : -25,
-
-                        y:
-                            index === 0
-                                ? -28
-                                : 24,
-
-                        duration:
-                            6.5 +
-                            index,
-
-                        repeat:-1,
-
-                        yoyo:true,
-
-                        ease:
-                            "sine.inOut",
-
-                        delay:
-                            index * .6
-
-                    }
-                );
-
-            }
-        );
-
-
-        particles.forEach(
-            (
-                particle,
-                index
-            ) => {
-
-                gsap.to(
-                    particle,
-                    {
-                        x:
-                            index % 2
-                                ? -18
-                                : 18,
-
-                        y:
-                            index % 2
-                                ? 20
-                                : -24,
-
-                        opacity:.24,
-
-                        duration:
-                            3.2 +
-                            index * .35,
-
-                        repeat:-1,
-
-                        yoyo:true,
-
-                        ease:
-                            "sine.inOut",
-
-                        delay:
-                            index * .25
-
-                    }
-                );
-
-            }
-        );
-
-
-        ripples.forEach(
-            (
-                ripple,
-                index
-            ) => {
-
-                gsap.to(
-                    ripple,
-                    {
-                        scale:1.65,
-                        opacity:0,
-                        duration:
-                            2.5 +
-                            index * .65,
-                        repeat:-1,
-                        ease:"sine.out",
-                        delay:
-                            index * .8
-                    }
-                );
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       PARALLAX MOUSE
-    ===================================================== */
 
     if(
-        !mobile &&
-        !reducedMotion
+        revealGroups.length &&
+        "IntersectionObserver" in window
     ){
 
-        life.addEventListener(
-            "pointermove",
-            event => {
+        const observer =
+            new IntersectionObserver(
+                entries => {
 
-                const rect =
-                    life.getBoundingClientRect();
+                    entries.forEach(
+                        entry => {
 
-
-                const x =
-                    (
-                        event.clientX -
-                        rect.left
-                    ) /
-                    rect.width -
-                    .5;
+                            if(
+                                !entry.isIntersecting
+                            ){
+                                return;
+                            }
 
 
-                const y =
-                    (
-                        event.clientY -
-                        rect.top
-                    ) /
-                    rect.height -
-                    .5;
+                            entry.target.classList.add(
+                                "is-visible"
+                            );
 
 
-                gsap.to(
-                    bgSky,
-                    {
-                        x:x * 20,
-                        y:y * 12,
-                        duration:1.1,
-                        ease:"power3.out",
-                        overwrite:"auto"
-                    }
-                );
+                            observer.unobserve(
+                                entry.target
+                            );
 
-
-                gsap.to(
-                    bgMountainBack,
-                    {
-                        x:x * 30,
-                        y:y * 12,
-                        duration:1.2,
-                        ease:"power3.out",
-                        overwrite:"auto"
-                    }
-                );
-
-
-                gsap.to(
-                    bgMountainFront,
-                    {
-                        x:x * -20,
-                        y:y * -8,
-                        duration:1.35,
-                        ease:"power3.out",
-                        overwrite:"auto"
-                    }
-                );
-
-
-                gsap.to(
-                    mistA,
-                    {
-                        x:x * 42,
-                        y:y * 18,
-                        duration:1.25,
-                        ease:"power3.out",
-                        overwrite:"auto"
-                    }
-                );
-
-
-                gsap.to(
-                    mistB,
-                    {
-                        x:x * -35,
-                        y:y * -15,
-                        duration:1.3,
-                        ease:"power3.out",
-                        overwrite:"auto"
-                    }
-                );
-
-
-                if(introOrbit){
-
-                    gsap.to(
-                        introOrbit,
-                        {
-                            x:x * 11,
-                            y:y * 8,
-                            duration:.8,
-                            ease:"power3.out",
-                            overwrite:"auto"
                         }
                     );
 
+                },
+                {
+                    threshold:.12,
+                    rootMargin:
+                        "0px 0px -8% 0px"
                 }
+            );
 
 
-                travelCards.forEach(
-                    (
-                        card,
-                        index
-                    ) => {
-
-                        gsap.to(
-                            card,
-                            {
-                                x:
-                                    x *
-                                    (
-                                        index %
-                                        2
-                                            ? 7
-                                            : -5
-                                    ),
-
-                                y:y * 4,
-
-                                duration:.7,
-
-                                ease:
-                                    "power3.out",
-
-                                overwrite:
-                                    "auto"
-
-                            }
-                        );
-
-                    }
-                );
-
-            }
+        revealGroups.forEach(
+            item =>
+                observer.observe(item)
         );
 
+    }
+    else{
 
-        life.addEventListener(
-            "pointerleave",
-            () => {
-
-                [
-                    bgSky,
-                    bgMountainBack,
-                    bgMountainFront,
-                    mistA,
-                    mistB,
-                    introOrbit
-                ]
-                .filter(Boolean)
-                .forEach(
-                    element => {
-
-                        gsap.to(
-                            element,
-                            {
-                                x:0,
-                                y:0,
-                                duration:1.1,
-                                ease:
-                                    "power3.out"
-                            }
-                        );
-
-                    }
-                );
-
-
-                travelCards.forEach(
-                    card => {
-
-                        gsap.to(
-                            card,
-                            {
-                                x:0,
-                                y:0,
-                                duration:.8,
-                                ease:
-                                    "power3.out"
-                            }
-                        );
-
-                    }
-                );
-
-            }
+        revealGroups.forEach(
+            item =>
+                item.classList.add(
+                    "is-visible"
+                )
         );
 
     }
 
 
     /* =====================================================
-       ANIMASI PERJALANAN
-    ===================================================== */
-
-    if(travel){
-
-        const timeline =
-            gsap.timeline({
-                paused:true,
-                defaults:{
-                    overwrite:"auto"
-                }
-            });
-
-
-        timeline.to(
-            [
-                introOrbit,
-                introTitle,
-                introCopy
-            ]
-            .filter(Boolean),
-            {
-                autoAlpha:1,
-                y:0,
-                duration:1,
-                stagger:.11,
-                ease:"power4.out"
-            },
-            0
-        );
-
-
-        if(travelHead){
-
-            timeline.to(
-                travelHead,
-                {
-                    autoAlpha:1,
-                    y:0,
-                    duration:1.1,
-                    ease:"power4.out"
-                },
-                .2
-            );
-
-        }
-
-
-        if(routeLine){
-
-            timeline.to(
-                routeLine,
-                {
-                    scaleY:1,
-                    duration:1.3,
-                    ease:"power3.inOut"
-                },
-                .32
-            );
-
-        }
-
-
-        if(routeDots.length){
-
-            timeline.to(
-                routeDots,
-                {
-                    autoAlpha:1,
-                    scale:1,
-                    duration:.62,
-                    stagger:.12,
-                    ease:"back.out(1.7)"
-                },
-                .52
-            );
-
-        }
-
-
-        if(travelCards.length){
-
-            timeline.to(
-                travelCards,
-                {
-                    autoAlpha:1,
-                    y:0,
-                    scale:1,
-                    duration:1.2,
-                    stagger:.18,
-                    ease:"power4.out"
-                },
-                .42
-            );
-
-        }
-
-
-        if(travelNote){
-
-            timeline.to(
-                travelNote,
-                {
-                    autoAlpha:1,
-                    y:0,
-                    rotate:-4,
-                    scale:1,
-                    duration:1,
-                    ease:"back.out(1.3)"
-                },
-                1
-            );
-
-        }
-
-
-        if(travelFloatingIcon){
-
-            timeline.to(
-                travelFloatingIcon,
-                {
-                    autoAlpha:1,
-                    y:0,
-                    rotate:8,
-                    scale:1,
-                    duration:.85,
-                    ease:"back.out(1.6)"
-                },
-                1.08
-            );
-
-        }
-
-
-        if(travelDoodles.length){
-
-            timeline.to(
-                travelDoodles,
-                {
-                    autoAlpha:1,
-                    scale:1,
-                    rotate:0,
-                    duration:.65,
-                    stagger:.1,
-                    ease:"back.out(1.8)"
-                },
-                .9
-            );
-
-        }
-
-
-        ScrollTrigger.create({
-
-            trigger:
-                travel,
-
-            start:
-                "top 82%",
-
-            end:
-                "bottom 12%",
-
-            onEnter:
-                () => {
-
-                    timeline
-                        .pause(0)
-                        .restart();
-
-                },
-
-            onEnterBack:
-                () => {
-
-                    timeline
-                        .pause(0)
-                        .restart();
-
-                },
-
-            onLeave:
-                () => {
-
-                    timeline.pause(0);
-
-                },
-
-            onLeaveBack:
-                () => {
-
-                    timeline.pause(0);
-
-                }
-
-        });
-
-    }
-
-
-    /* =====================================================
-       PARALLAX FOTO PERJALANAN
+       AMBIENT POINTER
     ===================================================== */
 
     if(
-        !reducedMotion &&
-        travelImages.length
+        finePointer &&
+        !reduceMotion
     ){
 
-        travelImages.forEach(
-            image => {
-
-                const card =
-                    image.closest(
-                        ".life-travel-card"
-                    );
-
-
-                if(!card){
-                    return;
-                }
+        const ambientSections = [
+            life,
+            like,
+            document.querySelector(
+                "#contact.contact-redesign"
+            )
+        ].filter(Boolean);
 
 
-                gsap.fromTo(
-                    image,
-                    {
-                        yPercent:5,
-                        scale:1.08
-                    },
-                    {
-                        yPercent:-5,
-                        scale:1.03,
-                        ease:"none",
+        ambientSections.forEach(
+            section => {
 
-                        scrollTrigger:{
-                            trigger:card,
-                            start:"top bottom",
-                            end:"bottom top",
-                            scrub:1.15
-                        }
-
-                    }
-                );
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       TILT KARTU PERJALANAN
-    ===================================================== */
-
-    if(
-        !mobile &&
-        !reducedMotion
-    ){
-
-        travelCards.forEach(
-            card => {
-
-                card.addEventListener(
+                section.addEventListener(
                     "pointermove",
                     event => {
 
                         const rect =
-                            card.getBoundingClientRect();
+                            section.getBoundingClientRect();
 
 
                         const x =
                             (
-                                event.clientX -
-                                rect.left
-                            ) /
-                            rect.width -
-                            .5;
+                                (event.clientX -
+                                rect.left) /
+                                rect.width
+                            ) * 100;
 
 
                         const y =
                             (
-                                event.clientY -
-                                rect.top
-                            ) /
-                            rect.height -
-                            .5;
+                                (event.clientY -
+                                rect.top) /
+                                rect.height
+                            ) * 100;
 
 
-                        gsap.to(
-                            card,
-                            {
-                                rotateY:
-                                    x * 3.5,
-
-                                rotateX:
-                                    -y * 3.5,
-
-                                duration:.42,
-
-                                ease:
-                                    "power3.out",
-
-                                overwrite:
-                                    "auto"
-                            }
+                        section.style.setProperty(
+                            "--spot-x",
+                            `${x}%`
                         );
 
-                    }
-                );
 
-
-                card.addEventListener(
-                    "pointerleave",
-                    () => {
-
-                        gsap.to(
-                            card,
-                            {
-                                rotateX:0,
-                                rotateY:0,
-                                duration:.65,
-                                ease:
-                                    "power3.out"
-                            }
+                        section.style.setProperty(
+                            "--spot-y",
+                            `${y}%`
                         );
 
+                    },
+                    {
+                        passive:true
                     }
                 );
 
@@ -6757,794 +6129,320 @@ function initLifeAnimation(){
 
 
     /* =====================================================
-       GAMING CAROUSEL
+       LIFE CARD TILT
     ===================================================== */
 
-    let gameIndex =
-        0;
+    if(
+        life &&
+        finePointer &&
+        !reduceMotion
+    ){
+
+        life
+            .querySelectorAll(
+                ".life-story-card"
+            )
+            .forEach(
+                card => {
+
+                    card.addEventListener(
+                        "pointermove",
+                        event => {
+
+                            const rect =
+                                card.getBoundingClientRect();
 
 
-    let dragging =
-        false;
+                            const px =
+                                (
+                                    event.clientX -
+                                    rect.left
+                                ) / rect.width -
+                                .5;
 
 
-    let dragStartX =
-        0;
+                            const py =
+                                (
+                                    event.clientY -
+                                    rect.top
+                                ) / rect.height -
+                                .5;
 
 
-    let dragStartTranslate =
-        0;
+                            card.style.setProperty(
+                                "--tilt-x",
+                                `${(-py * 3).toFixed(2)}deg`
+                            );
 
 
-    const getGameStep =
-        () => {
+                            card.style.setProperty(
+                                "--tilt-y",
+                                `${(px * 4).toFixed(2)}deg`
+                            );
 
-            if(
-                !gameCards.length ||
-                !gameTrack
-            ){
-                return 0;
-            }
-
-
-            const first =
-                gameCards[0];
+                        },
+                        {
+                            passive:true
+                        }
+                    );
 
 
-            const rect =
-                first.getBoundingClientRect();
+                    card.addEventListener(
+                        "pointerleave",
+                        () => {
+
+                            card.style.setProperty(
+                                "--tilt-x",
+                                "0deg"
+                            );
 
 
-            const gap =
-                parseFloat(
-                    getComputedStyle(
-                        gameTrack
-                    ).gap
-                ) || 28;
+                            card.style.setProperty(
+                                "--tilt-y",
+                                "0deg"
+                            );
 
+                        }
+                    );
 
-            return (
-                rect.width +
-                gap
+                }
             );
 
-        };
+    }
 
 
-    const getMaxGame =
-        () => {
+    /* =====================================================
+       MUSIC PLAYER — 5 LAGU / PILIH & GESER
+    ===================================================== */
 
-            if(
-                !gameTrack ||
-                !gameWindow
-            ){
-                return 0;
+    if(!like){
+        return;
+    }
+
+    const audio = like.querySelector("[data-music-audio]");
+    const playButton = like.querySelector("[data-music-play]");
+    const disc = like.querySelector("[data-music-disc]");
+    const progress = like.querySelector("[data-music-progress]");
+    const timeLabel = like.querySelector("[data-music-time]");
+    const status = like.querySelector("[data-music-status]");
+    const title = like.querySelector("[data-music-title]");
+    const label = like.querySelector("[data-music-label]");
+    const tracks = qa("[data-music-track]", like);
+
+    const icon = playButton
+        ? playButton.querySelector("i")
+        : null;
+
+    if(!audio || !playButton){
+        return;
+    }
+
+    // Tandai player sudah aktif agar failsafe di bawah tidak memasang listener ganda.
+    like.dataset.musicReady = "true";
+
+    const formatTime = value => {
+        if(!Number.isFinite(value)){
+            return "00:00";
+        }
+
+        const minutes = Math.floor(value / 60);
+        const seconds = Math.floor(value % 60);
+
+        return String(minutes).padStart(2,"0") + ":" + String(seconds).padStart(2,"0");
+    };
+
+    const setActiveTrack = (track, autoPlay=false) => {
+        if(!track){
+            return;
+        }
+
+        const src = track.dataset.src || "";
+        const trackTitle = track.dataset.title || "Judul lagu";
+        const artist = track.dataset.artist || "Pilihan saya";
+
+        tracks.forEach(item => {
+            item.classList.toggle("is-active", item === track);
+        });
+
+        audio.pause();
+        audio.currentTime = 0;
+        audio.src = src;
+        audio.load();
+
+        if(title){
+            title.textContent = trackTitle;
+        }
+
+        if(label){
+            label.textContent = "PUTAR LAGU";
+        }
+
+        if(status){
+            status.textContent = `${artist} · ${src}`;
+        }
+
+        if(progress){
+            progress.style.width = "0%";
+        }
+
+        if(timeLabel){
+            timeLabel.textContent = "00:00";
+        }
+
+        if(autoPlay){
+            audio.play().then(() => {
+                if(status){
+                    status.textContent = `Sedang diputar · ${artist}`;
+                }
+                syncMusicUI();
+            }).catch(() => {
+                if(status){
+                    status.textContent = `File belum tersedia: ${src}`;
+                }
+                syncMusicUI();
+            });
+        }
+    };
+
+    const syncMusicUI = () => {
+        const duration = audio.duration || 0;
+        const current = audio.currentTime || 0;
+        const ratio = duration > 0 ? current / duration : 0;
+
+        if(progress){
+            progress.style.width = `${Math.min(100, Math.max(0, ratio * 100))}%`;
+        }
+
+        if(timeLabel){
+            timeLabel.textContent = formatTime(current);
+        }
+
+        if(icon){
+            icon.className = audio.paused
+                ? "bi bi-play-fill"
+                : "bi bi-pause-fill";
+        }
+
+        if(disc){
+            disc.classList.toggle("is-playing", !audio.paused);
+        }
+    };
+
+    tracks.forEach(track => {
+        track.addEventListener("click", () => {
+            setActiveTrack(track, true);
+        });
+    });
+
+    playButton.addEventListener("click", async () => {
+        if(!audio.src){
+            return;
+        }
+
+        try{
+            if(audio.paused){
+                await audio.play();
+                const active = like.querySelector("[data-music-track].is-active");
+                const artist = active?.dataset.artist || "Pilihan saya";
+
+                if(status){
+                    status.textContent = `Sedang diputar · ${artist}`;
+                }
+            }else{
+                audio.pause();
+
+                if(status){
+                    status.textContent = "Lagu dijeda.";
+                }
             }
+        }catch(error){
+            const active = like.querySelector("[data-music-track].is-active");
+            const src = active?.dataset.src || audio.currentSrc || "";
 
-
-            const overflow =
-                Math.max(
-                    0,
-                    gameTrack.scrollWidth -
-                    gameWindow.clientWidth
-                );
-
-
-            const step =
-                getGameStep();
-
-
-            if(!step){
-                return 0;
+            if(status){
+                status.textContent = src
+                    ? `File audio belum ditemukan: ${src}`
+                    : "File audio belum dipilih.";
             }
+        }
 
+        syncMusicUI();
+    });
 
-            return Math.max(
-                0,
-                Math.ceil(
-                    overflow /
-                    step
-                )
-            );
+    audio.addEventListener("loadedmetadata", () => {
+        if(status){
+            const active = like.querySelector("[data-music-track].is-active");
+            const artist = active?.dataset.artist || "Pilihan saya";
+            status.textContent = `Siap diputar · ${artist}`;
+        }
 
-        };
+        syncMusicUI();
+    });
 
+    audio.addEventListener("error", () => {
+        const active = like.querySelector("[data-music-track].is-active");
+        const src = active?.dataset.src || audio.currentSrc || "";
 
-    const renderGame =
-        (
-            animate=true
-        ) => {
+        if(status){
+            status.textContent = src
+                ? `File audio belum ditemukan: ${src}`
+                : "File audio belum dipilih.";
+        }
 
-            if(!gameTrack){
+        syncMusicUI();
+    });
+
+    audio.addEventListener("timeupdate", syncMusicUI);
+    audio.addEventListener("play", syncMusicUI);
+    audio.addEventListener("pause", syncMusicUI);
+
+    audio.addEventListener("ended", () => {
+        syncMusicUI();
+
+        const activeIndex = tracks.findIndex(track => track.classList.contains("is-active"));
+        const nextTrack = tracks[activeIndex + 1];
+
+        if(nextTrack){
+            setActiveTrack(nextTrack, true);
+        }else if(status){
+            status.textContent = "Semua lagu di daftar sudah selesai.";
+        }
+    });
+
+    const progressTrack = like.querySelector(".like-music-progress");
+
+    if(progressTrack){
+        progressTrack.addEventListener("click", event => {
+            if(!Number.isFinite(audio.duration) || audio.duration <= 0){
                 return;
             }
 
-
-            const max =
-                getMaxGame();
-
-
-            gameIndex =
-                Math.max(
-                    0,
-                    Math.min(
-                        max,
-                        gameIndex
-                    )
-                );
-
-
-            const step =
-                getGameStep();
-
-
-            const x =
-                -(gameIndex * step);
-
-
-            if(animate){
-
-                gsap.to(
-                    gameTrack,
-                    {
-                        x:x,
-                        duration:.9,
-                        ease:"power4.out",
-                        overwrite:"auto"
-                    }
-                );
-
-            }
-            else{
-
-                gsap.set(
-                    gameTrack,
-                    {
-                        x:x
-                    }
-                );
-
-            }
-
-
-            if(progress){
-
-                const percentage =
-                    max === 0
-                        ? 50
-                        : 25 +
-                          (
-                            gameIndex /
-                            Math.max(
-                                1,
-                                max
-                            )
-                          ) *
-                          50;
-
-
-                progress.style.width =
-                    `${percentage}%`;
-
-            }
-
-
-            if(counter){
-
-                counter.textContent =
-                    `${String(
-                        gameIndex + 1
-                    ).padStart(
-                        2,
-                        "0"
-                    )} / ${String(
-                        gameCards.length
-                    ).padStart(
-                        2,
-                        "0"
-                    )}`;
-
-            }
-
-        };
-
-
-    if(prevButton){
-
-        prevButton.addEventListener(
-            "click",
-            () => {
-
-                gameIndex =
-                    Math.max(
-                        0,
-                        gameIndex - 1
-                    );
-
-
-                renderGame(true);
-
-            }
-        );
-
-    }
-
-
-    if(nextButton){
-
-        nextButton.addEventListener(
-            "click",
-            () => {
-
-                const max =
-                    getMaxGame();
-
-
-                gameIndex =
-                    Math.min(
-                        max,
-                        gameIndex + 1
-                    );
-
-
-                renderGame(true);
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       DRAG GAMING
-    ===================================================== */
-
-    if(gameTrack){
-
-        gameTrack.addEventListener(
-            "pointerdown",
-            event => {
-
-                dragging =
-                    true;
-
-
-                dragStartX =
-                    event.clientX;
-
-
-                const transform =
-                    getComputedStyle(
-                        gameTrack
-                    ).transform;
-
-
-                const matrix =
-                    transform !== "none"
-                        ? new DOMMatrix(
-                            transform
-                        )
-                        : null;
-
-
-                dragStartTranslate =
-                    matrix
-                        ? matrix.m41
-                        : 0;
-
-
-                gameTrack.classList.add(
-                    "is-dragging"
-                );
-
-
-                try{
-
-                    gameTrack.setPointerCapture(
-                        event.pointerId
-                    );
-
-                }
-                catch(error){}
-
-            }
-        );
-
-
-        gameTrack.addEventListener(
-            "pointermove",
-            event => {
-
-                if(!dragging){
-                    return;
-                }
-
-
-                const step =
-                    getGameStep();
-
-
-                const max =
-                    getMaxGame();
-
-
-                const minX =
-                    -(max * step);
-
-
-                let x =
-                    dragStartTranslate +
-                    (
-                        event.clientX -
-                        dragStartX
-                    );
-
-
-                x =
-                    Math.max(
-                        minX - 65,
-                        Math.min(
-                            65,
-                            x
-                        )
-                    );
-
-
-                gsap.set(
-                    gameTrack,
-                    {
-                        x:x
-                    }
-                );
-
-            }
-        );
-
-
-        const finishDrag =
-            event => {
-
-                if(!dragging){
-                    return;
-                }
-
-
-                dragging =
-                    false;
-
-
-                gameTrack.classList.remove(
-                    "is-dragging"
-                );
-
-
-                const step =
-                    getGameStep();
-
-
-                if(step){
-
-                    const transform =
-                        getComputedStyle(
-                            gameTrack
-                        ).transform;
-
-
-                    const matrix =
-                        transform !==
-                        "none"
-                            ? new DOMMatrix(
-                                transform
-                            )
-                            : null;
-
-
-                    const currentX =
-                        matrix
-                            ? matrix.m41
-                            : 0;
-
-
-                    gameIndex =
-                        Math.round(
-                            Math.abs(
-                                currentX
-                            ) /
-                            step
-                        );
-
-                }
-
-
-                renderGame(true);
-
-
-                try{
-
-                    gameTrack.releasePointerCapture(
-                        event.pointerId
-                    );
-
-                }
-                catch(error){}
-
-            };
-
-
-        gameTrack.addEventListener(
-            "pointerup",
-            finishDrag
-        );
-
-
-        gameTrack.addEventListener(
-            "pointercancel",
-            finishDrag
-        );
-
-    }
-
-
-    /* =====================================================
-       ANIMASI PERMAINAN
-    ===================================================== */
-
-    if(gaming){
-
-        const timeline =
-            gsap.timeline({
-                paused:true,
-                defaults:{
-                    overwrite:
-                        "auto"
-                }
-            });
-
-
-        if(gamingHead){
-
-            timeline.to(
-                gamingHead,
-                {
-                    autoAlpha:1,
-                    y:0,
-                    duration:1.05,
-                    ease:
-                        "power4.out"
-                },
-                0
+            const rect = progressTrack.getBoundingClientRect();
+            const ratio = (event.clientX - rect.left) / rect.width;
+
+            audio.currentTime = Math.min(
+                audio.duration,
+                Math.max(0, ratio * audio.duration)
             );
-
-        }
-
-
-        if(gameCards.length){
-
-            timeline.to(
-                gameCards,
-                {
-                    autoAlpha:1,
-                    y:0,
-                    scale:1,
-                    rotate:0,
-                    duration:1.1,
-                    stagger:.18,
-                    ease:
-                        "power4.out"
-                },
-                .22
-            );
-
-        }
-
-
-        if(gameStatusIcon){
-
-            timeline.to(
-                gameStatusIcon,
-                {
-                    autoAlpha:1,
-                    scale:1,
-                    duration:.7,
-                    ease:
-                        "back.out(1.6)"
-                },
-                .7
-            );
-
-        }
-
-
-        ScrollTrigger.create({
-
-            trigger:
-                gaming,
-
-            start:
-                "top 84%",
-
-            end:
-                "bottom 12%",
-
-            onEnter:
-                () => {
-
-                    timeline
-                        .pause(0)
-                        .restart();
-
-
-                    gameIndex =
-                        0;
-
-
-                    renderGame(false);
-
-                },
-
-            onEnterBack:
-                () => {
-
-                    timeline
-                        .pause(0)
-                        .restart();
-
-
-                    gameIndex =
-                        0;
-
-
-                    renderGame(false);
-
-                },
-
-            onLeave:
-                () => {
-
-                    timeline.pause(0);
-
-                },
-
-            onLeaveBack:
-                () => {
-
-                    timeline.pause(0);
-
-                }
-
         });
-
     }
 
+    const firstTrack = tracks[0];
 
-    /* =====================================================
-       ANIMASI PENUTUP
-    ===================================================== */
-
-    if(closing){
-
-        const closingTimeline =
-            gsap.timeline({
-                paused:true,
-                defaults:{
-                    overwrite:"auto"
-                }
-            });
-
-
-        closingTimeline.to(
-            closing,
-            {
-                autoAlpha:1,
-                y:0,
-                duration:1,
-                ease:
-                    "power4.out"
-            },
-            0
-        );
-
-
-        if(closingIcon){
-
-            closingTimeline.fromTo(
-                closingIcon,
-                {
-                    scale:.55,
-                    rotate:-25
-                },
-                {
-                    scale:1,
-                    rotate:0,
-                    duration:.8,
-                    ease:
-                        "back.out(1.7)"
-                },
-                .12
-            );
-
-        }
-
-
-        if(closingTitle){
-
-            closingTimeline.fromTo(
-                closingTitle,
-                {
-                    y:30
-                },
-                {
-                    y:0,
-                    duration:.8,
-                    ease:
-                        "power4.out"
-                },
-                .2
-            );
-
-        }
-
-
-        if(closingText){
-
-            closingTimeline.fromTo(
-                closingText,
-                {
-                    y:18
-                },
-                {
-                    y:0,
-                    duration:.7,
-                    ease:
-                        "power3.out"
-                },
-                .34
-            );
-
-        }
-
-
-        ScrollTrigger.create({
-
-            trigger:
-                closing,
-
-            start:
-                "top 86%",
-
-            end:
-                "bottom 15%",
-
-            onEnter:
-                () => {
-
-                    closingTimeline
-                        .pause(0)
-                        .restart();
-
-                },
-
-            onEnterBack:
-                () => {
-
-                    closingTimeline
-                        .pause(0)
-                        .restart();
-
-                },
-
-            onLeave:
-                () => {
-
-                    closingTimeline.pause(0);
-
-                },
-
-            onLeaveBack:
-                () => {
-
-                    closingTimeline.pause(0);
-
-                }
-
-        });
-
+    if(firstTrack){
+        setActiveTrack(firstTrack, false);
     }
 
-
-    /* =====================================================
-       HOVER ICON
-    ===================================================== */
-
-    if(!reducedMotion){
-
-        qa(
-            ".life-orbit-icon," +
-            ".life-place-badge," +
-            ".life-chapter-icon," +
-            ".life-note-icon," +
-            ".life-travel-floating-icon," +
-            ".life-game-center-icon," +
-            ".life-game-status-icon",
-            life
-        )
-        .forEach(
-            icon => {
-
-                icon.addEventListener(
-                    "mouseenter",
-                    () => {
-
-                        gsap.to(
-                            icon,
-                            {
-                                scale:1.1,
-                                rotate:-8,
-                                y:-3,
-                                duration:.35,
-                                ease:
-                                    "power3.out",
-                                overwrite:
-                                    "auto"
-                            }
-                        );
-
-                    }
-                );
-
-
-                icon.addEventListener(
-                    "mouseleave",
-                    () => {
-
-                        gsap.to(
-                            icon,
-                            {
-                                scale:1,
-                                rotate:0,
-                                y:0,
-                                duration:.55,
-                                ease:
-                                    "elastic.out(1,.5)",
-                                overwrite:
-                                    "auto"
-                            }
-                        );
-
-                    }
-                );
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       AWAL CAROUSEL
-    ===================================================== */
-
-    renderGame(false);
-
-
-    /* =====================================================
-       REFRESH
-    ===================================================== */
-
-    requestAnimationFrame(
-        () => {
-
-            ScrollTrigger.refresh();
-
-        }
-    );
+    syncMusicUI();
 
 }
 
+
 /* =========================================================
-   LIFE — INTERAKSI POSTINGAN
-   LIKE / SAVE / DOUBLE CLICK
+   FILM + CONTACT SUPPORT
+   Kecepatan reveal/tilt dibuat konsisten dengan section baru.
 ========================================================= */
+
 function initLifeSocialInteractions(){
 
     const life =
@@ -8143,6 +7041,11 @@ function initHeroResponsive(){
                     String(!isOpen)
                 );
 
+                mobileMenu.classList.toggle(
+                    "is-open",
+                    isOpen
+                );
+
             }
 
 
@@ -8398,3 +7301,554 @@ function initHeroResponsive(){
     }
 
 }
+
+
+/* =========================================================
+   TOP 3 FILM — POINTER TILT
+   Scoped to [data-film-tilt] only.
+========================================================= */
+document.addEventListener("DOMContentLoaded", () => {
+  const filmCards = [...document.querySelectorAll("[data-film-tilt]")];
+  if (!filmCards.length) return;
+
+  const isFinePointer = window.matchMedia("(hover:hover) and (pointer:fine)").matches;
+  if (!isFinePointer) return;
+
+  filmCards.forEach((card) => {
+    const reset = () => {
+      card.style.setProperty("--rx", "0deg");
+      card.style.setProperty("--ry", "0deg");
+      card.style.setProperty("--mx", "50%");
+      card.style.setProperty("--my", "50%");
+    };
+
+    card.addEventListener("pointermove", (event) => {
+      const rect = card.getBoundingClientRect();
+      const px = (event.clientX - rect.left) / rect.width;
+      const py = (event.clientY - rect.top) / rect.height;
+      const rotateY = (px - 0.5) * 7;
+      const rotateX = (0.5 - py) * 7;
+
+      card.style.setProperty("--rx", `${rotateX.toFixed(2)}deg`);
+      card.style.setProperty("--ry", `${rotateY.toFixed(2)}deg`);
+      card.style.setProperty("--mx", `${(px * 100).toFixed(1)}%`);
+      card.style.setProperty("--my", `${(py * 100).toFixed(1)}%`);
+    });
+
+    card.addEventListener("pointerleave", reset);
+    card.addEventListener("pointercancel", reset);
+  });
+});
+
+
+/* =========================================================
+   CONTACT — SOCIAL TILT / REVEAL
+   Additive only.
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const contact = document.querySelector("#contact.contact-v2");
+  if (!contact) return;
+
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  const finePointer = window.matchMedia(
+    "(pointer: fine)"
+  ).matches;
+
+
+  /* Reveal */
+
+  const revealItems = contact.querySelectorAll(
+    ".contact-v2-reveal"
+  );
+
+  if ("IntersectionObserver" in window && !reduceMotion) {
+
+    revealItems.forEach((item, index) => {
+      item.style.opacity = "0";
+      item.style.transform = "translateY(28px)";
+      item.style.transition =
+        "opacity .8s cubic-bezier(.2,.7,.2,1), " +
+        "transform .8s cubic-bezier(.2,.7,.2,1)";
+      item.style.transitionDelay =
+        `${Math.min(index * 70, 320)}ms`;
+    });
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+
+          entry.target.style.opacity = "1";
+          entry.target.style.transform = "translateY(0)";
+
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: .12,
+        rootMargin: "0px 0px -8% 0px"
+      }
+    );
+
+    revealItems.forEach(item => observer.observe(item));
+
+  } else {
+
+    revealItems.forEach(item => {
+      item.style.opacity = "1";
+      item.style.transform = "none";
+    });
+
+  }
+
+
+  /* Social card tilt */
+
+  if (!finePointer || reduceMotion) return;
+
+  contact
+    .querySelectorAll("[data-contact-social]")
+    .forEach(card => {
+
+      let raf = 0;
+      let targetX = 0;
+      let targetY = 0;
+      let currentX = 0;
+      let currentY = 0;
+
+      const render = () => {
+
+        currentX +=
+          (targetX - currentX) * .12;
+
+        currentY +=
+          (targetY - currentY) * .12;
+
+        card.style.transform =
+          `perspective(850px)
+           rotateX(${currentY.toFixed(2)}deg)
+           rotateY(${currentX.toFixed(2)}deg)
+           translateZ(0)`;
+
+        raf = requestAnimationFrame(render);
+
+      };
+
+      const stop = () => {
+        if (!raf) return;
+        cancelAnimationFrame(raf);
+        raf = 0;
+      };
+
+      card.addEventListener("pointerenter", () => {
+        if (!raf) raf = requestAnimationFrame(render);
+        card.style.setProperty("--contact-glow", "1");
+      });
+
+      card.addEventListener("pointermove", event => {
+
+        const rect =
+          card.getBoundingClientRect();
+
+        const px =
+          (event.clientX - rect.left) /
+          rect.width;
+
+        const py =
+          (event.clientY - rect.top) /
+          rect.height;
+
+        targetX =
+          (px - .5) * 4.2;
+
+        targetY =
+          (.5 - py) * 4.2;
+
+        card.style.setProperty(
+          "--contact-spot-x",
+          `${px * 100}%`
+        );
+
+        card.style.setProperty(
+          "--contact-spot-y",
+          `${py * 100}%`
+        );
+
+      });
+
+      card.addEventListener("pointerleave", () => {
+
+        targetX = 0;
+        targetY = 0;
+
+        card.style.setProperty(
+          "--contact-glow",
+          "0"
+        );
+
+        window.setTimeout(() => {
+
+          if (!card.matches(":hover")) {
+            stop();
+            card.style.transform = "";
+          }
+
+        }, 380);
+
+      });
+
+    });
+
+});
+
+
+
+/* =========================================================
+   LIFE VIDEO PREVIEW
+   Video akan bergerak halus saat disentuh/diarahkan.
+========================================================= */
+document.addEventListener("DOMContentLoaded", () => {
+
+    const cards =
+        document.querySelectorAll(
+            "#life.life-redesign [data-life-video]"
+        );
+
+    cards.forEach(card => {
+
+        const video =
+            card.querySelector(".life-video");
+
+        if(!video){
+            return;
+        }
+
+        card.addEventListener(
+            "pointerenter",
+            () => {
+
+                const promise =
+                    video.play();
+
+                if(
+                    promise &&
+                    typeof promise.catch === "function"
+                ){
+                    promise.catch(() => {});
+                }
+
+            }
+        );
+
+        card.addEventListener(
+            "pointerleave",
+            () => {
+
+                video.pause();
+                video.currentTime = 0;
+
+            }
+        );
+
+    });
+
+});
+
+
+/* =========================================================
+   LIFE VIDEO 03 — AUTOPLAY SAAT MASUK LAYAR
+========================================================= */
+document.addEventListener("DOMContentLoaded", () => {
+
+    const video =
+        document.querySelector(
+            "#life.life-redesign .life-video-card-landscape .life-video"
+        );
+
+    if(!video){
+        return;
+    }
+
+    video.muted = true;
+    video.autoplay = true;
+    video.loop = true;
+    video.playsInline = true;
+
+    const playVideo = () => {
+        const promise = video.play();
+
+        if(
+            promise &&
+            typeof promise.catch === "function"
+        ){
+            promise.catch(() => {});
+        }
+    };
+
+    if("IntersectionObserver" in window){
+
+        const observer =
+            new IntersectionObserver(
+                entries => {
+
+                    entries.forEach(entry => {
+
+                        if(entry.isIntersecting){
+                            playVideo();
+                        }
+                        else{
+                            video.pause();
+                        }
+
+                    });
+
+                },
+                {
+                    threshold:.18
+                }
+            );
+
+        observer.observe(video);
+
+    }
+    else{
+        playVideo();
+    }
+
+});
+
+
+/* =========================================================
+   MUSIC PLAYER FAILSAFE
+   Tetap membuat player musik bekerja walau GSAP gagal dimuat.
+   Tidak memakai autoplay; lagu diputar setelah klik.
+========================================================= */
+(function initMusicPlayerFailsafe(){
+    "use strict";
+
+    const boot = () => {
+        const like = document.querySelector("#love.like-redesign");
+        if(!like || like.dataset.musicReady === "true"){
+            return;
+        }
+
+        const audio = like.querySelector("[data-music-audio]");
+        const playButton = like.querySelector("[data-music-play]");
+        const progress = like.querySelector("[data-music-progress]");
+        const timeLabel = like.querySelector("[data-music-time]");
+        const status = like.querySelector("[data-music-status]");
+        const title = like.querySelector("[data-music-title]");
+        const label = like.querySelector("[data-music-label]");
+        const disc = like.querySelector("[data-music-disc]");
+        const tracks = [...like.querySelectorAll("[data-music-track]")];
+
+        if(!audio || !playButton || !tracks.length){
+            return;
+        }
+
+        like.dataset.musicReady = "true";
+
+        const icon = playButton.querySelector("i");
+
+        const formatTime = (value) => {
+            if(!Number.isFinite(value)){
+                return "00:00";
+            }
+
+            const minutes = Math.floor(value / 60);
+            const seconds = Math.floor(value % 60);
+
+            return String(minutes).padStart(2, "0") + ":" +
+                   String(seconds).padStart(2, "0");
+        };
+
+        const syncUI = () => {
+            const duration = Number.isFinite(audio.duration) ? audio.duration : 0;
+            const current = Number.isFinite(audio.currentTime) ? audio.currentTime : 0;
+            const ratio = duration > 0 ? current / duration : 0;
+
+            if(progress){
+                progress.style.width =
+                    `${Math.min(100, Math.max(0, ratio * 100))}%`;
+            }
+
+            if(timeLabel){
+                timeLabel.textContent = formatTime(current);
+            }
+
+            if(icon){
+                icon.className = audio.paused
+                    ? "bi bi-play-fill"
+                    : "bi bi-pause-fill";
+            }
+
+            if(disc){
+                disc.classList.toggle("is-playing", !audio.paused);
+            }
+        };
+
+        const setActiveTrack = (track, shouldPlay) => {
+            if(!track){
+                return;
+            }
+
+            const src = (track.dataset.src || "").trim();
+            const trackTitle = track.dataset.title || "Judul lagu";
+            const artist = track.dataset.artist || "Pilihan saya";
+
+            if(!src){
+                if(status){
+                    status.textContent = "File audio belum dipilih.";
+                }
+                return;
+            }
+
+            tracks.forEach(item => {
+                item.classList.toggle("is-active", item === track);
+            });
+
+            audio.pause();
+            audio.removeAttribute("src");
+            audio.load();
+            audio.src = src;
+            audio.load();
+
+            if(title){
+                title.textContent = trackTitle;
+            }
+
+            if(label){
+                label.textContent = "PUTAR LAGU";
+            }
+
+            if(status){
+                status.textContent = `Siap diputar · ${artist}`;
+            }
+
+            if(progress){
+                progress.style.width = "0%";
+            }
+
+            if(timeLabel){
+                timeLabel.textContent = "00:00";
+            }
+
+            if(shouldPlay){
+                const result = audio.play();
+
+                if(result && typeof result.catch === "function"){
+                    result.then(() => {
+                        if(status){
+                            status.textContent = `Sedang diputar · ${artist}`;
+                        }
+                        syncUI();
+                    }).catch(() => {
+                        if(status){
+                            status.textContent =
+                                `Tidak bisa memutar ${src}`;
+                        }
+                        syncUI();
+                    });
+                }
+            }
+
+            syncUI();
+        };
+
+        tracks.forEach(track => {
+            track.addEventListener("click", () => {
+                setActiveTrack(track, true);
+            });
+        });
+
+        playButton.addEventListener("click", async () => {
+            const active =
+                like.querySelector("[data-music-track].is-active") ||
+                tracks[0];
+
+            if(!audio.src){
+                setActiveTrack(active, false);
+            }
+
+            try{
+                if(audio.paused){
+                    await audio.play();
+
+                    const artist =
+                        active.dataset.artist || "Pilihan saya";
+
+                    if(status){
+                        status.textContent =
+                            `Sedang diputar · ${artist}`;
+                    }
+                }else{
+                    audio.pause();
+
+                    if(status){
+                        status.textContent = "Lagu dijeda.";
+                    }
+                }
+            }catch(error){
+                if(status){
+                    status.textContent =
+                        `File audio belum ditemukan: ${active.dataset.src || ""}`;
+                }
+            }
+
+            syncUI();
+        });
+
+        audio.addEventListener("loadedmetadata", syncUI);
+        audio.addEventListener("timeupdate", syncUI);
+        audio.addEventListener("play", syncUI);
+        audio.addEventListener("pause", syncUI);
+
+        audio.addEventListener("error", () => {
+            const active =
+                like.querySelector("[data-music-track].is-active");
+
+            if(status){
+                status.textContent = active?.dataset.src
+                    ? `File audio belum ditemukan: ${active.dataset.src}`
+                    : "File audio belum dipilih.";
+            }
+
+            syncUI();
+        });
+
+        const progressTrack = like.querySelector(".like-music-progress");
+
+        if(progressTrack){
+            progressTrack.addEventListener("click", (event) => {
+                if(!Number.isFinite(audio.duration) || audio.duration <= 0){
+                    return;
+                }
+
+                const rect = progressTrack.getBoundingClientRect();
+                const ratio =
+                    Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+
+                audio.currentTime = ratio * audio.duration;
+                syncUI();
+            });
+        }
+
+        const firstTrack =
+            like.querySelector("[data-music-track].is-active") ||
+            tracks[0];
+
+        setActiveTrack(firstTrack, false);
+        syncUI();
+    };
+
+    if(document.readyState === "loading"){
+        document.addEventListener("DOMContentLoaded", boot, {once:true});
+    }else{
+        boot();
+    }
+})();
