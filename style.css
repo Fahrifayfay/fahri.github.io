@@ -18333,3 +18333,5538 @@ main{
             calc(100vw - 24px) !important;
     }
 }
+
+
+/* =========================================================
+   WHAT I LOVE — GAMING + FILM
+   Added without changing existing project/about/stack styles.
+========================================================= */
+
+#love.love-section{
+  position:relative;
+  margin-top:18px;
+  padding-top:88px;
+  border-top:1px solid rgba(225,243,231,.12);
+}
+
+#love.love-section .life-chapter-head{
+  margin-bottom:10px;
+}
+
+#love.love-section .life-kicker{
+  color:rgba(235,246,239,.62);
+}
+
+#love.love-section .life-chapter-number{
+  color:rgba(235,246,239,.48);
+}
+
+#love.love-section .life-gaming-head h3{
+  color:#f3f7f4;
+}
+
+#love.love-section .life-game-track{
+  gap:58px !important;
+}
+
+#love.love-section .life-game-card:nth-child(3)::before{
+  content:"Film favorit";
+}
+
+#love.love-section .life-film-image{
+  position:relative !important;
+  background:
+    radial-gradient(
+      circle at 72% 25%,
+      rgba(215,220,194,.18),
+      transparent 25%
+    ),
+    linear-gradient(
+      135deg,
+      #2b2b28 0%,
+      #171715 48%,
+      #0e0e0d 100%
+    ) !important;
+}
+
+#love.love-section .life-film-art{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:28px;
+  color:#f5f4ef;
+}
+
+#love.love-section .life-film-art::before{
+  content:"";
+  position:absolute;
+  inset:16px;
+  border:1px solid rgba(255,255,255,.13);
+  pointer-events:none;
+}
+
+#love.love-section .life-film-art-kicker{
+  position:relative;
+  z-index:2;
+  color:rgba(255,255,255,.52);
+  font:500 8px/1 "DM Mono",monospace;
+  letter-spacing:.16em;
+}
+
+#love.love-section .life-film-art-grid{
+  position:absolute;
+  inset:0;
+  opacity:.28;
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0 24.5%,
+      rgba(255,255,255,.055) 24.5% 25%,
+      transparent 25% 49.5%,
+      rgba(255,255,255,.055) 49.5% 50%,
+      transparent 50% 74.5%,
+      rgba(255,255,255,.055) 74.5% 75%,
+      transparent 75%
+    ),
+    linear-gradient(
+      180deg,
+      transparent 0 24.5%,
+      rgba(255,255,255,.055) 24.5% 25%,
+      transparent 25% 49.5%,
+      rgba(255,255,255,.055) 49.5% 50%,
+      transparent 50% 74.5%,
+      rgba(255,255,255,.055) 74.5% 75%,
+      transparent 75%
+    );
+  transform:scale(1.12) rotate(-7deg);
+}
+
+#love.love-section .life-film-art-main{
+  position:relative;
+  z-index:2;
+  margin-top:auto;
+  margin-bottom:auto;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  transform:translateY(10px);
+}
+
+#love.love-section .life-film-art-main span{
+  color:rgba(255,255,255,.55);
+  font:500 clamp(16px,2vw,26px)/1 "DM Mono",monospace;
+  letter-spacing:.12em;
+}
+
+#love.love-section .life-film-art-main strong{
+  margin-top:4px;
+  font:
+    400 clamp(58px,7vw,92px)/.76
+    "Instrument Serif",
+    Georgia,
+    serif;
+  letter-spacing:-.04em;
+}
+
+#love.love-section .life-film-art-icon{
+  position:absolute;
+  right:28px;
+  top:50%;
+  z-index:2;
+  width:64px;
+  height:64px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.17);
+  border-radius:50%;
+  background:rgba(0,0,0,.16);
+  color:rgba(255,255,255,.82);
+  font-size:22px;
+  transform:translateY(-50%) rotate(8deg);
+}
+
+#love.love-section .life-film-art small{
+  position:relative;
+  z-index:2;
+  color:rgba(255,255,255,.4);
+  font:500 7px/1 "DM Mono",monospace;
+  letter-spacing:.15em;
+}
+
+#love.love-section .life-film-card:hover .life-film-art-icon{
+  transform:translateY(-50%) rotate(0deg) scale(1.06);
+  border-color:rgba(255,255,255,.27);
+}
+
+@media(max-width:700px){
+  #love.love-section{
+    margin-top:10px;
+    padding-top:64px;
+  }
+
+  #love.love-section .life-film-art{
+    padding:20px;
+  }
+
+  #love.love-section .life-film-art::before{
+    inset:12px;
+  }
+
+  #love.love-section .life-film-art-icon{
+    right:20px;
+    width:50px;
+    height:50px;
+    font-size:18px;
+  }
+
+  #love.love-section .life-film-art-main strong{
+    font-size:56px;
+  }
+}
+
+
+/* WHAT I LOVE — 3 FILM CARDS */
+#love.love-section .life-film-card-2 .life-film-image{
+  background:
+    radial-gradient(circle at 22% 22%, rgba(224,191,150,.18), transparent 24%),
+    linear-gradient(135deg, #302820 0%, #1b1714 48%, #0e0d0c 100%) !important;
+}
+
+#love.love-section .life-film-card-3 .life-film-image{
+  background:
+    radial-gradient(circle at 80% 18%, rgba(181,198,214,.16), transparent 25%),
+    linear-gradient(135deg, #252b31 0%, #15191d 48%, #0c0d0f 100%) !important;
+}
+
+#love.love-section .life-film-card-2 .life-film-art-grid{
+  transform:scale(1.08) rotate(7deg);
+}
+
+#love.love-section .life-film-card-3 .life-film-art-grid{
+  transform:scale(1.14) rotate(13deg);
+}
+
+#love.love-section .life-film-card-2 .life-film-art-main strong{
+  letter-spacing:-.055em;
+}
+
+#love.love-section .life-film-card-3 .life-film-art-main strong{
+  letter-spacing:-.06em;
+}
+
+/* =========================================================
+   WHAT I LOVE — 3 FILM CARDS PORTRAIT
+   Hanya kartu film yang diubah menjadi format portrait.
+========================================================= */
+#love.love-section .life-film-card{
+  flex:0 0 300px !important;
+  width:300px !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  aspect-ratio:2 / 3 !important;
+  overflow:hidden !important;
+}
+
+#love.love-section .life-film-card .life-film-image{
+  width:100% !important;
+  height:100% !important;
+  aspect-ratio:auto !important;
+}
+
+#love.love-section .life-film-card-2{
+  margin-top:34px !important;
+  transform:rotate(-1.2deg) !important;
+}
+
+#love.love-section .life-film-card-3{
+  margin-top:8px !important;
+  transform:rotate(1.3deg) !important;
+}
+
+@media(max-width:900px){
+  #love.love-section .life-film-card{
+    flex:0 0 280px !important;
+    width:280px !important;
+    aspect-ratio:2 / 3 !important;
+  }
+}
+
+@media(max-width:620px){
+  #love.love-section .life-film-card{
+    flex:0 0 245px !important;
+    width:245px !important;
+    aspect-ratio:2 / 3 !important;
+  }
+
+  #love.love-section .life-film-card-2,
+  #love.love-section .life-film-card-3{
+    margin-top:0 !important;
+    transform:none !important;
+  }
+
+  #love.love-section .life-film-art{
+    padding:18px !important;
+  }
+
+  #love.love-section .life-film-art::before{
+    inset:10px !important;
+  }
+
+  #love.love-section .life-film-art-main strong{
+    font-size:52px !important;
+  }
+}
+
+
+/* =========================================================
+   WHAT I LOVE — FILM STRIP
+   3 poster cards, horizontal row, 9:16
+   Film cards are intentionally separated from the gaming track.
+========================================================= */
+#love.love-section .life-film-section{
+  width:100%;
+  margin-top:58px;
+  padding-top:34px;
+  border-top:1px solid rgba(235,246,239,.11);
+}
+
+#love.love-section .life-film-heading{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:24px;
+  margin-bottom:24px;
+}
+
+#love.love-section .life-film-heading span{
+  display:block;
+  margin-bottom:7px;
+  color:rgba(235,246,239,.48);
+  font:500 8px/1 "DM Mono",monospace;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+
+#love.love-section .life-film-heading h4{
+  margin:0;
+  color:#f3f7f4;
+  font-family:"Instrument Serif",Georgia,serif;
+  font-size:clamp(31px,3.4vw,48px);
+  line-height:.9;
+  font-weight:400;
+  letter-spacing:-.025em;
+}
+
+#love.love-section .life-film-heading small{
+  color:rgba(235,246,239,.4);
+  font:500 8px/1 "DM Mono",monospace;
+  letter-spacing:.13em;
+  white-space:nowrap;
+}
+
+#love.love-section .life-film-window{
+  width:100%;
+  overflow-x:auto;
+  overflow-y:visible;
+  padding:8px 2px 28px;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,.22) transparent;
+}
+
+#love.love-section .life-film-window::-webkit-scrollbar{
+  height:6px;
+}
+
+#love.love-section .life-film-window::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+#love.love-section .life-film-window::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,.22);
+  border-radius:999px;
+}
+
+#love.love-section .life-film-track{
+  display:flex !important;
+  flex-direction:row !important;
+  align-items:flex-start !important;
+  gap:22px !important;
+  width:max-content !important;
+  padding:0 !important;
+}
+
+#love.love-section .life-film-card{
+  flex:0 0 250px !important;
+  width:250px !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  aspect-ratio:9 / 16 !important;
+  margin:0 !important;
+  transform:none !important;
+  overflow:hidden !important;
+  border-radius:18px !important;
+}
+
+#love.love-section .life-film-card:nth-child(2),
+#love.love-section .life-film-card:nth-child(3){
+  margin-top:22px !important;
+}
+
+#love.love-section .life-film-card .life-film-image{
+  width:100% !important;
+  height:100% !important;
+  min-height:0 !important;
+  aspect-ratio:9 / 16 !important;
+  overflow:hidden !important;
+}
+
+#love.love-section .life-film-card .life-film-art{
+  padding:22px !important;
+}
+
+#love.love-section .life-film-card .life-game-number{
+  z-index:6;
+}
+
+@media (max-width:700px){
+  #love.love-section .life-film-section{
+    margin-top:42px;
+    padding-top:28px;
+  }
+
+  #love.love-section .life-film-heading{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:18px;
+  }
+
+  #love.love-section .life-film-window{
+    padding-bottom:22px;
+  }
+
+  #love.love-section .life-film-track{
+    gap:16px !important;
+  }
+
+  #love.love-section .life-film-card{
+    flex-basis:46vw !important;
+    width:46vw !important;
+    min-width:160px !important;
+    max-width:220px !important;
+    border-radius:16px !important;
+  }
+
+  #love.love-section .life-film-card:nth-child(2),
+  #love.love-section .life-film-card:nth-child(3){
+    margin-top:10px !important;
+  }
+
+  #love.love-section .life-film-card .life-film-art{
+    padding:18px !important;
+  }
+}
+
+
+/* =========================================================
+   TOP 3 FILM I LIKE — FINAL POLISH
+   Scoped only to the film strip.
+========================================================= */
+#love.love-section .life-film-section{
+  width:100%;
+  margin-top:72px;
+  padding-top:34px;
+  border-top:1px solid rgba(235,246,239,.11);
+}
+
+#love.love-section .life-film-heading{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:24px;
+  margin-bottom:30px;
+}
+
+#love.love-section .life-film-heading span{
+  display:block;
+  margin-bottom:8px;
+  color:rgba(235,246,239,.48);
+  font:500 8px/1 "DM Mono",monospace;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+
+#love.love-section .life-film-heading h4{
+  margin:0;
+  color:#f3f7f4;
+  font-family:"Instrument Serif",Georgia,serif;
+  font-size:clamp(46px,5vw,76px);
+  line-height:.9;
+  font-weight:400;
+  letter-spacing:-.04em;
+}
+
+#love.love-section .life-film-heading small{
+  color:rgba(235,246,239,.4);
+  font:500 8px/1 "DM Mono",monospace;
+  letter-spacing:.13em;
+  white-space:nowrap;
+}
+
+#love.love-section .life-film-window{
+  width:100%;
+  overflow-x:auto;
+  overflow-y:visible;
+  padding:10px 14px 30px;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,.22) transparent;
+  perspective:1200px;
+}
+
+#love.love-section .life-film-window::-webkit-scrollbar{height:6px;}
+#love.love-section .life-film-window::-webkit-scrollbar-track{background:transparent;}
+#love.love-section .life-film-window::-webkit-scrollbar-thumb{background:rgba(255,255,255,.22);border-radius:999px;}
+
+#love.love-section .life-film-track{
+  display:flex !important;
+  flex-direction:row !important;
+  align-items:flex-start !important;
+  justify-content:center;
+  gap:28px !important;
+  width:max-content !important;
+  min-width:100%;
+  padding:0 !important;
+}
+
+#love.love-section .life-film-poster{
+  --rx:0deg;
+  --ry:0deg;
+  --lift:0px;
+  --mx:50%;
+  --my:50%;
+  position:relative;
+  flex:0 0 300px !important;
+  width:300px !important;
+  aspect-ratio:9 / 16 !important;
+  transform:
+    perspective(1000px)
+    rotateX(var(--rx))
+    rotateY(var(--ry))
+    translateY(var(--lift));
+  transform-style:preserve-3d;
+  transition:transform .18s ease-out, filter .25s ease, box-shadow .25s ease;
+  will-change:transform;
+  border-radius:20px;
+  background:
+    linear-gradient(#0c1511,#0c1511) padding-box,
+    conic-gradient(
+      from 0deg,
+      rgba(143,165,111,.10),
+      rgba(235,246,239,.55),
+      rgba(93,142,112,.16),
+      rgba(235,246,239,.12),
+      rgba(143,165,111,.52),
+      rgba(235,246,239,.18),
+      rgba(143,165,111,.10)
+    ) border-box;
+  border:1px solid transparent;
+  overflow:hidden;
+  box-shadow:0 24px 52px rgba(0,0,0,.24);
+  animation:filmBorderSpin 8s linear infinite;
+}
+
+#love.love-section .life-film-poster:nth-child(2){animation-delay:-2.4s; margin-top:28px;}
+#love.love-section .life-film-poster:nth-child(3){animation-delay:-5.1s; margin-top:8px;}
+
+@keyframes filmBorderSpin{
+  to{
+    background:
+      linear-gradient(#0c1511,#0c1511) padding-box,
+      conic-gradient(
+        from 360deg,
+        rgba(143,165,111,.10),
+        rgba(235,246,239,.55),
+        rgba(93,142,112,.16),
+        rgba(235,246,239,.12),
+        rgba(143,165,111,.52),
+        rgba(235,246,239,.18),
+        rgba(143,165,111,.10)
+      ) border-box;
+  }
+}
+
+#love.love-section .life-film-poster::before{
+  content:"";
+  position:absolute;
+  inset:1px;
+  z-index:0;
+  pointer-events:none;
+  border-radius:19px;
+  background:
+    radial-gradient(circle at var(--mx) var(--my), rgba(235,246,239,.16), transparent 24%),
+    linear-gradient(150deg, rgba(255,255,255,.06), transparent 34%, transparent 66%, rgba(0,0,0,.22));
+  opacity:.92;
+}
+
+#love.love-section .life-film-poster:hover{
+  --lift:-8px;
+  filter:saturate(1.06) brightness(1.04);
+  box-shadow:0 34px 74px rgba(0,0,0,.38), 0 0 34px rgba(143,165,111,.10);
+}
+
+#love.love-section .life-film-poster-media{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  border-radius:19px;
+  background:
+    radial-gradient(circle at 75% 20%, rgba(143,165,111,.16), transparent 25%),
+    linear-gradient(145deg,#1e2923 0%,#0d1410 52%,#080c0a 100%);
+  transform:translateZ(0);
+}
+
+#love.love-section .life-film-poster-media img{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+  transition:transform .8s cubic-bezier(.2,.7,.2,1), filter .4s ease;
+}
+
+#love.love-section .life-film-poster:hover .life-film-poster-media img{
+  transform:scale(1.035);
+  filter:saturate(1.05) contrast(1.04);
+}
+
+#love.love-section .life-film-poster-media.is-empty .life-film-empty{display:flex;}
+#love.love-section .life-film-empty{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:10px;
+  color:rgba(243,247,244,.6);
+  text-align:center;
+  background:
+    radial-gradient(circle at 60% 30%, rgba(143,165,111,.14), transparent 27%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,.025) 0 1px, transparent 1px 12px),
+    #0c1511;
+}
+#love.love-section .life-film-empty span{
+  font:500 8px/1 "DM Mono",monospace;
+  letter-spacing:.2em;
+}
+#love.love-section .life-film-empty strong{
+  font:400 27px/.92 "Instrument Serif",Georgia,serif;
+  letter-spacing:-.02em;
+}
+
+#love.love-section .life-film-poster-number{
+  position:absolute;
+  z-index:5;
+  left:14px;
+  top:14px;
+  display:grid;
+  place-items:center;
+  width:42px;
+  height:42px;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:50%;
+  color:#fff;
+  background:rgba(7,11,9,.48);
+  backdrop-filter:blur(10px);
+  font:700 9px/1 "DM Mono",monospace;
+}
+
+#love.love-section .life-film-poster-vignette{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.26), transparent 24%, transparent 58%, rgba(0,0,0,.62) 100%);
+}
+
+#love.love-section .life-film-poster-shine{
+  position:absolute;
+  inset:-30% -20%;
+  z-index:4;
+  pointer-events:none;
+  background:linear-gradient(115deg, transparent 35%, rgba(255,255,255,.10) 47%, transparent 59%);
+  transform:translateX(-55%);
+  transition:transform .8s cubic-bezier(.2,.7,.2,1);
+}
+#love.love-section .life-film-poster:hover .life-film-poster-shine{transform:translateX(55%);}
+
+#love.love-section .life-film-poster-meta{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-30px;
+  z-index:6;
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:0 6px;
+  color:rgba(235,246,239,.48);
+  font:500 8px/1 "DM Mono",monospace;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  pointer-events:none;
+}
+#love.love-section .life-film-poster-meta span:last-child{color:rgba(235,246,239,.28);}
+
+@media(max-width:900px){
+  #love.love-section .life-film-heading{margin-bottom:22px;}
+  #love.love-section .life-film-track{justify-content:flex-start; min-width:0; gap:20px !important;}
+  #love.love-section .life-film-poster{flex-basis:210px; width:210px;}
+}
+
+@media(max-width:620px){
+  #love.love-section .life-film-section{margin-top:56px; padding-top:28px;}
+  #love.love-section .life-film-heading{align-items:flex-start; flex-direction:column; gap:10px; margin-bottom:18px;}
+  #love.love-section .life-film-heading h4{font-size:clamp(40px,13vw,58px);}
+  #love.love-section .life-film-heading small{font-size:7px;}
+  #love.love-section .life-film-window{padding:8px 8px 28px;}
+  #love.love-section .life-film-poster{flex-basis:185px; width:185px; border-radius:17px;}
+  #love.love-section .life-film-poster-media{border-radius:16px;}
+  #love.love-section .life-film-poster-number{width:36px;height:36px;left:10px;top:10px;}
+  #love.love-section .life-film-poster-meta{bottom:-24px;font-size:7px;}
+}
+
+/* =========================================================
+   TOP 3 FILM — FINAL SIZE
+   Desktop poster 9:16, slightly larger but tetap rapi.
+========================================================= */
+#love.love-section .life-film-card{
+  flex:0 0 280px !important;
+  width:280px !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  aspect-ratio:9 / 16 !important;
+  margin:0 !important;
+  overflow:hidden !important;
+  border-radius:18px !important;
+}
+
+#love.love-section .life-film-card:nth-child(2),
+#love.love-section .life-film-card:nth-child(3){
+  margin-top:22px !important;
+}
+
+#love.love-section .life-film-card .life-film-image{
+  width:100% !important;
+  height:100% !important;
+  min-height:0 !important;
+  aspect-ratio:9 / 16 !important;
+  overflow:hidden !important;
+}
+
+@media (max-width:700px){
+  #love.love-section .life-film-card{
+    flex-basis:46vw !important;
+    width:46vw !important;
+    min-width:160px !important;
+    max-width:220px !important;
+    aspect-ratio:9 / 16 !important;
+    border-radius:16px !important;
+  }
+}
+
+
+/* =========================================================
+   TOP 3 FILM — INFO BENAR-BENAR DI BAWAH POSTER
+   CLASS HTML TETAP, TIDAK DIUBAH
+========================================================= */
+
+#love.love-section .life-film-poster{
+  position:relative !important;
+
+  flex:0 0 300px !important;
+  width:300px !important;
+
+  height:auto !important;
+  min-height:0 !important;
+  aspect-ratio:auto !important;
+
+  background:transparent !important;
+  border:0 !important;
+
+  overflow:visible !important;
+
+  box-shadow:none !important;
+  animation:none !important;
+
+  transform:
+    perspective(1000px)
+    rotateX(var(--rx))
+    rotateY(var(--ry))
+    translateY(var(--lift));
+}
+
+
+/* MATIKAN BACKGROUND / BORDER PARENT */
+#love.love-section .life-film-poster::before{
+  display:none !important;
+}
+
+
+/* =========================================================
+   POSTER = CARD
+========================================================= */
+
+#love.love-section .life-film-poster-media{
+  position:relative !important;
+
+  width:100% !important;
+  height:auto !important;
+
+  aspect-ratio:9 / 16 !important;
+
+  overflow:hidden !important;
+
+  border-radius:20px !important;
+
+  border:1px solid transparent !important;
+
+  background:
+    linear-gradient(#0c1511,#0c1511) padding-box,
+    conic-gradient(
+      from 0deg,
+      rgba(143,165,111,.12),
+      rgba(235,246,239,.60),
+      rgba(93,142,112,.18),
+      rgba(143,165,111,.45),
+      rgba(235,246,239,.15),
+      rgba(143,165,111,.12)
+    ) border-box !important;
+
+  box-shadow:
+    0 24px 52px rgba(0,0,0,.24) !important;
+
+  animation:
+    filmPosterBorderSpin 8s linear infinite !important;
+}
+
+
+/* BORDER BERPUTAR */
+@keyframes filmPosterBorderSpin{
+  to{
+    background:
+      linear-gradient(#0c1511,#0c1511) padding-box,
+      conic-gradient(
+        from 360deg,
+        rgba(143,165,111,.12),
+        rgba(235,246,239,.60),
+        rgba(93,142,112,.18),
+        rgba(143,165,111,.45),
+        rgba(235,246,239,.15),
+        rgba(143,165,111,.12)
+      ) border-box;
+  }
+}
+
+
+/* =========================================================
+   IMAGE POSTER
+========================================================= */
+
+#love.love-section .life-film-poster-media img{
+  position:absolute !important;
+  inset:0 !important;
+
+  z-index:1 !important;
+
+  width:100% !important;
+  height:100% !important;
+
+  object-fit:cover !important;
+  object-position:center !important;
+
+  display:block !important;
+
+  transition:
+    transform .8s cubic-bezier(.2,.7,.2,1),
+    filter .4s ease !important;
+}
+
+#love.love-section .life-film-poster:hover
+.life-film-poster-media img{
+  transform:scale(1.035) !important;
+  filter:saturate(1.05) contrast(1.04) !important;
+}
+
+
+/* =========================================================
+   NOMOR
+========================================================= */
+
+#love.love-section .life-film-poster-number{
+  position:absolute !important;
+
+  left:14px !important;
+  top:14px !important;
+
+  z-index:8 !important;
+
+  width:42px !important;
+  height:42px !important;
+
+  display:grid !important;
+  place-items:center !important;
+
+  border:1px solid rgba(255,255,255,.20) !important;
+  border-radius:50% !important;
+
+  background:rgba(7,11,9,.55) !important;
+  backdrop-filter:blur(10px) !important;
+
+  color:#fff !important;
+
+  font:
+    700 9px/1
+    "DM Mono",
+    monospace !important;
+}
+
+
+/* =========================================================
+   INFO FILM — DI LUAR CARD
+========================================================= */
+
+#love.love-section .life-film-poster-meta{
+  position:relative !important;
+
+  left:auto !important;
+  right:auto !important;
+  top:auto !important;
+  bottom:auto !important;
+
+  z-index:10 !important;
+
+  display:block !important;
+
+  width:100% !important;
+  height:auto !important;
+
+  margin-top:18px !important;
+
+  padding:0 4px !important;
+
+  background:transparent !important;
+  border:0 !important;
+
+  color:#f3f7f4 !important;
+
+  overflow:visible !important;
+
+  box-shadow:none !important;
+
+  pointer-events:none !important;
+
+  text-align:left !important;
+
+  text-transform:none !important;
+  letter-spacing:normal !important;
+}
+
+
+/* GARIS KECIL */
+#love.love-section .life-film-poster-meta::before{
+  content:"" !important;
+
+  display:block !important;
+
+  width:32px !important;
+  height:1px !important;
+
+  margin:0 0 11px !important;
+
+  background:rgba(235,246,239,.28) !important;
+}
+
+
+/* TOP 01 / 02 / 03 */
+#love.love-section .life-film-poster-meta > span:first-child{
+  display:block !important;
+
+  margin:0 0 8px !important;
+
+  color:rgba(235,246,239,.42) !important;
+
+  font:
+    500 8px/1.2
+    "DM Mono",
+    monospace !important;
+
+  letter-spacing:.14em !important;
+  text-transform:uppercase !important;
+}
+
+
+/* HAPUS MY PICK */
+#love.love-section .life-film-poster-meta > span:last-child{
+  display:none !important;
+}
+
+
+/* =========================================================
+   JUDUL FILM
+========================================================= */
+
+#love.love-section .life-film-poster-meta > strong{
+  display:block !important;
+
+  margin:0 !important;
+
+  color:#f3f7f4 !important;
+
+  font:
+    400 30px/.94
+    "Instrument Serif",
+    Georgia,
+    serif !important;
+
+  letter-spacing:-.025em !important;
+
+  text-transform:none !important;
+}
+
+
+/* =========================================================
+   DESKRIPSI FILM
+========================================================= */
+
+#love.love-section .life-film-poster-meta > p{
+  display:block !important;
+
+  width:100% !important;
+  max-width:300px !important;
+
+  margin:10px 0 0 !important;
+
+  color:rgba(235,246,239,.48) !important;
+
+  font:
+    400 10px/1.7
+    "Manrope",
+    sans-serif !important;
+
+  letter-spacing:0 !important;
+
+  text-transform:none !important;
+}
+
+
+/* =========================================================
+   JARAK ANTAR POSTER
+========================================================= */
+
+#love.love-section .life-film-track{
+  display:flex !important;
+  flex-direction:row !important;
+  align-items:flex-start !important;
+  gap:28px !important;
+}
+
+
+/* POSTER 2 */
+#love.love-section .life-film-poster:nth-child(2){
+  margin-top:28px !important;
+}
+
+
+/* POSTER 3 */
+#love.love-section .life-film-poster:nth-child(3){
+  margin-top:8px !important;
+}
+
+
+/* =========================================================
+   HOVER CARD
+========================================================= */
+
+#love.love-section .life-film-poster:hover
+.life-film-poster-media{
+  box-shadow:
+    0 34px 74px rgba(0,0,0,.38),
+    0 0 34px rgba(143,165,111,.12) !important;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media(max-width:900px){
+
+  #love.love-section .life-film-poster{
+    flex:0 0 280px !important;
+    width:280px !important;
+  }
+
+}
+
+
+/* =========================================================
+   HP
+========================================================= */
+
+@media(max-width:620px){
+
+  #love.love-section .life-film-poster{
+    flex:0 0 245px !important;
+    width:245px !important;
+  }
+
+  #love.love-section .life-film-poster:nth-child(2),
+  #love.love-section .life-film-poster:nth-child(3){
+    margin-top:0 !important;
+  }
+
+  #love.love-section .life-film-poster-meta{
+    margin-top:14px !important;
+  }
+
+  #love.love-section .life-film-poster-meta > strong{
+    font-size:26px !important;
+  }
+
+  #love.love-section .life-film-poster-meta > p{
+    font-size:9px !important;
+  }
+
+}
+
+
+/* =========================================================
+   CONTACT — FINAL POLISH
+   Scoped only to #contact.
+========================================================= */
+
+#contact.contact-v2{
+  --contact-spot-x:50%;
+  --contact-spot-y:50%;
+}
+
+#contact .contact-v2-social{
+  overflow:hidden;
+  transform-style:preserve-3d;
+}
+
+#contact .contact-v2-social::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(
+      180px circle at var(--contact-spot-x) var(--contact-spot-y),
+      rgba(198,209,173,.14),
+      transparent 62%
+    );
+  opacity:.8;
+  transition:opacity .35s ease;
+}
+
+#contact .contact-v2-social-copy,
+#contact .contact-v2-social-icon,
+#contact .contact-v2-social-arrow{
+  position:relative;
+  z-index:2;
+}
+
+#contact .contact-v2-submit{
+  text-decoration:none;
+}
+
+#contact .contact-v2-message{
+  align-items:center;
+}
+
+#contact .contact-v2-form-bottom{
+  margin:0;
+  align-items:center;
+}
+
+#contact .contact-v2-form-status:empty{
+  display:none;
+}
+
+@media (max-width:700px){
+
+  #contact .contact-v2-socials{
+    width:100%;
+  }
+
+  #contact .contact-v2-form-bottom{
+    gap:18px;
+  }
+
+  #contact .contact-v2-form-note{
+    max-width:100%;
+  }
+
+}
+
+
+
+/* =========================================================
+   FIX FINAL — WHAT I LOVE / GAMING + FILM
+   Black like ABOUT, termasuk sampai batas bawah LIFE.
+   Travel / gunung tetap memakai background hijau.
+========================================================= */
+
+#love.love-section{
+  position:relative !important;
+  isolation:isolate !important;
+
+  background:#11110f !important;
+  color:#fff !important;
+
+  overflow:visible !important;
+}
+
+/*
+  Hitam diperpanjang sampai menyentuh dasar parent
+  .life-section, sehingga area hijau kosong di bawah
+  What I Love tidak muncul lagi.
+*/
+#love.love-section::before{
+  content:"" !important;
+
+  position:absolute !important;
+
+  top:0 !important;
+  left:50% !important;
+
+  width:100vw !important;
+  height:calc(100% + 150px) !important;
+
+  transform:translateX(-50%) !important;
+
+  background:#11110f !important;
+
+  z-index:-1 !important;
+
+  pointer-events:none !important;
+}
+
+/* isi tetap di atas background hitam */
+#love.love-section > *{
+  position:relative;
+  z-index:2;
+}
+
+/* jangan biarkan atmosfer hijau tampak melalui Love */
+#love.love-section .life-atmosphere,
+#love.love-section .life-background{
+  display:none !important;
+}
+
+/* Film + gaming tetap hitam */
+#love.love-section .life-game-window,
+#love.love-section .life-film-section{
+  position:relative;
+  z-index:2;
+}
+
+
+/* =========================================================
+   FINAL FIX — HILANGKAN HIJAU DI BAWAH WHAT I LOVE
+   Gaming + Film full hitam sampai ujung section.
+   Bagian Travel/Gunung di atas tetap hijau.
+========================================================= */
+
+#love.love-section{
+  position:relative !important;
+  isolation:isolate !important;
+
+  background:#11110f !important;
+
+  margin-bottom:-135px !important;
+  padding-bottom:135px !important;
+
+  overflow:visible !important;
+}
+
+/* Background hitam menutupi sisa padding parent */
+#love.love-section::before{
+  content:"" !important;
+
+  position:absolute !important;
+
+  left:50% !important;
+  top:0 !important;
+  bottom:0 !important;
+
+  width:100vw !important;
+
+  transform:translateX(-50%) !important;
+
+  background:#11110f !important;
+
+  z-index:0 !important;
+
+  pointer-events:none !important;
+}
+
+/* Semua isi Love di atas background */
+#love.love-section > *{
+  position:relative !important;
+  z-index:2 !important;
+}
+
+/* Matikan elemen atmosfer hijau yang masuk ke Love */
+#love.love-section .life-atmosphere,
+#love.love-section .life-background{
+  display:none !important;
+}
+
+/* =========================================================
+   FINAL — HILANGKAN GAP HIJAU SETELAH WHAT I LOVE
+========================================================= */
+
+/* Dua wrapper #life punya padding bawah besar.
+   Hilangkan hanya padding bawahnya. */
+#life.life-section{
+  padding-bottom:0 !important;
+}
+
+/* What I Love tetap hitam */
+#love.love-section{
+  background:#11110f !important;
+  margin-bottom:0 !important;
+}
+
+/* =========================================================
+   REDESAIN TOTAL — KEHIDUPAN / YANG SAYA SUKA / HUBUNGI
+   Tema visual konsisten:
+   - dasar #11110f
+   - panel #171815
+   - teks krem #f3f1ec
+   - aksen zaitun lembut #9eaf88
+   Tidak mengubah section sebelum STACK.
+========================================================= */
+
+:root{
+  --redesign-bg:#11110f;
+  --redesign-bg-2:#141512;
+  --redesign-panel:#171815;
+  --redesign-panel-2:#1b1c18;
+  --redesign-line:rgba(243,241,236,.12);
+  --redesign-line-soft:rgba(243,241,236,.07);
+  --redesign-text:#f3f1ec;
+  --redesign-muted:rgba(243,241,236,.58);
+  --redesign-soft:rgba(243,241,236,.34);
+  --redesign-accent:#9eaf88;
+  --redesign-shadow:0 30px 70px rgba(0,0,0,.30);
+}
+
+
+/* =========================================================
+   GLOBAL REDESIGN BACKGROUND
+========================================================= */
+
+#life.life-redesign,
+#love.like-redesign,
+#contact.contact-redesign{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  width:100%;
+  margin:0;
+}
+
+
+/* =========================================================
+   LIFE — KEHIDUPAN DI LUAR LAYAR
+========================================================= */
+
+#life.life-redesign{
+  min-height:auto;
+  padding:150px 0 120px;
+  background:
+    radial-gradient(
+      circle at var(--spot-x,50%) var(--spot-y,15%),
+      rgba(158,175,136,.085),
+      transparent 28%
+    ),
+    linear-gradient(
+      180deg,
+      #11110f 0%,
+      #121310 52%,
+      #11110f 100%
+    );
+  color:var(--redesign-text);
+}
+
+
+#life.life-redesign .life-redesign-bg{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+}
+
+
+#life.life-redesign .life-bg-grid{
+  position:absolute;
+  inset:-20%;
+  opacity:.12;
+  background-image:
+    linear-gradient(
+      90deg,
+      transparent 0 49.5%,
+      rgba(243,241,236,.08) 49.5% 50.5%,
+      transparent 50.5%
+    ),
+    linear-gradient(
+      0deg,
+      transparent 0 49.5%,
+      rgba(243,241,236,.08) 49.5% 50.5%,
+      transparent 50.5%
+    );
+  background-size:180px 180px;
+  transform:rotate(-5deg);
+}
+
+
+#life.life-redesign .life-bg-orb{
+  position:absolute;
+  border:1px solid rgba(243,241,236,.08);
+  border-radius:50%;
+}
+
+
+#life.life-redesign .life-bg-orb-a{
+  width:360px;
+  height:360px;
+  right:-130px;
+  top:18%;
+}
+
+
+#life.life-redesign .life-bg-orb-b{
+  width:180px;
+  height:180px;
+  left:-75px;
+  bottom:9%;
+}
+
+
+#life.life-redesign .life-bg-line{
+  position:absolute;
+  width:1px;
+  height:70%;
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      rgba(243,241,236,.12),
+      transparent
+    );
+  transform-origin:center;
+}
+
+
+#life.life-redesign .life-bg-line-a{
+  left:17%;
+  top:5%;
+  transform:rotate(26deg);
+}
+
+
+#life.life-redesign .life-bg-line-b{
+  right:20%;
+  top:6%;
+  transform:rotate(-24deg);
+}
+
+
+#life.life-redesign .life-bg-dot{
+  position:absolute;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:rgba(243,241,236,.48);
+  box-shadow:0 0 22px rgba(158,175,136,.30);
+}
+
+
+#life.life-redesign .life-bg-dot-a{
+  left:14%;
+  top:26%;
+}
+
+
+#life.life-redesign .life-bg-dot-b{
+  right:15%;
+  top:42%;
+}
+
+
+#life.life-redesign .life-bg-dot-c{
+  left:63%;
+  bottom:14%;
+}
+
+
+#life.life-redesign .life-redesign-shell{
+  position:relative;
+  z-index:2;
+}
+
+
+#life.life-redesign .life-redesign-head{
+  display:grid;
+  grid-template-columns:.55fr 1fr;
+  gap:8vw;
+  align-items:end;
+  margin-bottom:76px;
+}
+
+
+#life.life-redesign .life-redesign-label{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+
+#life.life-redesign .life-redesign-label .section-number{
+  margin:0;
+  color:var(--redesign-soft);
+}
+
+
+#life.life-redesign .life-redesign-mini{
+  color:rgba(243,241,236,.24);
+  font:500 8px "DM Mono",monospace;
+  letter-spacing:.16em;
+}
+
+
+#life.life-redesign .life-redesign-title-wrap{
+  max-width:780px;
+}
+
+
+#life.life-redesign .life-redesign-title-wrap h2{
+  margin:0;
+  color:var(--redesign-text);
+  font-size:clamp(72px,9vw,138px);
+  line-height:.80;
+  letter-spacing:-.075em;
+  font-weight:800;
+}
+
+
+#life.life-redesign .life-redesign-title-wrap h2 em{
+  color:#9c9991;
+  font-style:normal;
+}
+
+
+#life.life-redesign .life-redesign-title-wrap p{
+  max-width:520px;
+  margin:28px 0 0;
+  color:var(--redesign-muted);
+  font-size:13px;
+  line-height:1.8;
+}
+
+
+/* KARTU CERITA */
+
+#life.life-redesign .life-story-grid{
+  display:grid;
+  grid-template-columns:1.22fr .78fr;
+  grid-template-rows:auto auto;
+  gap:26px;
+  align-items:start;
+}
+
+
+#life.life-redesign .life-story-card{
+  --tilt-x:0deg;
+  --tilt-y:0deg;
+  position:relative;
+  min-width:0;
+  transform:
+    perspective(1100px)
+    rotateX(var(--tilt-x))
+    rotateY(var(--tilt-y));
+  transition:
+    transform .55s cubic-bezier(.2,.7,.2,1),
+    filter .35s ease;
+}
+
+
+#life.life-redesign .life-story-card-feature{
+  grid-row:1 / span 2;
+}
+
+
+#life.life-redesign .life-story-media{
+  position:relative;
+  overflow:hidden;
+  min-height:380px;
+  border:1px solid var(--redesign-line);
+  border-radius:24px;
+  background:#0f100e;
+  box-shadow:var(--redesign-shadow);
+}
+
+
+#life.life-redesign .life-story-card-feature .life-story-media{
+  min-height:665px;
+}
+
+
+#life.life-redesign .life-story-media img{
+  width:100%;
+  height:100%;
+  min-height:inherit;
+  object-fit:cover;
+  transition:
+    transform .9s cubic-bezier(.2,.7,.2,1),
+    filter .6s ease;
+}
+
+
+#life.life-redesign .life-story-card:hover .life-story-media img{
+  transform:scale(1.045);
+  filter:saturate(.88) contrast(1.04);
+}
+
+
+#life.life-redesign .life-story-shade{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.04) 28%,
+      rgba(0,0,0,.78) 100%
+    );
+}
+
+
+#life.life-redesign .life-story-index{
+  position:absolute;
+  top:17px;
+  left:17px;
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:50%;
+  background:rgba(10,10,9,.46);
+  color:#fff;
+  backdrop-filter:blur(9px);
+  font:700 9px "DM Mono",monospace;
+}
+
+
+#life.life-redesign .life-story-corner{
+  position:absolute;
+  top:17px;
+  right:17px;
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.17);
+  border-radius:50%;
+  background:rgba(10,10,9,.28);
+  color:rgba(255,255,255,.72);
+  backdrop-filter:blur(9px);
+}
+
+
+#life.life-redesign .life-story-copy{
+  position:absolute;
+  left:24px;
+  right:24px;
+  bottom:25px;
+}
+
+
+#life.life-redesign .life-story-copy > span,
+#life.life-redesign .life-story-meta > span,
+#love.like-redesign .like-card-copy > span,
+#love.like-redesign .like-film-meta > span,
+#love.like-redesign .like-music-info > span{
+  display:block;
+  color:rgba(243,241,236,.45);
+  font:500 8px "DM Mono",monospace;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+
+
+#life.life-redesign .life-story-copy h3{
+  max-width:620px;
+  margin:10px 0 0;
+  color:#fff;
+  font-family:"Instrument Serif",Georgia,serif;
+  font-size:clamp(38px,4.7vw,69px);
+  line-height:.91;
+  font-weight:400;
+  letter-spacing:-.03em;
+}
+
+
+#life.life-redesign .life-story-meta{
+  padding:16px 4px 0;
+}
+
+
+#life.life-redesign .life-story-meta h3{
+  margin:8px 0 0;
+  color:var(--redesign-text);
+  font-family:"Instrument Serif",Georgia,serif;
+  font-size:35px;
+  line-height:.94;
+  font-weight:400;
+  letter-spacing:-.025em;
+}
+
+
+#life.life-redesign .life-story-meta p{
+  margin:10px 0 0;
+  color:var(--redesign-muted);
+  font-size:11px;
+  line-height:1.7;
+}
+
+
+#life.life-redesign .life-redesign-foot{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:26px;
+  align-items:center;
+  margin-top:66px;
+  padding-top:19px;
+  border-top:1px solid var(--redesign-line);
+}
+
+
+#life.life-redesign .life-redesign-foot > span{
+  color:rgba(243,241,236,.34);
+  font:500 8px "DM Mono",monospace;
+  letter-spacing:.13em;
+}
+
+
+#life.life-redesign .life-redesign-foot p{
+  margin:0;
+  color:var(--redesign-soft);
+  font-size:10px;
+}
+
+
+#life.life-redesign .life-redesign-foot i{
+  color:rgba(243,241,236,.48);
+}
+
+
+/* =========================================================
+   YANG SAYA SUKA — SATU SECTION / 3 KOLOM
+========================================================= */
+
+#love.like-redesign{
+  padding:150px 0 125px;
+  background:
+    radial-gradient(
+      circle at var(--spot-x,50%) var(--spot-y,30%),
+      rgba(158,175,136,.07),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #11110f 0%,
+      #151612 50%,
+      #11110f 100%
+    );
+  color:var(--redesign-text);
+}
+
+
+#love.like-redesign .like-redesign-bg{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+}
+
+
+#love.like-redesign .like-bg-orb{
+  position:absolute;
+  border:1px solid rgba(243,241,236,.06);
+  border-radius:50%;
+}
+
+
+#love.like-redesign .like-bg-orb-a{
+  width:280px;
+  height:280px;
+  left:-120px;
+  top:10%;
+}
+
+
+#love.like-redesign .like-bg-orb-b{
+  width:470px;
+  height:470px;
+  right:-220px;
+  bottom:-190px;
+}
+
+
+#love.like-redesign .like-bg-line{
+  position:absolute;
+  width:1px;
+  height:76%;
+  top:13%;
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      rgba(243,241,236,.10),
+      transparent
+    );
+}
+
+
+#love.like-redesign .like-bg-line-a{
+  left:34%;
+  transform:rotate(23deg);
+}
+
+
+#love.like-redesign .like-bg-line-b{
+  right:35%;
+  transform:rotate(-23deg);
+}
+
+
+#love.like-redesign .like-redesign-shell{
+  position:relative;
+  z-index:2;
+}
+
+
+#love.like-redesign .like-redesign-head{
+  display:grid;
+  grid-template-columns:1fr .54fr;
+  gap:8vw;
+  align-items:end;
+  margin-bottom:74px;
+}
+
+
+#love.like-redesign .section-number-light{
+  color:rgba(243,241,236,.34);
+}
+
+
+#love.like-redesign .like-redesign-head h2{
+  margin:0;
+  color:var(--redesign-text);
+  font-size:clamp(65px,7.4vw,110px);
+  line-height:.83;
+  letter-spacing:-.075em;
+  font-weight:800;
+}
+
+
+#love.like-redesign .like-redesign-head h2 em{
+  color:#9c9991;
+  font-style:normal;
+}
+
+
+#love.like-redesign .like-redesign-head > p{
+  margin:0;
+  color:var(--redesign-muted);
+  font-size:13px;
+  line-height:1.8;
+}
+
+
+#love.like-redesign .like-redesign-grid{
+  display:grid;
+  grid-template-columns:1fr 1.08fr 1fr;
+  gap:20px;
+  align-items:start;
+}
+
+
+/* panel umum */
+
+#love.like-redesign .like-panel{
+  min-width:0;
+  padding:22px;
+  border:1px solid var(--redesign-line-soft);
+  border-radius:24px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.035),
+      rgba(255,255,255,.01)
+    ),
+    var(--redesign-panel);
+  box-shadow:0 22px 48px rgba(0,0,0,.18);
+}
+
+
+#love.like-redesign .like-panel-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:23px;
+  padding-bottom:15px;
+  border-bottom:1px solid var(--redesign-line-soft);
+}
+
+
+#love.like-redesign .like-panel-head > div{
+  display:flex;
+  align-items:flex-end;
+  gap:10px;
+}
+
+
+#love.like-redesign .like-panel-head span{
+  color:rgba(243,241,236,.28);
+  font:500 8px "DM Mono",monospace;
+}
+
+
+#love.like-redesign .like-panel-head h3{
+  margin:0;
+  color:var(--redesign-text);
+  font-family:"Instrument Serif",Georgia,serif;
+  font-size:33px;
+  line-height:.9;
+  font-weight:400;
+}
+
+
+#love.like-redesign .like-panel-head > i{
+  color:rgba(243,241,236,.43);
+  font-size:18px;
+}
+
+
+/* GAME */
+
+#love.like-redesign .like-game-list{
+  display:grid;
+  gap:16px;
+}
+
+
+#love.like-redesign .like-game-card{
+  display:grid;
+  grid-template-columns:110px 1fr;
+  gap:14px;
+  align-items:start;
+  padding:10px;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:17px;
+  background:rgba(0,0,0,.10);
+  transition:
+    border-color .35s ease,
+    transform .35s ease,
+    background .35s ease;
+}
+
+
+#love.like-redesign .like-game-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(158,175,136,.24);
+  background:rgba(158,175,136,.035);
+}
+
+
+#love.like-redesign .like-game-image{
+  position:relative;
+  overflow:hidden;
+  aspect-ratio:4 / 3;
+  border-radius:12px;
+  background:#0f100e;
+}
+
+
+#love.like-redesign .like-game-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .65s ease;
+}
+
+
+#love.like-redesign .like-game-card:hover .like-game-image img{
+  transform:scale(1.06);
+}
+
+
+#love.like-redesign .like-game-image span{
+  position:absolute;
+  left:8px;
+  top:8px;
+  width:26px;
+  height:26px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:50%;
+  background:rgba(8,8,7,.42);
+  color:#fff;
+  backdrop-filter:blur(8px);
+  font:700 7px "DM Mono",monospace;
+}
+
+
+#love.like-redesign .like-card-copy{
+  padding-top:4px;
+}
+
+
+#love.like-redesign .like-card-copy h4{
+  margin:7px 0 0;
+  color:var(--redesign-text);
+  font-family:"Instrument Serif",Georgia,serif;
+  font-size:25px;
+  line-height:.95;
+  font-weight:400;
+}
+
+
+#love.like-redesign .like-card-copy p{
+  margin:8px 0 0;
+  color:var(--redesign-soft);
+  font-size:9px;
+  line-height:1.65;
+}
+
+
+/* FILM */
+
+#love.like-redesign .like-film-list{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:11px;
+}
+
+
+#love.like-redesign .like-film-card{
+  --rx:0deg;
+  --ry:0deg;
+  position:relative;
+  min-width:0;
+  transform:
+    perspective(900px)
+    rotateX(var(--rx))
+    rotateY(var(--ry));
+  transition:
+    transform .4s cubic-bezier(.2,.7,.2,1),
+    filter .35s ease;
+}
+
+
+#love.like-redesign .like-film-media{
+  position:relative;
+  overflow:hidden;
+  aspect-ratio:9 / 16;
+  border:1px solid rgba(243,241,236,.13);
+  border-radius:15px;
+  background:#0f100e;
+  box-shadow:0 16px 30px rgba(0,0,0,.25);
+}
+
+
+#love.like-redesign .like-film-media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:
+    transform .7s cubic-bezier(.2,.7,.2,1),
+    filter .45s ease;
+}
+
+
+#love.like-redesign .like-film-card:hover .like-film-media img{
+  transform:scale(1.045);
+  filter:saturate(1.04) contrast(1.03);
+}
+
+
+#love.like-redesign .like-film-number{
+  position:absolute;
+  left:8px;
+  top:8px;
+  width:30px;
+  height:30px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.20);
+  border-radius:50%;
+  background:rgba(8,8,7,.50);
+  color:#fff;
+  backdrop-filter:blur(8px);
+  font:700 7px "DM Mono",monospace;
+}
+
+
+#love.like-redesign .like-film-glow{
+  position:absolute;
+  inset:-20%;
+  pointer-events:none;
+  background:
+    radial-gradient(
+      circle at 50% 26%,
+      rgba(158,175,136,.15),
+      transparent 32%
+    );
+  mix-blend-mode:screen;
+}
+
+
+#love.like-redesign .like-film-meta{
+  padding:11px 2px 0;
+}
+
+
+#love.like-redesign .like-film-meta strong{
+  display:block;
+  margin-top:6px;
+  color:var(--redesign-text);
+  font-family:"Instrument Serif",Georgia,serif;
+  font-size:21px;
+  line-height:.92;
+  font-weight:400;
+  letter-spacing:-.02em;
+}
+
+
+#love.like-redesign .like-film-meta p{
+  margin:7px 0 0;
+  color:var(--redesign-soft);
+  font-size:8px;
+  line-height:1.6;
+}
+
+
+/* MUSIK */
+
+#love.like-redesign .like-record-stage{
+  position:relative;
+  min-height:310px;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+}
+
+
+#love.like-redesign .like-record-shadow{
+  position:absolute;
+  width:245px;
+  height:70px;
+  bottom:34px;
+  border-radius:50%;
+  background:rgba(0,0,0,.42);
+  filter:blur(22px);
+}
+
+
+#love.like-redesign .like-record{
+  position:relative;
+  width:min(250px,78%);
+  aspect-ratio:1;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:
+    radial-gradient(
+      circle,
+      #272825 0 13%,
+      #171815 13.5% 14.2%,
+      #252622 14.8% 15.3%,
+      #11120f 15.8% 16.5%,
+      #20221f 17% 17.4%,
+      #11110f 18% 100%
+    );
+  border:1px solid rgba(243,241,236,.15);
+  box-shadow:
+    0 25px 55px rgba(0,0,0,.35),
+    inset 0 0 0 10px rgba(255,255,255,.018);
+}
+
+
+#love.like-redesign .like-record-grooves{
+  position:absolute;
+  inset:11px;
+  border-radius:50%;
+  background:
+    repeating-radial-gradient(
+      circle,
+      transparent 0 4px,
+      rgba(255,255,255,.055) 4.5px 5px,
+      transparent 5.5px 9px
+    );
+  opacity:.60;
+}
+
+
+#love.like-redesign .like-record::before{
+  content:"";
+  position:absolute;
+  inset:22px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.055);
+}
+
+
+#love.like-redesign .like-record::after{
+  content:"";
+  position:absolute;
+  inset:36%;
+  border-radius:50%;
+  background:
+    conic-gradient(
+      from 20deg,
+      #a7b48e,
+      #69705f,
+      #d3d0c4,
+      #777c6b,
+      #a7b48e
+    );
+  opacity:.72;
+}
+
+
+#love.like-redesign .like-record-label{
+  position:absolute;
+  z-index:3;
+  width:74px;
+  height:74px;
+  display:grid;
+  place-items:center;
+  align-content:center;
+  gap:4px;
+  border-radius:50%;
+  background:#9eaf88;
+  color:#10120f;
+  text-align:center;
+  box-shadow:0 0 0 7px rgba(158,175,136,.06);
+}
+
+
+#love.like-redesign .like-record-label span{
+  max-width:48px;
+  font:700 6px/1.1 "DM Mono",monospace;
+  letter-spacing:.1em;
+}
+
+
+#love.like-redesign .like-record-label i{
+  font-size:13px;
+}
+
+
+#love.like-redesign .like-record-hole{
+  position:absolute;
+  z-index:5;
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#11110f;
+  border:1px solid rgba(255,255,255,.20);
+}
+
+
+#love.like-redesign .like-record-line{
+  position:absolute;
+  right:10%;
+  top:24%;
+  width:1px;
+  height:115px;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(158,175,136,.0),
+      rgba(158,175,136,.60),
+      rgba(158,175,136,.0)
+    );
+  transform:rotate(12deg);
+}
+
+
+#love.like-redesign .like-record.is-playing{
+  animation:
+    likeRecordSpin 5s linear infinite;
+}
+
+
+@keyframes likeRecordSpin{
+  from{
+    transform:rotate(0deg);
+  }
+
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+
+#love.like-redesign .like-music-info{
+  margin-top:5px;
+}
+
+
+#love.like-redesign .like-music-info h4{
+  margin:7px 0 0;
+  color:var(--redesign-text);
+  font-family:"Instrument Serif",Georgia,serif;
+  font-size:29px;
+  line-height:.92;
+  font-weight:400;
+}
+
+
+#love.like-redesign .like-music-info p{
+  margin:9px 0 0;
+  color:var(--redesign-soft);
+  font-size:9px;
+  line-height:1.65;
+}
+
+
+#love.like-redesign .like-music-info strong{
+  color:rgba(243,241,236,.60);
+  font-weight:600;
+}
+
+
+#love.like-redesign .like-music-controls{
+  display:grid;
+  grid-template-columns:42px 1fr auto;
+  gap:10px;
+  align-items:center;
+  margin-top:18px;
+  padding-top:15px;
+  border-top:1px solid var(--redesign-line-soft);
+}
+
+
+#love.like-redesign .like-music-play{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  padding:0;
+  border:1px solid rgba(243,241,236,.18);
+  border-radius:50%;
+  background:rgba(243,241,236,.05);
+  color:var(--redesign-text);
+  cursor:pointer;
+  transition:
+    transform .25s ease,
+    background .25s ease,
+    border-color .25s ease;
+}
+
+
+#love.like-redesign .like-music-play:hover{
+  transform:scale(1.06);
+  border-color:rgba(158,175,136,.48);
+  background:rgba(158,175,136,.12);
+}
+
+
+#love.like-redesign .like-music-progress{
+  height:4px;
+  overflow:hidden;
+  border-radius:999px;
+  background:rgba(255,255,255,.10);
+  cursor:pointer;
+}
+
+
+#love.like-redesign .like-music-progress-fill{
+  width:0;
+  height:100%;
+  border-radius:inherit;
+  background:var(--redesign-accent);
+  transition:width .12s linear;
+}
+
+
+#love.like-redesign .like-music-time{
+  min-width:36px;
+  color:rgba(243,241,236,.33);
+  text-align:right;
+  font:500 7px "DM Mono",monospace;
+}
+
+
+#love.like-redesign audio{
+  display:none;
+}
+
+
+#love.like-redesign .like-redesign-foot{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:24px;
+  align-items:center;
+  margin-top:66px;
+  padding-top:19px;
+  border-top:1px solid var(--redesign-line);
+}
+
+
+#love.like-redesign .like-redesign-foot > span{
+  color:rgba(243,241,236,.30);
+  font:500 8px "DM Mono",monospace;
+  letter-spacing:.14em;
+}
+
+
+#love.like-redesign .like-redesign-foot p{
+  margin:0;
+  color:var(--redesign-soft);
+  font-size:10px;
+}
+
+
+#love.like-redesign .like-redesign-foot i{
+  color:rgba(243,241,236,.46);
+}
+
+
+/* =========================================================
+   CONTACT — SAMA TEMA DENGAN LIFE / YANG SAYA SUKA
+========================================================= */
+
+#contact.contact-redesign{
+  min-height:auto;
+  padding:145px 0 80px;
+  background:
+    radial-gradient(
+      circle at var(--spot-x,70%) var(--spot-y,20%),
+      rgba(158,175,136,.085),
+      transparent 29%
+    ),
+    linear-gradient(
+      180deg,
+      #11110f 0%,
+      #0f100e 100%
+    );
+  color:var(--redesign-text);
+}
+
+
+#contact.contact-redesign .contact-redesign-bg{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+}
+
+
+#contact.contact-redesign .contact-bg-orb{
+  position:absolute;
+  border:1px solid rgba(243,241,236,.07);
+  border-radius:50%;
+}
+
+
+#contact.contact-redesign .contact-bg-orb-a{
+  width:440px;
+  height:440px;
+  right:-200px;
+  top:16%;
+}
+
+
+#contact.contact-redesign .contact-bg-orb-b{
+  width:180px;
+  height:180px;
+  left:-70px;
+  bottom:12%;
+}
+
+
+#contact.contact-redesign .contact-bg-line{
+  position:absolute;
+  top:6%;
+  height:82%;
+  width:1px;
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      rgba(243,241,236,.09),
+      transparent
+    );
+}
+
+
+#contact.contact-redesign .contact-bg-line-a{
+  left:24%;
+  transform:rotate(-18deg);
+}
+
+
+#contact.contact-redesign .contact-bg-line-b{
+  right:26%;
+  transform:rotate(18deg);
+}
+
+
+#contact.contact-redesign .contact-bg-dot{
+  position:absolute;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:rgba(243,241,236,.45);
+  box-shadow:0 0 20px rgba(158,175,136,.24);
+}
+
+
+#contact.contact-redesign .contact-bg-dot-a{
+  left:13%;
+  top:28%;
+}
+
+
+#contact.contact-redesign .contact-bg-dot-b{
+  right:13%;
+  top:64%;
+}
+
+
+#contact.contact-redesign .contact-v2-shell{
+  position:relative;
+  z-index:4;
+}
+
+
+#contact.contact-redesign .contact-v2-top{
+  color:rgba(243,241,236,.40);
+  border-color:var(--redesign-line);
+}
+
+
+#contact.contact-redesign .contact-live-dot{
+  background:var(--redesign-accent);
+  box-shadow:0 0 0 4px rgba(158,175,136,.10);
+}
+
+
+#contact.contact-redesign .contact-v2-label > span:last-child,
+#contact.contact-redesign .contact-v2-top-note{
+  color:rgba(243,241,236,.40);
+}
+
+
+#contact.contact-redesign .contact-v2-hero{
+  display:grid;
+  grid-template-columns:1fr .78fr;
+  gap:8vw;
+  align-items:end;
+  padding:76px 0 70px;
+}
+
+
+#contact.contact-redesign .contact-v2-kicker{
+  color:rgba(243,241,236,.32);
+  font:500 8px "DM Mono",monospace;
+  letter-spacing:.17em;
+}
+
+
+#contact.contact-redesign .contact-v2-title{
+  margin:20px 0 0;
+  color:var(--redesign-text);
+  font-size:clamp(72px,9vw,132px);
+  line-height:.79;
+  letter-spacing:-.075em;
+  font-weight:800;
+}
+
+
+#contact.contact-redesign .contact-v2-title > span{
+  display:block;
+}
+
+
+#contact.contact-redesign .contact-v2-title-accent{
+  color:#9c9991;
+}
+
+
+#contact.contact-redesign .contact-v2-intro{
+  max-width:520px;
+  margin:28px 0 0;
+  color:var(--redesign-muted);
+  font-size:13px;
+  line-height:1.8;
+}
+
+
+#contact.contact-redesign .contact-v2-arrow-line{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:34px;
+  color:rgba(243,241,236,.38);
+}
+
+
+#contact.contact-redesign .contact-v2-arrow-line span{
+  width:65px;
+  height:1px;
+  background:rgba(243,241,236,.20);
+}
+
+
+#contact.contact-redesign .contact-v2-socials{
+  display:grid;
+  gap:9px;
+}
+
+
+#contact.contact-redesign .contact-v2-social{
+  --contact-glow:0;
+  position:relative;
+  display:grid;
+  grid-template-columns:42px 1fr auto;
+  gap:13px;
+  align-items:center;
+  min-height:69px;
+  padding:12px 14px;
+  overflow:hidden;
+  border:1px solid var(--redesign-line-soft);
+  border-radius:16px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.03),
+      rgba(255,255,255,.008)
+    ),
+    rgba(0,0,0,.12);
+  color:var(--redesign-text);
+  transition:
+    border-color .35s ease,
+    background .35s ease,
+    transform .25s ease;
+}
+
+
+#contact.contact-redesign .contact-v2-social:hover{
+  border-color:rgba(158,175,136,.33);
+  background:rgba(158,175,136,.045);
+}
+
+
+#contact.contact-redesign .contact-v2-social::after{
+  background:
+    radial-gradient(
+      150px circle at var(--contact-spot-x,50%) var(--contact-spot-y,50%),
+      rgba(158,175,136,.14),
+      transparent 64%
+    );
+  opacity:.80;
+}
+
+
+#contact.contact-redesign .contact-v2-social-icon{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(243,241,236,.11);
+  border-radius:12px;
+  background:rgba(243,241,236,.035);
+  color:rgba(243,241,236,.72);
+}
+
+
+#contact.contact-redesign .contact-v2-social-copy small{
+  color:rgba(243,241,236,.33);
+}
+
+
+#contact.contact-redesign .contact-v2-social-copy strong{
+  color:var(--redesign-text);
+}
+
+
+#contact.contact-redesign .contact-v2-social-arrow{
+  color:rgba(243,241,236,.42);
+}
+
+
+#contact.contact-redesign .contact-v2-message{
+  margin-top:12px;
+  padding:26px 0 0;
+  border-top:1px solid var(--redesign-line);
+  border-bottom:1px solid var(--redesign-line);
+  background:transparent;
+}
+
+
+#contact.contact-redesign .contact-v2-form-intro{
+  display:flex;
+  align-items:flex-start;
+  gap:18px;
+}
+
+
+#contact.contact-redesign .contact-v2-form-no{
+  color:rgba(243,241,236,.28);
+  font:500 9px "DM Mono",monospace;
+}
+
+
+#contact.contact-redesign .contact-v2-form-kicker{
+  margin:0;
+  color:rgba(243,241,236,.30);
+  font:500 8px "DM Mono",monospace;
+  letter-spacing:.15em;
+}
+
+
+#contact.contact-redesign .contact-v2-message h3{
+  margin:10px 0 0;
+  color:var(--redesign-text);
+  font-family:"Instrument Serif",Georgia,serif;
+  font-size:clamp(40px,4.5vw,60px);
+  line-height:.88;
+  font-weight:400;
+  letter-spacing:-.025em;
+}
+
+
+#contact.contact-redesign .contact-v2-message h3 em{
+  color:#9c9991;
+  font-style:normal;
+}
+
+
+#contact.contact-redesign .contact-v2-form-bottom{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:25px;
+  align-items:center;
+  padding:26px 0 25px;
+}
+
+
+#contact.contact-redesign .contact-v2-form-note{
+  max-width:590px;
+  margin:0;
+  color:var(--redesign-soft);
+  font-size:10px;
+  line-height:1.7;
+}
+
+
+#contact.contact-redesign .contact-v2-submit{
+  min-height:50px;
+  padding:0 20px;
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  border:1px solid rgba(243,241,236,.18);
+  border-radius:999px;
+  background:var(--redesign-text);
+  color:#11110f;
+  font-size:10px;
+  font-weight:800;
+  transition:
+    transform .25s ease,
+    background .25s ease;
+}
+
+
+#contact.contact-redesign .contact-v2-submit:hover{
+  transform:translateY(-2px);
+  background:#ffffff;
+}
+
+
+#contact.contact-redesign .contact-v2-form-status:empty{
+  display:none;
+}
+
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+#life.life-redesign .life-reveal,
+#love.like-redesign .like-reveal,
+#contact.contact-redesign .contact-v2-reveal{
+  opacity:0;
+  transform:translateY(28px);
+  filter:blur(5px);
+  transition:
+    opacity .82s cubic-bezier(.2,.7,.2,1),
+    transform .82s cubic-bezier(.2,.7,.2,1),
+    filter .82s ease;
+}
+
+
+#life.life-redesign .life-reveal.is-visible,
+#love.like-redesign .like-reveal.is-visible,
+#contact.contact-redesign .contact-v2-reveal.is-visible{
+  opacity:1;
+  transform:none;
+  filter:none;
+}
+
+
+/* stagger berdasarkan posisi */
+#life.life-redesign .life-story-card:nth-child(2){ transition-delay:.08s; }
+#life.life-redesign .life-story-card:nth-child(3){ transition-delay:.16s; }
+
+#love.like-redesign .like-panel:nth-child(2){ transition-delay:.07s; }
+#love.like-redesign .like-panel:nth-child(3){ transition-delay:.14s; }
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1100px){
+
+  #life.life-redesign .life-redesign-head,
+  #love.like-redesign .like-redesign-head{
+    grid-template-columns:1fr;
+    gap:26px;
+  }
+
+  #life.life-redesign .life-story-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  #life.life-redesign .life-story-card-feature{
+    grid-column:1 / -1;
+    grid-row:auto;
+  }
+
+  #life.life-redesign .life-story-card-feature .life-story-media{
+    min-height:540px;
+  }
+
+  #love.like-redesign .like-redesign-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+
+@media(max-width:780px){
+
+  #life.life-redesign,
+  #love.like-redesign,
+  #contact.contact-redesign{
+    padding-top:105px;
+  }
+
+  #life.life-redesign .life-redesign-head{
+    margin-bottom:50px;
+  }
+
+  #life.life-redesign .life-redesign-title-wrap h2{
+    font-size:clamp(58px,15vw,92px);
+  }
+
+  #life.life-redesign .life-story-grid{
+    grid-template-columns:1fr;
+    gap:28px;
+  }
+
+  #life.life-redesign .life-story-card-feature{
+    grid-column:auto;
+  }
+
+  #life.life-redesign .life-story-media,
+  #life.life-redesign .life-story-card-feature .life-story-media{
+    min-height:460px;
+  }
+
+  #life.life-redesign .life-redesign-foot,
+  #love.like-redesign .like-redesign-foot{
+    grid-template-columns:1fr auto;
+    gap:12px;
+  }
+
+  #life.life-redesign .life-redesign-foot p,
+  #love.like-redesign .like-redesign-foot p{
+    grid-column:1 / -1;
+    grid-row:2;
+  }
+
+  #love.like-redesign .like-redesign-head{
+    margin-bottom:48px;
+  }
+
+  #love.like-redesign .like-redesign-head h2{
+    font-size:clamp(54px,13vw,82px);
+  }
+
+  #love.like-redesign .like-film-list{
+    gap:9px;
+  }
+
+  #love.like-redesign .like-film-meta strong{
+    font-size:18px;
+  }
+
+  #love.like-redesign .like-record-stage{
+    min-height:280px;
+  }
+
+  #love.like-redesign .like-record{
+    width:min(220px,70%);
+  }
+
+  #contact.contact-redesign .contact-v2-hero{
+    grid-template-columns:1fr;
+    gap:44px;
+  }
+
+  #contact.contact-redesign .contact-v2-title{
+    font-size:clamp(61px,14vw,92px);
+  }
+
+}
+
+
+@media(max-width:560px){
+
+  #life.life-redesign,
+  #love.like-redesign,
+  #contact.contact-redesign{
+    padding-left:0;
+    padding-right:0;
+  }
+
+  #life.life-redesign .life-redesign-title-wrap h2,
+  #love.like-redesign .like-redesign-head h2{
+    letter-spacing:-.065em;
+  }
+
+  #life.life-redesign .life-story-media,
+  #life.life-redesign .life-story-card-feature .life-story-media{
+    min-height:390px;
+    border-radius:20px;
+  }
+
+  #life.life-redesign .life-story-copy{
+    left:18px;
+    right:18px;
+    bottom:20px;
+  }
+
+  #life.life-redesign .life-story-copy h3{
+    font-size:40px;
+  }
+
+  #love.like-redesign .like-panel{
+    padding:17px;
+    border-radius:19px;
+  }
+
+  #love.like-redesign .like-game-card{
+    grid-template-columns:88px 1fr;
+  }
+
+  #love.like-redesign .like-film-meta strong{
+    font-size:16px;
+  }
+
+  #love.like-redesign .like-film-meta p{
+    font-size:7px;
+  }
+
+  #love.like-redesign .like-music-controls{
+    grid-template-columns:42px 1fr;
+  }
+
+  #love.like-redesign .like-music-time{
+    grid-column:2;
+    text-align:left;
+    margin-top:-5px;
+  }
+
+  #contact.contact-redesign .contact-v2-top{
+    align-items:flex-start;
+  }
+
+  #contact.contact-redesign .contact-v2-form-bottom{
+    grid-template-columns:1fr;
+    gap:18px;
+  }
+
+  #contact.contact-redesign .contact-v2-submit{
+    justify-content:center;
+  }
+
+}
+
+@media(prefers-reduced-motion:reduce){
+
+  #life.life-redesign .life-story-card,
+  #love.like-redesign .like-film-card,
+  #love.like-redesign .like-record,
+  #contact.contact-redesign .contact-v2-social{
+    transition:none !important;
+    animation:none !important;
+    transform:none !important;
+  }
+
+  #life.life-redesign .life-reveal,
+  #love.like-redesign .like-reveal,
+  #contact.contact-redesign .contact-v2-reveal{
+    opacity:1 !important;
+    transform:none !important;
+    filter:none !important;
+  }
+
+}
+
+/* =========================================================
+   YANG SAYA SUKA — ROMBAK FINAL
+   Tiga bagian tersusun VERTIKAL.
+   Hanya bagian ini yang di-override.
+========================================================= */
+
+#love.like-redesign{
+  position:relative !important;
+  isolation:isolate !important;
+  overflow:hidden !important;
+
+  padding:150px 0 140px !important;
+
+  background:
+    radial-gradient(
+      circle at 82% 12%,
+      rgba(158,175,136,.09),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 10% 86%,
+      rgba(255,255,255,.035),
+      transparent 22%
+    ),
+    #11110f !important;
+
+  color:#f3f1ec !important;
+}
+
+#love.like-redesign .like-redesign-bg{
+  z-index:0 !important;
+  opacity:.85 !important;
+}
+
+#love.like-redesign .like-bg-orb{
+  border-color:rgba(243,241,236,.075) !important;
+}
+
+#love.like-redesign .like-bg-line{
+  opacity:.55 !important;
+}
+
+#love.like-redesign .like-redesign-shell{
+  position:relative !important;
+  z-index:4 !important;
+}
+
+#love.like-redesign .like-redesign-head{
+  grid-template-columns:1fr .34fr !important;
+  gap:7vw !important;
+  align-items:end !important;
+  margin-bottom:80px !important;
+  padding-bottom:24px !important;
+  border-bottom:1px solid rgba(243,241,236,.10) !important;
+}
+
+#love.like-redesign .like-redesign-head h2{
+  font-size:clamp(65px,8.2vw,122px) !important;
+  line-height:.80 !important;
+  letter-spacing:-.075em !important;
+  color:#f3f1ec !important;
+}
+
+#love.like-redesign .like-redesign-head h2 em{
+  color:#98958d !important;
+}
+
+#love.like-redesign .like-redesign-head > p{
+  color:rgba(243,241,236,.50) !important;
+  font-size:12px !important;
+  line-height:1.9 !important;
+}
+
+
+/* VERTICAL */
+#love.like-redesign .like-redesign-grid{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:22px !important;
+}
+
+
+/* PANEL */
+#love.like-redesign .like-panel{
+  position:relative !important;
+  width:100% !important;
+  padding:30px !important;
+
+  border:1px solid rgba(243,241,236,.10) !important;
+  border-radius:28px !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.035),
+      rgba(255,255,255,.012)
+    ) !important;
+
+  box-shadow:
+    0 28px 70px rgba(0,0,0,.22) !important;
+
+  overflow:hidden !important;
+}
+
+#love.like-redesign .like-panel::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  pointer-events:none !important;
+
+  background:
+    linear-gradient(
+      115deg,
+      transparent 0 46%,
+      rgba(158,175,136,.035) 50%,
+      transparent 56%
+    ) !important;
+
+  opacity:.8 !important;
+}
+
+#love.like-redesign .like-panel > *{
+  position:relative !important;
+  z-index:2 !important;
+}
+
+
+/* PANEL HEADER */
+#love.like-redesign .like-panel-head{
+  margin-bottom:30px !important;
+  padding-bottom:18px !important;
+
+  border-bottom:1px solid rgba(243,241,236,.10) !important;
+}
+
+#love.like-redesign .like-panel-head > div{
+  gap:13px !important;
+  align-items:flex-end !important;
+}
+
+#love.like-redesign .like-panel-head span{
+  color:rgba(243,241,236,.28) !important;
+}
+
+#love.like-redesign .like-panel-head h3{
+  font-size:42px !important;
+  line-height:.86 !important;
+  color:#f3f1ec !important;
+}
+
+#love.like-redesign .like-panel-head > i{
+  color:rgba(243,241,236,.48) !important;
+  font-size:21px !important;
+}
+
+
+/* =========================================================
+   PERMAINAN
+========================================================= */
+
+#love.like-redesign .like-games-panel{
+  padding-bottom:25px !important;
+}
+
+#love.like-redesign .like-game-list{
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:16px !important;
+}
+
+#love.like-redesign .like-game-card{
+  grid-template-columns:190px 1fr !important;
+  gap:20px !important;
+  align-items:center !important;
+
+  padding:12px !important;
+
+  border:1px solid rgba(243,241,236,.085) !important;
+  border-radius:20px !important;
+
+  background:rgba(255,255,255,.018) !important;
+
+  transition:
+    transform .55s cubic-bezier(.2,.7,.2,1),
+    border-color .35s ease,
+    background .35s ease,
+    box-shadow .35s ease !important;
+}
+
+#love.like-redesign .like-game-card:hover{
+  transform:translateY(-5px) !important;
+  border-color:rgba(158,175,136,.28) !important;
+
+  background:rgba(158,175,136,.035) !important;
+
+  box-shadow:
+    0 18px 42px rgba(0,0,0,.20) !important;
+}
+
+#love.like-redesign .like-game-image{
+  aspect-ratio:16 / 10 !important;
+  border-radius:14px !important;
+}
+
+#love.like-redesign .like-game-image-sheen{
+  position:absolute;
+  inset:-25% -40%;
+  background:
+    linear-gradient(
+      110deg,
+      transparent 42%,
+      rgba(255,255,255,.12) 50%,
+      transparent 58%
+    );
+  transform:translateX(-35%);
+  transition:transform .8s cubic-bezier(.2,.7,.2,1);
+  pointer-events:none;
+}
+
+#love.like-redesign .like-game-card:hover .like-game-image-sheen{
+  transform:translateX(35%);
+}
+
+#love.like-redesign .like-card-copy span{
+  color:rgba(243,241,236,.40) !important;
+  font:500 8px/1 "DM Mono",monospace !important;
+  letter-spacing:.16em !important;
+}
+
+#love.like-redesign .like-card-copy h4{
+  margin:9px 0 0 !important;
+  font-size:34px !important;
+  line-height:.9 !important;
+  color:#f3f1ec !important;
+}
+
+#love.like-redesign .like-card-copy p{
+  margin:10px 0 0 !important;
+  max-width:360px !important;
+  color:rgba(243,241,236,.43) !important;
+  font-size:10px !important;
+  line-height:1.7 !important;
+}
+
+#love.like-redesign .like-section-note{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+
+  margin-top:20px;
+  padding-top:16px;
+
+  border-top:1px solid rgba(243,241,236,.08);
+
+  color:rgba(243,241,236,.27);
+  font:500 8px/1 "DM Mono",monospace;
+  letter-spacing:.14em;
+}
+
+
+/* =========================================================
+   FILM
+========================================================= */
+
+#love.like-redesign .like-film-intro{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:20px;
+
+  margin-bottom:22px;
+}
+
+#love.like-redesign .like-film-intro span{
+  color:rgba(243,241,236,.36);
+  font:500 8px/1 "DM Mono",monospace;
+  letter-spacing:.15em;
+}
+
+#love.like-redesign .like-film-intro p{
+  margin:0;
+  max-width:360px;
+  color:rgba(243,241,236,.42);
+  font-size:10px;
+  line-height:1.7;
+  text-align:right;
+}
+
+#love.like-redesign .like-film-list{
+  display:grid !important;
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  gap:24px !important;
+}
+
+#love.like-redesign .like-film-card{
+  display:block !important;
+  color:inherit !important;
+  text-decoration:none !important;
+
+  --rx:0deg;
+  --ry:0deg;
+
+  min-width:0 !important;
+
+  transform:
+    perspective(1100px)
+    rotateX(var(--rx))
+    rotateY(var(--ry)) !important;
+
+  transition:
+    transform .5s cubic-bezier(.2,.7,.2,1),
+    filter .35s ease !important;
+}
+
+#love.like-redesign .like-film-media{
+  aspect-ratio:9 / 16 !important;
+  border-radius:19px !important;
+
+  border:1px solid rgba(243,241,236,.13) !important;
+
+  box-shadow:
+    0 24px 48px rgba(0,0,0,.28) !important;
+}
+
+#love.like-redesign .like-film-media::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:3;
+  pointer-events:none;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.04),
+      transparent 55%,
+      rgba(0,0,0,.25)
+    );
+}
+
+#love.like-redesign .like-film-card:hover .like-film-media{
+  border-color:rgba(158,175,136,.30) !important;
+  box-shadow:
+    0 32px 64px rgba(0,0,0,.34),
+    0 0 35px rgba(158,175,136,.06) !important;
+}
+
+#love.like-redesign .like-film-card:hover .like-film-media img{
+  transform:scale(1.045) !important;
+}
+
+#love.like-redesign .like-film-glow{
+  z-index:4 !important;
+  opacity:0 !important;
+  transition:opacity .5s ease !important;
+}
+
+#love.like-redesign .like-film-card:hover .like-film-glow{
+  opacity:1 !important;
+}
+
+#love.like-redesign .like-film-play{
+  position:absolute;
+  right:15px;
+  bottom:15px;
+
+  width:44px;
+  height:44px;
+
+  display:grid;
+  place-items:center;
+
+  z-index:5;
+
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:50%;
+
+  background:rgba(12,12,11,.58);
+  backdrop-filter:blur(9px);
+
+  color:#fff;
+
+  opacity:.86;
+
+  transition:
+    transform .3s ease,
+    background .3s ease;
+}
+
+#love.like-redesign .like-film-card:hover .like-film-play{
+  transform:translate(2px,-2px);
+  background:rgba(158,175,136,.16);
+}
+
+#love.like-redesign .like-film-meta{
+  padding:16px 3px 0 !important;
+}
+
+#love.like-redesign .like-film-meta > span{
+  color:rgba(243,241,236,.36) !important;
+  font:500 8px/1 "DM Mono",monospace !important;
+  letter-spacing:.16em !important;
+}
+
+#love.like-redesign .like-film-meta strong{
+  margin-top:8px !important;
+  font-size:31px !important;
+  line-height:.91 !important;
+  color:#f3f1ec !important;
+}
+
+#love.like-redesign .like-film-meta p{
+  max-width:330px !important;
+  margin:10px 0 0 !important;
+  color:rgba(243,241,236,.43) !important;
+  font-size:10px !important;
+  line-height:1.7 !important;
+}
+
+#love.like-redesign .like-film-meta small{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+
+  margin-top:12px;
+
+  color:rgba(243,241,236,.62);
+
+  font:500 8px/1 "DM Mono",monospace;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+#love.like-redesign .like-film-meta small i{
+  font-size:10px;
+  transition:transform .3s ease;
+}
+
+#love.like-redesign .like-film-card:hover .like-film-meta small i{
+  transform:translate(3px,-3px);
+}
+
+
+/* =========================================================
+   MUSIK — 5 PIRINGAN, HORIZONTAL SCROLL
+========================================================= */
+
+#love.like-redesign .like-music-panel{
+  padding-bottom:32px !important;
+}
+
+#love.like-redesign .like-music-heading{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:30px;
+  margin-bottom:24px;
+}
+
+#love.like-redesign .like-music-heading > div > span{
+  color:rgba(243,241,236,.36);
+  font:500 8px/1 "DM Mono",monospace;
+  letter-spacing:.16em;
+}
+
+#love.like-redesign .like-music-heading h4{
+  margin:9px 0 0;
+  font-family:"Instrument Serif",Georgia,serif;
+  font-size:40px;
+  line-height:.9;
+  font-weight:400;
+  color:#f3f1ec;
+}
+
+#love.like-redesign .like-music-heading p{
+  max-width:320px;
+  margin:0;
+  color:rgba(243,241,236,.42);
+  font-size:10px;
+  line-height:1.7;
+  text-align:right;
+}
+
+
+/* RAK */
+#love.like-redesign .like-music-playlist{
+  display:flex !important;
+  flex-direction:row !important;
+  align-items:stretch !important;
+  gap:18px !important;
+
+  width:100% !important;
+
+  overflow-x:auto !important;
+  overflow-y:visible !important;
+
+  padding:12px 3px 18px !important;
+
+  scrollbar-width:none !important;
+
+  cursor:grab;
+
+  scroll-snap-type:x proximity;
+}
+
+#love.like-redesign .like-music-playlist::-webkit-scrollbar{
+  display:none;
+}
+
+#love.like-redesign .like-music-playlist.is-dragging{
+  cursor:grabbing;
+  user-select:none;
+}
+
+
+/* CARD PIRINGAN */
+#love.like-redesign .like-music-track{
+  position:relative;
+
+  flex:0 0 235px !important;
+  width:235px !important;
+
+  min-height:310px !important;
+
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:flex-start !important;
+
+  padding:16px !important;
+
+  border:1px solid rgba(243,241,236,.10) !important;
+  border-radius:22px !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.035),
+      rgba(255,255,255,.008)
+    ) !important;
+
+  color:#f3f1ec !important;
+
+  cursor:pointer !important;
+
+  text-align:left !important;
+
+  scroll-snap-align:start;
+
+  transition:
+    transform .5s cubic-bezier(.2,.7,.2,1),
+    border-color .35s ease,
+    background .35s ease,
+    box-shadow .35s ease !important;
+}
+
+#love.like-redesign .like-music-track:hover{
+  transform:translateY(-7px) !important;
+
+  border-color:rgba(158,175,136,.28) !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(158,175,136,.06),
+      rgba(255,255,255,.012)
+    ) !important;
+
+  box-shadow:
+    0 22px 46px rgba(0,0,0,.25) !important;
+}
+
+#love.like-redesign .like-music-track.is-active{
+  border-color:rgba(158,175,136,.40) !important;
+
+  box-shadow:
+    0 0 0 1px rgba(158,175,136,.07),
+    0 24px 52px rgba(0,0,0,.26) !important;
+}
+
+
+/* NOMOR */
+#love.like-redesign .like-music-track-number{
+  position:absolute;
+  top:12px;
+  left:13px;
+  z-index:5;
+
+  font:500 8px/1 "DM Mono",monospace;
+  letter-spacing:.12em;
+
+  color:rgba(243,241,236,.38);
+}
+
+
+/* PIRINGAN */
+#love.like-redesign .like-music-track-disc{
+  position:relative;
+
+  width:178px !important;
+  height:178px !important;
+
+  flex:0 0 178px;
+
+  align-self:center;
+
+  margin:5px auto 16px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      #262722 0 10%,
+      #11110f 10.5% 16%,
+      #20211e 16.5% 17%,
+      #11110f 17.5% 100%
+    );
+
+  border:1px solid rgba(243,241,236,.16);
+
+  box-shadow:
+    0 24px 44px rgba(0,0,0,.33),
+    inset 0 0 0 9px rgba(255,255,255,.015);
+
+  transition:
+    transform .55s cubic-bezier(.2,.7,.2,1),
+    box-shadow .35s ease;
+}
+
+#love.like-redesign .like-music-track:hover .like-music-track-disc{
+  transform:rotate(4deg) scale(1.025);
+}
+
+#love.like-redesign .like-music-track.is-active .like-music-track-disc{
+  box-shadow:
+    0 26px 50px rgba(0,0,0,.36),
+    0 0 0 1px rgba(158,175,136,.15),
+    inset 0 0 0 9px rgba(255,255,255,.015);
+}
+
+#love.like-redesign .like-music-track-disc.is-playing{
+  animation:
+    likeMusicCardSpin 5s linear infinite;
+}
+
+@keyframes likeMusicCardSpin{
+  from{ transform:rotate(0deg); }
+  to{ transform:rotate(360deg); }
+}
+
+
+/* ALUR PIRINGAN */
+#love.like-redesign .like-music-disc-rings{
+  position:absolute;
+  inset:9px;
+
+  border-radius:50%;
+
+  background:
+    repeating-radial-gradient(
+      circle,
+      transparent 0 5px,
+      rgba(255,255,255,.055) 5.5px 6px,
+      transparent 6.5px 10px
+    );
+
+  opacity:.67;
+}
+
+
+/* LABEL TENGAH */
+#love.like-redesign .like-music-disc-label{
+  position:relative;
+  z-index:3;
+
+  width:69px;
+  height:69px;
+
+  display:grid;
+  place-items:center;
+
+  overflow:hidden;
+
+  border-radius:50%;
+
+  background:#9eaf88;
+
+  border:1px solid rgba(255,255,255,.35);
+
+  box-shadow:
+    0 0 0 5px rgba(158,175,136,.08);
+
+  color:#11110f;
+}
+
+#love.like-redesign .like-music-disc-label img{
+  position:absolute;
+  inset:0;
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+  opacity:.88;
+}
+
+#love.like-redesign .like-music-disc-label span{
+  position:relative;
+  z-index:2;
+
+  display:grid;
+  place-items:center;
+
+  width:25px;
+  height:25px;
+
+  border-radius:50%;
+
+  background:rgba(17,17,15,.72);
+  color:#fff;
+
+  font:600 7px/1 "DM Mono",monospace;
+}
+
+
+/* LUBANG */
+#love.like-redesign .like-music-disc-hole{
+  position:absolute;
+  z-index:5;
+
+  width:8px;
+  height:8px;
+
+  border-radius:50%;
+
+  background:#11110f;
+
+  border:1px solid rgba(255,255,255,.18);
+}
+
+
+/* INFO */
+#love.like-redesign .like-music-track-info{
+  display:block;
+  width:100%;
+}
+
+#love.like-redesign .like-music-track-info small{
+  display:block;
+
+  color:rgba(243,241,236,.34);
+
+  font:500 7px/1 "DM Mono",monospace;
+  letter-spacing:.15em;
+}
+
+#love.like-redesign .like-music-track-info strong{
+  display:block;
+
+  margin-top:8px;
+
+  color:#f3f1ec;
+
+  font-family:"Instrument Serif",Georgia,serif;
+
+  font-size:27px;
+  line-height:.9;
+  font-weight:400;
+}
+
+#love.like-redesign .like-music-track-info em{
+  display:block;
+
+  margin-top:8px;
+
+  color:rgba(243,241,236,.38);
+
+  font:
+    400 9px/1.6
+    "Manrope",sans-serif;
+
+  font-style:normal;
+}
+
+
+/* ICON PLAY CARD */
+#love.like-redesign .like-music-track-action{
+  position:absolute;
+
+  right:14px;
+  bottom:14px;
+
+  width:34px;
+  height:34px;
+
+  display:grid;
+  place-items:center;
+
+  border:1px solid rgba(243,241,236,.16);
+  border-radius:50%;
+
+  background:rgba(243,241,236,.035);
+
+  color:#f3f1ec;
+
+  font-size:13px;
+
+  transition:
+    transform .3s ease,
+    background .3s ease,
+    border-color .3s ease;
+}
+
+#love.like-redesign .like-music-track:hover .like-music-track-action{
+  transform:scale(1.07);
+}
+
+#love.like-redesign .like-music-track.is-active .like-music-track-action{
+  background:rgba(158,175,136,.13);
+  border-color:rgba(158,175,136,.38);
+}
+
+
+/* PEMUTAR BAWAH */
+#love.like-redesign .like-music-now{
+  display:grid;
+  grid-template-columns:130px 1fr;
+  gap:24px;
+  align-items:center;
+
+  margin-top:28px;
+  padding-top:24px;
+
+  border-top:1px solid rgba(243,241,236,.10);
+}
+
+#love.like-redesign .like-music-now-disc{
+  display:grid;
+  place-items:center;
+}
+
+#love.like-redesign .like-music-now .like-record{
+  position:relative;
+
+  width:118px !important;
+  height:118px !important;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      #262722 0 12%,
+      #11110f 12.5% 17%,
+      #20211e 17.5% 18%,
+      #11110f 18.5% 100%
+    ) !important;
+
+  border:1px solid rgba(243,241,236,.15);
+
+  box-shadow:
+    0 20px 38px rgba(0,0,0,.35),
+    inset 0 0 0 7px rgba(255,255,255,.015);
+}
+
+#love.like-redesign .like-music-now .like-record-grooves{
+  position:absolute;
+  inset:8px;
+
+  border-radius:50%;
+
+  background:
+    repeating-radial-gradient(
+      circle,
+      transparent 0 4px,
+      rgba(255,255,255,.055) 4.5px 5px,
+      transparent 5.5px 8px
+    );
+
+  opacity:.58;
+}
+
+#love.like-redesign .like-music-now .like-record-label{
+  position:absolute;
+  z-index:3;
+
+  width:43px;
+  height:43px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:50%;
+
+  background:#9eaf88;
+  color:#11110f;
+
+  box-shadow:
+    0 0 0 4px rgba(158,175,136,.07);
+}
+
+#love.like-redesign .like-music-now .like-record-label span{
+  font:700 6px/1 "DM Mono",monospace;
+  letter-spacing:.08em;
+}
+
+#love.like-redesign .like-music-now .like-record-label i{
+  font-size:11px;
+}
+
+#love.like-redesign .like-music-now .like-record-hole{
+  position:absolute;
+  z-index:4;
+
+  width:7px;
+  height:7px;
+
+  border-radius:50%;
+
+  background:#11110f;
+}
+
+#love.like-redesign .like-music-now .like-record.is-playing{
+  animation:likeRecordSpin 5s linear infinite !important;
+}
+
+
+#love.like-redesign .like-music-now-copy > span{
+  display:block;
+
+  color:rgba(243,241,236,.34);
+
+  font:500 8px/1 "DM Mono",monospace;
+  letter-spacing:.15em;
+}
+
+#love.like-redesign .like-music-now-copy h4{
+  margin:9px 0 0 !important;
+
+  color:#f3f1ec !important;
+
+  font-family:"Instrument Serif",Georgia,serif !important;
+
+  font-size:42px !important;
+  line-height:.9 !important;
+
+  font-weight:400 !important;
+}
+
+#love.like-redesign .like-music-now-copy p{
+  margin:10px 0 0 !important;
+
+  color:rgba(243,241,236,.44) !important;
+
+  font-size:10px !important;
+}
+
+#love.like-redesign .like-music-controls{
+  display:grid !important;
+  grid-template-columns:42px 1fr auto !important;
+  gap:11px !important;
+
+  align-items:center !important;
+
+  margin-top:18px !important;
+  padding-top:15px !important;
+
+  border-top:1px solid rgba(243,241,236,.09) !important;
+}
+
+#love.like-redesign .like-music-progress{
+  height:4px !important;
+  border-radius:999px !important;
+  overflow:hidden !important;
+  background:rgba(255,255,255,.10) !important;
+  cursor:pointer;
+}
+
+#love.like-redesign .like-music-progress-fill{
+  background:#9eaf88 !important;
+}
+
+#love.like-redesign .like-music-time{
+  color:rgba(243,241,236,.35) !important;
+}
+
+
+/* FOOTER */
+#love.like-redesign .like-redesign-foot{
+  margin-top:42px !important;
+  padding-top:19px !important;
+  border-top:1px solid rgba(243,241,236,.10) !important;
+}
+
+#love.like-redesign .like-redesign-foot > span{
+  color:rgba(243,241,236,.28) !important;
+}
+
+#love.like-redesign .like-redesign-foot p{
+  color:rgba(243,241,236,.40) !important;
+}
+
+#love.like-redesign .like-redesign-foot i{
+  color:rgba(243,241,236,.42) !important;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media(max-width:1000px){
+
+  #love.like-redesign{
+    padding:120px 0 110px !important;
+  }
+
+  #love.like-redesign .like-redesign-head{
+    grid-template-columns:1fr !important;
+    gap:25px !important;
+  }
+
+  #love.like-redesign .like-redesign-head > p{
+    max-width:540px;
+  }
+
+  #love.like-redesign .like-game-list{
+    grid-template-columns:1fr !important;
+  }
+
+  #love.like-redesign .like-film-list{
+    grid-template-columns:repeat(3,minmax(200px,1fr)) !important;
+    overflow-x:auto !important;
+    padding-bottom:10px;
+  }
+
+  #love.like-redesign .like-film-card{
+    width:210px !important;
+  }
+
+}
+
+
+/* =========================================================
+   HP
+========================================================= */
+
+@media(max-width:620px){
+
+  #love.like-redesign{
+    padding:92px 0 90px !important;
+  }
+
+  #love.like-redesign .like-panel{
+    padding:20px !important;
+    border-radius:22px !important;
+  }
+
+  #love.like-redesign .like-redesign-head{
+    margin-bottom:52px !important;
+    padding-bottom:18px !important;
+  }
+
+  #love.like-redesign .like-redesign-head h2{
+    font-size:clamp(49px,14vw,72px) !important;
+  }
+
+  #love.like-redesign .like-panel-head h3{
+    font-size:35px !important;
+  }
+
+  #love.like-redesign .like-game-list{
+    grid-template-columns:1fr !important;
+  }
+
+  #love.like-redesign .like-game-card{
+    grid-template-columns:120px 1fr !important;
+    gap:13px !important;
+  }
+
+  #love.like-redesign .like-card-copy h4{
+    font-size:27px !important;
+  }
+
+  #love.like-redesign .like-film-list{
+    grid-template-columns:repeat(3,178px) !important;
+    gap:14px !important;
+    overflow-x:auto !important;
+  }
+
+  #love.like-redesign .like-film-card{
+    width:178px !important;
+  }
+
+  #love.like-redesign .like-film-meta strong{
+    font-size:25px !important;
+  }
+
+  #love.like-redesign .like-film-intro{
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    gap:8px !important;
+  }
+
+  #love.like-redesign .like-film-intro p{
+    max-width:100% !important;
+    text-align:left !important;
+  }
+
+  #love.like-redesign .like-music-heading{
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    gap:9px !important;
+  }
+
+  #love.like-redesign .like-music-heading p{
+    max-width:100% !important;
+    text-align:left !important;
+  }
+
+  #love.like-redesign .like-music-track{
+    flex-basis:205px !important;
+    width:205px !important;
+    min-height:282px !important;
+    padding:13px !important;
+  }
+
+  #love.like-redesign .like-music-track-disc{
+    width:148px !important;
+    height:148px !important;
+    flex-basis:148px !important;
+  }
+
+  #love.like-redesign .like-music-track-info strong{
+    font-size:24px !important;
+  }
+
+  #love.like-redesign .like-music-now{
+    grid-template-columns:88px 1fr !important;
+    gap:15px !important;
+  }
+
+  #love.like-redesign .like-music-now .like-record{
+    width:82px !important;
+    height:82px !important;
+  }
+
+  #love.like-redesign .like-music-now-copy h4{
+    font-size:30px !important;
+  }
+
+  #love.like-redesign .like-music-controls{
+    grid-template-columns:38px 1fr auto !important;
+    gap:8px !important;
+  }
+
+}
+
+
+/* =========================================================
+   WHAT I LIKE — PERMAINAN DIPERBESAR
+   Hanya bagian permainan yang diubah.
+   Film, musik, life, contact dan section lain tidak disentuh.
+========================================================= */
+
+#love.like-redesign .like-games-panel{
+  width:100% !important;
+  padding:30px !important;
+}
+
+#love.like-redesign .like-games-panel .like-panel-head{
+  margin-bottom:26px !important;
+}
+
+#love.like-redesign .like-game-list{
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:24px !important;
+}
+
+#love.like-redesign .like-game-card{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:0 !important;
+  padding:0 !important;
+  overflow:hidden !important;
+  border:1px solid rgba(243,241,236,.10) !important;
+  border-radius:24px !important;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.008)) !important;
+  box-shadow:0 22px 48px rgba(0,0,0,.18) !important;
+  transition:
+    transform .55s cubic-bezier(.2,.7,.2,1),
+    border-color .35s ease,
+    background .35s ease,
+    box-shadow .45s ease !important;
+}
+
+#love.like-redesign .like-game-card:hover{
+  transform:translateY(-8px) !important;
+  border-color:rgba(158,175,136,.30) !important;
+  background:
+    linear-gradient(145deg,rgba(158,175,136,.045),rgba(255,255,255,.01)) !important;
+  box-shadow:
+    0 30px 70px rgba(0,0,0,.28),
+    0 0 0 1px rgba(158,175,136,.045) inset !important;
+}
+
+#love.like-redesign .like-game-image{
+  width:100% !important;
+  aspect-ratio:16 / 9 !important;
+  border-radius:0 !important;
+  background:#0f100e !important;
+}
+
+#love.like-redesign .like-game-image img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  object-position:center !important;
+  transition:
+    transform .85s cubic-bezier(.2,.7,.2,1),
+    filter .45s ease !important;
+}
+
+#love.like-redesign .like-game-card:hover .like-game-image img{
+  transform:scale(1.045) !important;
+  filter:saturate(1.04) contrast(1.03) !important;
+}
+
+#love.like-redesign .like-game-image::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  pointer-events:none !important;
+  z-index:2 !important;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.03) 0%,
+      transparent 54%,
+      rgba(0,0,0,.36) 100%
+    ) !important;
+}
+
+#love.like-redesign .like-game-image span{
+  left:14px !important;
+  top:14px !important;
+  width:40px !important;
+  height:40px !important;
+  z-index:5 !important;
+  font:700 9px "DM Mono",monospace !important;
+}
+
+#love.like-redesign .like-card-copy{
+  padding:20px 22px 24px !important;
+}
+
+#love.like-redesign .like-card-copy span{
+  display:block !important;
+  color:rgba(243,241,236,.38) !important;
+  font:500 8px/1 "DM Mono",monospace !important;
+  letter-spacing:.16em !important;
+  text-transform:uppercase !important;
+}
+
+#love.like-redesign .like-card-copy h4{
+  margin:10px 0 0 !important;
+  color:#f3f1ec !important;
+  font-family:"Instrument Serif",Georgia,serif !important;
+  font-size:clamp(38px,4vw,58px) !important;
+  line-height:.88 !important;
+  font-weight:400 !important;
+  letter-spacing:-.03em !important;
+}
+
+#love.like-redesign .like-card-copy p{
+  max-width:520px !important;
+  margin:12px 0 0 !important;
+  color:rgba(243,241,236,.43) !important;
+  font-size:11px !important;
+  line-height:1.72 !important;
+}
+
+#love.like-redesign .like-games-panel .like-section-note{
+  margin-top:24px !important;
+}
+
+@media(max-width:900px){
+  #love.like-redesign .like-games-panel{
+    padding:24px !important;
+  }
+
+  #love.like-redesign .like-game-list{
+    grid-template-columns:1fr !important;
+    gap:20px !important;
+  }
+
+  #love.like-redesign .like-card-copy h4{
+    font-size:42px !important;
+  }
+}
+
+@media(max-width:620px){
+  #love.like-redesign .like-games-panel{
+    padding:18px !important;
+  }
+
+  #love.like-redesign .like-game-card{
+    border-radius:19px !important;
+  }
+
+  #love.like-redesign .like-game-image span{
+    left:10px !important;
+    top:10px !important;
+    width:34px !important;
+    height:34px !important;
+  }
+
+  #love.like-redesign .like-card-copy{
+    padding:17px 18px 20px !important;
+  }
+
+  #love.like-redesign .like-card-copy h4{
+    font-size:34px !important;
+  }
+
+  #love.like-redesign .like-card-copy p{
+    font-size:10px !important;
+  }
+}
+
+
+/* =========================================================
+   MUSIK — LABEL ALBUM DI TENGAH PIRINGAN
+   Pakai img/music/musik-01.png s.d. musik-05.png
+   untuk cover album. Lubang tengah tetap terlihat.
+========================================================= */
+
+#love.like-redesign .like-music-disc-label{
+  position:relative !important;
+  width:78px !important;
+  height:78px !important;
+  border-radius:50% !important;
+  overflow:hidden !important;
+  display:grid !important;
+  place-items:center !important;
+  background:#9eaf88 !important;
+  border:1px solid rgba(255,255,255,.38) !important;
+  box-shadow:
+    0 0 0 5px rgba(158,175,136,.08),
+    0 7px 20px rgba(0,0,0,.22) !important;
+}
+
+#love.like-redesign .like-music-disc-label img{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  object-position:center !important;
+  opacity:1 !important;
+  border-radius:50% !important;
+  z-index:1 !important;
+}
+
+#love.like-redesign .like-music-disc-label > span{
+  position:relative !important;
+  z-index:2 !important;
+  width:24px !important;
+  height:24px !important;
+  border-radius:50% !important;
+  display:grid !important;
+  place-items:center !important;
+  background:rgba(10,10,9,.62) !important;
+  color:#fff !important;
+  font:600 7px/1 "DM Mono",monospace !important;
+  border:1px solid rgba(255,255,255,.20) !important;
+}
+
+#love.like-redesign .like-music-disc-hole{
+  position:absolute !important;
+  left:50% !important;
+  top:50% !important;
+  transform:translate(-50%,-50%) !important;
+  z-index:6 !important;
+  width:8px !important;
+  height:8px !important;
+  border-radius:50% !important;
+  background:#11110f !important;
+  border:1px solid rgba(255,255,255,.48) !important;
+  box-shadow:
+    0 0 0 2px rgba(0,0,0,.20),
+    0 0 0 4px rgba(255,255,255,.035) !important;
+  pointer-events:none !important;
+}
+
+/* Sedikit kilau di cover saat disentuh */
+#love.like-redesign .like-music-track:hover .like-music-disc-label img{
+  transform:scale(1.04) !important;
+  transition:transform .55s cubic-bezier(.2,.7,.2,1) !important;
+}
+
+/* Supaya tombol track tetap benar-benar bisa diklik */
+#love.like-redesign .like-music-track{
+  cursor:pointer !important;
+}
+
+/* Sumber error dibuat langsung terbaca */
+#love.like-redesign .like-music-now-copy p strong{
+  color:#b7c5a1 !important;
+}
+
+/* Mobile: label sedikit lebih kecil */
+@media(max-width:560px){
+  #love.like-redesign .like-music-disc-label{
+    width:68px !important;
+    height:68px !important;
+  }
+
+  #love.like-redesign .like-music-disc-label > span{
+    width:21px !important;
+    height:21px !important;
+  }
+
+  #love.like-redesign .like-music-disc-hole{
+    width:7px !important;
+    height:7px !important;
+  }
+}
+
+
+/* =========================================================
+   PIRINGAN AKTIF — SAMPUL ALBUM DINAMIS
+   Hanya untuk piringan besar di bagian pemutar bawah.
+========================================================= */
+
+#love.like-redesign .like-music-now .like-record-label{
+  overflow:hidden !important;
+  position:absolute !important;
+  isolation:isolate !important;
+  background:#9eaf88 !important;
+}
+
+#love.like-redesign .like-music-now
+.like-record-label
+[data-music-current-image]{
+  position:absolute !important;
+  inset:0 !important;
+
+  width:100% !important;
+  height:100% !important;
+
+  object-fit:cover !important;
+  object-position:center !important;
+
+  border-radius:50% !important;
+
+  opacity:1;
+  transition:opacity .22s ease, transform .35s ease !important;
+
+  z-index:1 !important;
+}
+
+/* overlay tipis agar cover menyatu dengan vinyl */
+#love.like-redesign .like-music-now
+.like-record-label::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  border-radius:50% !important;
+  background:
+    radial-gradient(
+      circle at 35% 25%,
+      rgba(255,255,255,.14),
+      transparent 38%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(0,0,0,.06),
+      rgba(0,0,0,.22)
+    ) !important;
+  z-index:2 !important;
+  pointer-events:none !important;
+}
+
+/* teks/icon lama tidak menutupi gambar */
+#love.like-redesign .like-music-now
+.like-record-label
+[data-music-label],
+#love.like-redesign .like-music-now
+.like-record-label i{
+  position:relative !important;
+  z-index:3 !important;
+}
+
+/* Anggap cover album sebagai elemen utama.
+   Nomor/label lama dibuat sangat halus. */
+#love.like-redesign .like-music-now
+.like-record-label
+[data-music-label]{
+  display:none !important;
+}
+
+#love.like-redesign .like-music-now
+.like-record-label i{
+  display:none !important;
+}
+
+/* Lubang asli tetap terlihat paling atas */
+#love.like-redesign .like-music-now
+.like-record-hole{
+  z-index:8 !important;
+  width:7px !important;
+  height:7px !important;
+  background:#11110f !important;
+  border:1px solid rgba(255,255,255,.48) !important;
+  box-shadow:0 0 0 2px rgba(0,0,0,.30) !important;
+}
+
+
+/* =========================================================
+   LIFE — ROMBAK TOTAL / VIDEO 16:9
+   Hanya mengubah section #life.
+========================================================= */
+
+#life.life-redesign{
+  position:relative !important;
+  padding:155px 0 135px !important;
+  background:
+    radial-gradient(
+      circle at var(--spot-x,50%) var(--spot-y,20%),
+      rgba(158,175,136,.075),
+      transparent 28%
+    ),
+    linear-gradient(
+      180deg,
+      #11110f 0%,
+      #151613 52%,
+      #11110f 100%
+    ) !important;
+  color:var(--redesign-text) !important;
+}
+
+#life.life-redesign .life-redesign-head{
+  grid-template-columns:.48fr 1.05fr !important;
+  gap:8vw !important;
+  margin-bottom:68px !important;
+}
+
+#life.life-redesign .life-redesign-title-wrap h2{
+  font-size:clamp(76px,8.7vw,132px) !important;
+  line-height:.80 !important;
+  letter-spacing:-.075em !important;
+}
+
+#life.life-redesign .life-redesign-title-wrap p{
+  max-width:580px !important;
+  margin-top:25px !important;
+  color:rgba(243,241,236,.56) !important;
+  font-size:13px !important;
+  line-height:1.78 !important;
+}
+
+/* 01 full width, 02 + 03 di bawah */
+#life.life-redesign .life-video-grid{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:28px !important;
+  align-items:start !important;
+}
+
+#life.life-redesign .life-video-card-feature{
+  grid-column:1 / -1 !important;
+}
+
+#life.life-redesign .life-video-card{
+  min-width:0 !important;
+  transform:
+    perspective(1100px)
+    rotateX(var(--tilt-x))
+    rotateY(var(--tilt-y)) !important;
+  transition:
+    transform .55s cubic-bezier(.2,.7,.2,1),
+    filter .35s ease !important;
+}
+
+/* Semua media = 16:9 */
+#life.life-redesign .life-video-media{
+  position:relative !important;
+  width:100% !important;
+  aspect-ratio:16 / 9 !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+  border-radius:26px !important;
+  border:1px solid rgba(243,241,236,.13) !important;
+  background:#0d0e0c !important;
+  box-shadow:
+    0 26px 70px rgba(0,0,0,.30) !important;
+}
+
+#life.life-redesign .life-video{
+  position:absolute !important;
+  inset:0 !important;
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  object-position:center !important;
+  background:#0d0e0c !important;
+  filter:saturate(.82) contrast(1.04) !important;
+  transition:
+    transform .9s cubic-bezier(.2,.7,.2,1),
+    filter .7s ease !important;
+}
+
+#life.life-redesign .life-video-card:hover .life-video{
+  transform:scale(1.045) !important;
+  filter:saturate(.95) contrast(1.05) !important;
+}
+
+#life.life-redesign .life-story-shade{
+  position:absolute !important;
+  inset:0 !important;
+  z-index:2 !important;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.04) 34%,
+      rgba(0,0,0,.76) 100%
+    ) !important;
+}
+
+#life.life-redesign .life-story-index{
+  z-index:6 !important;
+}
+
+#life.life-redesign .life-story-corner{
+  z-index:6 !important;
+  transition:
+    transform .35s ease,
+    border-color .35s ease,
+    background .35s ease !important;
+}
+
+#life.life-redesign .life-video-card:hover .life-story-corner{
+  transform:rotate(8deg) scale(1.05) !important;
+  border-color:rgba(158,175,136,.45) !important;
+  background:rgba(158,175,136,.10) !important;
+}
+
+#life.life-redesign .life-video-center{
+  position:absolute !important;
+  left:50% !important;
+  top:50% !important;
+  transform:translate(-50%,-50%) scale(.88) !important;
+  z-index:5 !important;
+  width:76px !important;
+  height:76px !important;
+  display:grid !important;
+  place-items:center !important;
+  border:1px solid rgba(243,241,236,.34) !important;
+  border-radius:50% !important;
+  background:rgba(17,17,15,.24) !important;
+  backdrop-filter:blur(12px) !important;
+  opacity:.78 !important;
+  transition:
+    transform .45s cubic-bezier(.2,.7,.2,1),
+    opacity .35s ease,
+    background .35s ease !important;
+}
+
+#life.life-redesign .life-video-center span{
+  width:44px !important;
+  height:44px !important;
+  display:grid !important;
+  place-items:center !important;
+  border-radius:50% !important;
+  background:#f3f1ec !important;
+  color:#11110f !important;
+}
+
+#life.life-redesign .life-video-center i{
+  margin-left:2px !important;
+  font-size:18px !important;
+}
+
+#life.life-redesign .life-video-card:hover .life-video-center{
+  opacity:1 !important;
+  transform:translate(-50%,-50%) scale(1) !important;
+  background:rgba(158,175,136,.16) !important;
+}
+
+#life.life-redesign .life-video-ratio{
+  position:absolute !important;
+  right:18px !important;
+  bottom:18px !important;
+  z-index:6 !important;
+  padding:7px 9px !important;
+  border:1px solid rgba(243,241,236,.16) !important;
+  border-radius:999px !important;
+  background:rgba(10,10,9,.40) !important;
+  color:rgba(243,241,236,.72) !important;
+  backdrop-filter:blur(9px) !important;
+  font:500 8px "DM Mono",monospace !important;
+  letter-spacing:.13em !important;
+}
+
+#life.life-redesign .life-story-copy{
+  z-index:6 !important;
+  left:28px !important;
+  right:28px !important;
+  bottom:28px !important;
+}
+
+#life.life-redesign .life-story-copy h3{
+  font-size:clamp(40px,4.3vw,67px) !important;
+  line-height:.92 !important;
+}
+
+#life.life-redesign .life-video-card:not(.life-video-card-feature) .life-story-copy h3{
+  font-size:clamp(34px,3.2vw,50px) !important;
+}
+
+#life.life-redesign .life-story-meta{
+  padding:18px 4px 0 !important;
+}
+
+#life.life-redesign .life-meta-top{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:18px !important;
+  padding-bottom:12px !important;
+  border-bottom:1px solid rgba(243,241,236,.11) !important;
+}
+
+#life.life-redesign .life-meta-top span{
+  color:rgba(243,241,236,.36) !important;
+  font:500 8px "DM Mono",monospace !important;
+  letter-spacing:.14em !important;
+}
+
+#life.life-redesign .life-story-meta h3{
+  max-width:760px !important;
+  margin:15px 0 0 !important;
+  color:var(--redesign-text) !important;
+  font-family:"Instrument Serif",Georgia,serif !important;
+  font-size:clamp(27px,2.4vw,39px) !important;
+  line-height:.98 !important;
+  font-weight:400 !important;
+  letter-spacing:-.025em !important;
+}
+
+#life.life-redesign .life-story-meta p{
+  max-width:660px !important;
+  margin:10px 0 0 !important;
+  color:rgba(243,241,236,.43) !important;
+  font-size:11px !important;
+  line-height:1.7 !important;
+}
+
+/* Garis bawah lebih rapi */
+#life.life-redesign .life-redesign-foot{
+  margin-top:72px !important;
+  padding-top:20px !important;
+  border-top:1px solid rgba(243,241,236,.12) !important;
+}
+
+/* Tablet */
+@media (max-width:900px){
+
+  #life.life-redesign{
+    padding:120px 0 100px !important;
+  }
+
+  #life.life-redesign .life-redesign-head{
+    grid-template-columns:1fr !important;
+    gap:28px !important;
+  }
+
+  #life.life-redesign .life-video-grid{
+    grid-template-columns:1fr !important;
+    gap:42px !important;
+  }
+
+  #life.life-redesign .life-video-card-feature{
+    grid-column:auto !important;
+  }
+
+  #life.life-redesign .life-story-copy{
+    left:20px !important;
+    right:20px !important;
+    bottom:20px !important;
+  }
+
+}
+
+/* HP */
+@media (max-width:560px){
+
+  #life.life-redesign{
+    padding:100px 0 80px !important;
+  }
+
+  #life.life-redesign .life-redesign-head{
+    margin-bottom:48px !important;
+  }
+
+  #life.life-redesign .life-redesign-title-wrap h2{
+    font-size:clamp(58px,17vw,82px) !important;
+  }
+
+  #life.life-redesign .life-video-media{
+    border-radius:20px !important;
+  }
+
+  #life.life-redesign .life-video-center{
+    width:58px !important;
+    height:58px !important;
+  }
+
+  #life.life-redesign .life-video-center span{
+    width:34px !important;
+    height:34px !important;
+  }
+
+  #life.life-redesign .life-story-copy h3,
+  #life.life-redesign .life-video-card:not(.life-video-card-feature) .life-story-copy h3{
+    font-size:32px !important;
+  }
+
+  #life.life-redesign .life-story-meta h3{
+    font-size:28px !important;
+  }
+
+  #life.life-redesign .life-redesign-foot{
+    grid-template-columns:1fr auto !important;
+    gap:14px !important;
+  }
+
+  #life.life-redesign .life-redesign-foot p{
+    display:none !important;
+  }
+
+}
+
+
+/* =========================================================
+   LIFE — MIXED MEDIA RATIO
+   CARD 01 + 02 = PORTRAIT
+   CARD 03 = LANDSCAPE
+========================================================= */
+
+#life.life-redesign .life-video-grid{
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:28px !important;
+  align-items:start !important;
+}
+
+/* semua card tidak lagi dipaksa 16:9 */
+#life.life-redesign .life-video-card{
+  grid-column:auto !important;
+}
+
+/* CARD 01 — PORTRAIT */
+#life.life-redesign .life-video-card:nth-child(1){
+  grid-column:1 !important;
+}
+
+#life.life-redesign .life-video-card:nth-child(1) .life-video-media{
+  aspect-ratio:4 / 5 !important;
+}
+
+/* CARD 02 — PORTRAIT */
+#life.life-redesign .life-video-card:nth-child(2){
+  grid-column:2 !important;
+}
+
+#life.life-redesign .life-video-card:nth-child(2) .life-video-media{
+  aspect-ratio:4 / 5 !important;
+}
+
+/* CARD 03 — LANDSCAPE, FULL WIDTH */
+#life.life-redesign .life-video-card:nth-child(3){
+  grid-column:1 / -1 !important;
+}
+
+#life.life-redesign .life-video-card:nth-child(3) .life-video-media{
+  aspect-ratio:16 / 9 !important;
+}
+
+/* teks card portrait sedikit lebih compact */
+#life.life-redesign .life-video-card:nth-child(1) .life-story-copy,
+#life.life-redesign .life-video-card:nth-child(2) .life-story-copy{
+  left:22px !important;
+  right:22px !important;
+  bottom:22px !important;
+}
+
+#life.life-redesign .life-video-card:nth-child(1) .life-story-copy h3,
+#life.life-redesign .life-video-card:nth-child(2) .life-story-copy h3{
+  font-size:clamp(32px,3.2vw,50px) !important;
+  line-height:.92 !important;
+}
+
+/* landscape card jadi feature besar */
+#life.life-redesign .life-video-card:nth-child(3) .life-story-copy{
+  left:30px !important;
+  right:30px !important;
+  bottom:30px !important;
+}
+
+#life.life-redesign .life-video-card:nth-child(3) .life-story-copy h3{
+  font-size:clamp(40px,4vw,64px) !important;
+  line-height:.90 !important;
+}
+
+/* mobile: ketiganya kembali satu kolom */
+@media(max-width:900px){
+
+  #life.life-redesign .life-video-grid{
+    grid-template-columns:1fr !important;
+  }
+
+  #life.life-redesign .life-video-card:nth-child(1),
+  #life.life-redesign .life-video-card:nth-child(2),
+  #life.life-redesign .life-video-card:nth-child(3){
+    grid-column:1 !important;
+  }
+
+}
+
+@media(max-width:560px){
+
+  #life.life-redesign .life-video-card:nth-child(1) .life-video-media,
+  #life.life-redesign .life-video-card:nth-child(2) .life-video-media{
+    aspect-ratio:4 / 5 !important;
+  }
+
+  #life.life-redesign .life-video-card:nth-child(3) .life-video-media{
+    aspect-ratio:16 / 9 !important;
+  }
+
+}
+
+
+/* =========================================================
+   LIFE FINAL — 01/02 FOTO PORTRAIT + 03 VIDEO LANDSCAPE
+   Ukuran foto dibuat mendekati poster film.
+========================================================= */
+
+#life.life-redesign{
+  position:relative !important;
+  padding:145px 0 125px !important;
+}
+
+/* dua foto portrait */
+#life.life-redesign .life-photo-row{
+  display:grid !important;
+  grid-template-columns:repeat(2, minmax(0, 340px)) !important;
+  justify-content:center !important;
+  gap:30px !important;
+  margin:0 auto 58px !important;
+}
+
+#life.life-redesign .life-photo-card{
+  min-width:0 !important;
+}
+
+/* poster-style portrait */
+#life.life-redesign .life-photo-media{
+  position:relative !important;
+  width:100% !important;
+  aspect-ratio:9 / 16 !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+  border-radius:18px !important;
+  border:1px solid rgba(243,241,236,.14) !important;
+  background:#0f100e !important;
+  box-shadow:0 22px 50px rgba(0,0,0,.28) !important;
+}
+
+#life.life-redesign .life-photo-media img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  object-position:center !important;
+  transition:
+    transform .8s cubic-bezier(.2,.7,.2,1),
+    filter .5s ease !important;
+}
+
+#life.life-redesign .life-photo-card:hover .life-photo-media img{
+  transform:scale(1.045) !important;
+  filter:saturate(1.04) contrast(1.03) !important;
+}
+
+#life.life-redesign .life-photo-tag{
+  position:absolute !important;
+  right:12px !important;
+  top:12px !important;
+  z-index:7 !important;
+  padding:7px 9px !important;
+  border:1px solid rgba(243,241,236,.18) !important;
+  border-radius:999px !important;
+  background:rgba(10,10,9,.42) !important;
+  color:rgba(243,241,236,.72) !important;
+  backdrop-filter:blur(8px) !important;
+  font:500 8px "DM Mono",monospace !important;
+  letter-spacing:.13em !important;
+}
+
+#life.life-redesign .life-photo-card .life-story-copy{
+  left:19px !important;
+  right:19px !important;
+  bottom:20px !important;
+  z-index:7 !important;
+}
+
+#life.life-redesign .life-photo-card .life-story-copy h3{
+  font-size:clamp(29px,2.2vw,42px) !important;
+  line-height:.92 !important;
+}
+
+/* video ketiga: landscape 16:9, full width */
+#life.life-redesign .life-video-card-landscape{
+  width:100% !important;
+  margin-top:0 !important;
+}
+
+#life.life-redesign .life-video-card-landscape .life-video-media{
+  position:relative !important;
+  width:100% !important;
+  aspect-ratio:16 / 9 !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+  border-radius:24px !important;
+  border:1px solid rgba(243,241,236,.14) !important;
+  background:#0e0f0d !important;
+  box-shadow:0 24px 60px rgba(0,0,0,.3) !important;
+}
+
+#life.life-redesign .life-video-card-landscape .life-video{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  object-position:center !important;
+  background:#0e0f0d !important;
+}
+
+#life.life-redesign .life-video-card-landscape .life-story-copy{
+  left:28px !important;
+  right:28px !important;
+  bottom:28px !important;
+  z-index:7 !important;
+}
+
+#life.life-redesign .life-video-card-landscape .life-story-copy h3{
+  font-size:clamp(40px,4vw,64px) !important;
+  line-height:.9 !important;
+}
+
+#life.life-redesign .life-video-card-landscape .life-video-center{
+  z-index:8 !important;
+}
+
+#life.life-redesign .life-video-card-landscape .life-story-shade{
+  pointer-events:none !important;
+}
+
+/* metadata konsisten */
+#life.life-redesign .life-story-meta{
+  padding:15px 2px 0 !important;
+}
+
+#life.life-redesign .life-meta-top{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  padding-bottom:10px !important;
+  border-bottom:1px solid rgba(243,241,236,.11) !important;
+}
+
+#life.life-redesign .life-story-meta h3{
+  margin:13px 0 0 !important;
+  font-family:"Instrument Serif",Georgia,serif !important;
+  font-size:clamp(25px,2vw,35px) !important;
+  line-height:1 !important;
+  font-weight:400 !important;
+  color:var(--redesign-text) !important;
+}
+
+#life.life-redesign .life-story-meta p{
+  margin:9px 0 0 !important;
+  color:rgba(243,241,236,.44) !important;
+  font-size:11px !important;
+  line-height:1.65 !important;
+}
+
+/* responsive */
+@media(max-width:900px){
+
+  #life.life-redesign .life-photo-row{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    max-width:650px !important;
+  }
+
+}
+
+@media(max-width:620px){
+
+  #life.life-redesign{
+    padding:110px 0 90px !important;
+  }
+
+  #life.life-redesign .life-photo-row{
+    grid-template-columns:1fr !important;
+    max-width:340px !important;
+    gap:38px !important;
+    margin-bottom:48px !important;
+  }
+
+  #life.life-redesign .life-video-card-landscape .life-video-media{
+    aspect-ratio:16 / 9 !important;
+    border-radius:19px !important;
+  }
+
+  #life.life-redesign .life-video-card-landscape .life-story-copy h3{
+    font-size:32px !important;
+  }
+
+}
+
+
+/* =========================================================
+   LIFE — FINAL POLISH
+   Center + smaller cards + photo / video separation.
+========================================================= */
+
+#life.life-redesign .life-redesign-head{
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  justify-items:center !important;
+  text-align:center !important;
+  gap:20px !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+
+#life.life-redesign .life-redesign-label{
+  align-items:center !important;
+}
+
+#life.life-redesign .life-redesign-title-wrap{
+  width:100% !important;
+  max-width:760px !important;
+  margin:0 auto !important;
+}
+
+#life.life-redesign .life-redesign-title-wrap h2{
+  text-align:center !important;
+}
+
+#life.life-redesign .life-redesign-title-wrap p{
+  margin-left:auto !important;
+  margin-right:auto !important;
+  text-align:center !important;
+}
+
+/* FOTO 01 + FOTO 02 — ukuran mendekati poster film */
+#life.life-redesign .life-photo-row{
+  grid-template-columns:repeat(2, minmax(0, 275px)) !important;
+  justify-content:center !important;
+  align-items:start !important;
+  gap:28px !important;
+  max-width:none !important;
+}
+
+#life.life-redesign .life-photo-media{
+  aspect-ratio:9 / 16 !important;
+  border-radius:17px !important;
+}
+
+/* VIDEO 03 — lebih kecil, tetap landscape 16:9 */
+#life.life-redesign .life-video-card-landscape{
+  width:min(820px,100%) !important;
+  margin:56px auto 0 !important;
+}
+
+#life.life-redesign .life-video-card-landscape .life-video-media{
+  aspect-ratio:16 / 9 !important;
+  border-radius:22px !important;
+}
+
+/* Hilangkan tombol play besar di tengah */
+#life.life-redesign .life-video-card-landscape .life-video-center{
+  display:none !important;
+}
+
+/* Video langsung jalan saat tersedia */
+#life.life-redesign .life-video-card-landscape .life-video{
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+}
+
+/* Metadata video ikut center agar komposisinya rapi */
+#life.life-redesign .life-video-card-landscape .life-story-meta{
+  text-align:center !important;
+}
+
+#life.life-redesign .life-video-card-landscape .life-meta-top{
+  justify-content:center !important;
+  gap:28px !important;
+}
+
+#life.life-redesign .life-video-card-landscape .life-story-meta h3,
+#life.life-redesign .life-video-card-landscape .life-story-meta p{
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+
+/* Footer Life tetap center */
+#life.life-redesign .life-redesign-foot{
+  justify-content:center !important;
+  text-align:center !important;
+}
+
+#life.life-redesign .life-redesign-foot p{
+  text-align:center !important;
+}
+
+/* =========================================================
+   CONTACT — HAPUS BLUR YANG NYANGKUT
+   JS contact lama hanya mengubah opacity/transform,
+   bukan class is-visible, jadi filter blur bisa tertinggal.
+========================================================= */
+
+#contact.contact-redesign .contact-v2-reveal{
+  filter:none !important;
+  transition:
+    opacity .82s cubic-bezier(.2,.7,.2,1),
+    transform .82s cubic-bezier(.2,.7,.2,1) !important;
+}
+
+@media(max-width:900px){
+
+  #life.life-redesign .life-photo-row{
+    grid-template-columns:repeat(2,minmax(0,275px)) !important;
+    gap:22px !important;
+  }
+
+  #life.life-redesign .life-video-card-landscape{
+    width:min(760px,100%) !important;
+  }
+
+}
+
+@media(max-width:620px){
+
+  #life.life-redesign .life-photo-row{
+    grid-template-columns:minmax(0,275px) !important;
+  }
+
+  #life.life-redesign .life-video-card-landscape{
+    width:100% !important;
+    margin-top:44px !important;
+  }
+
+  #life.life-redesign .life-video-card-landscape .life-story-copy{
+    left:18px !important;
+    right:18px !important;
+    bottom:18px !important;
+  }
+
+}
+
+/* Life #03: MP4 saja, autoplay, tanpa kontrol browser */
+#life.life-redesign .life-video-card-landscape .life-video {
+  pointer-events: none !important;
+}
+
+
+/* LIFE #03 — autoplay video, tanpa tombol overlay */
+#life.life-redesign .life-video-card-landscape .life-video{
+  pointer-events:none !important;
+}
+
+/* LIFE #03 — video otomatis saat section terlihat */
+#life.life-redesign .life-video-card-landscape .life-video{
+  pointer-events:none !important;
+}
+
+
+/* =========================================================
+   NAVBAR — IKUT WARNA SECTION LIFE & YANG SAYA SUKA
+========================================================= */
+
+.hero-reference-style .hero-nav-wrap.nav-section-match{
+  background:var(--nav-section-bg,#11110f) !important;
+  color:#fff !important;
+  border-color:rgba(255,255,255,.14) !important;
+  box-shadow:
+    0 18px 50px rgba(0,0,0,.30),
+    inset 0 1px 0 rgba(255,255,255,.07) !important;
+}
+
+.hero-reference-style .hero-nav-wrap.nav-section-match .hero-logo,
+.hero-reference-style .hero-nav-wrap.nav-section-match .hero-menu a,
+.hero-reference-style .hero-nav-wrap.nav-section-match .hero-contact,
+.hero-reference-style .hero-nav-wrap.nav-section-match .hero-contact i{
+  color:#fff !important;
+}
+
+.hero-reference-style .hero-nav-wrap.nav-section-match .hero-menu a:hover{
+  color:#fff !important;
+  background:rgba(255,255,255,.075) !important;
+}
+
+.hero-reference-style .hero-nav-wrap.nav-section-match .hero-menu a::after{
+  background:#fff !important;
+}
+
+.hero-reference-style .hero-nav-wrap.nav-section-match .hero-contact{
+  color:#fff !important;
+  background:rgba(255,255,255,.08) !important;
+  border-color:rgba(255,255,255,.16) !important;
+}
+
+/* =========================================================
+   CONTACT — SUPER PENDEK FINAL
+   Hanya mengecilkan ruang vertikal Contact.
+   ========================================================= */
+#contact.contact-redesign{
+  padding-top:58px !important;
+  padding-bottom:38px !important;
+}
+
+#contact.contact-redesign .contact-v2-hero{
+  padding:34px 0 30px !important;
+  gap:4vw !important;
+}
+
+#contact.contact-redesign .contact-v2-title{
+  margin-top:12px !important;
+  font-size:clamp(60px,8vw,112px) !important;
+  line-height:.74 !important;
+}
+
+#contact.contact-redesign .contact-v2-intro{
+  margin-top:16px !important;
+  line-height:1.55 !important;
+}
+
+#contact.contact-redesign .contact-v2-arrow-line{
+  margin-top:18px !important;
+}
+
+#contact.contact-redesign .contact-v2-socials{
+  gap:6px !important;
+}
+
+#contact.contact-redesign .contact-v2-social{
+  min-height:54px !important;
+  padding:7px 10px !important;
+  grid-template-columns:34px 1fr auto !important;
+  gap:10px !important;
+  border-radius:12px !important;
+}
+
+#contact.contact-redesign .contact-v2-social-icon{
+  width:34px !important;
+  height:34px !important;
+  border-radius:9px !important;
+}
+
+#contact.contact-redesign .contact-v2-message{
+  margin-top:7px !important;
+  padding-top:14px !important;
+}
+
+#contact.contact-redesign .contact-v2-message h3{
+  margin-top:6px !important;
+  font-size:clamp(34px,4vw,52px) !important;
+  line-height:.84 !important;
+}
+
+#contact.contact-redesign .contact-v2-form-bottom{
+  gap:14px !important;
+  padding:14px 0 14px !important;
+}
+
+#contact.contact-redesign .contact-v2-submit{
+  min-height:44px !important;
+  padding:0 16px !important;
+}
+
+@media(max-width:780px){
+  #contact.contact-redesign{
+    padding-top:60px !important;
+    padding-bottom:32px !important;
+  }
+
+  #contact.contact-redesign .contact-v2-hero{
+    gap:24px !important;
+    padding:28px 0 24px !important;
+  }
+}
+
+@media(max-width:560px){
+  #contact.contact-redesign{
+    padding-top:52px !important;
+    padding-bottom:28px !important;
+  }
+
+  #contact.contact-redesign .contact-v2-hero{
+    padding:24px 0 20px !important;
+    gap:20px !important;
+  }
+
+  #contact.contact-redesign .contact-v2-title{
+    font-size:clamp(54px,15vw,78px) !important;
+  }
+
+  #contact.contact-redesign .contact-v2-intro{
+    font-size:12px !important;
+  }
+
+  #contact.contact-redesign .contact-v2-social{
+    min-height:50px !important;
+  }
+}
+
+
+/* =========================================================
+   CONTACT — REMOVE VIEWPORT HEIGHT / BLANK SPACE
+   Hanya Contact. Biar tinggi mengikuti isi sebenarnya.
+========================================================= */
+#contact.contact-redesign,
+#contact.contact-v2{
+  min-height:0 !important;
+  height:auto !important;
+  padding-top:40px !important;
+  padding-bottom:28px !important;
+}
+
+#contact.contact-redesign .contact-v2-hero{
+  padding-top:24px !important;
+  padding-bottom:22px !important;
+}
+
+#contact.contact-redesign .contact-v2-message{
+  margin-top:0 !important;
+  padding-top:12px !important;
+}
+
+#contact.contact-redesign .contact-v2-form-bottom{
+  padding-top:12px !important;
+  padding-bottom:8px !important;
+}
+
+@media(max-width:780px){
+  #contact.contact-redesign,
+  #contact.contact-v2{
+    min-height:0 !important;
+    height:auto !important;
+    padding-top:34px !important;
+    padding-bottom:22px !important;
+  }
+}
+
+@media(max-width:560px){
+  #contact.contact-redesign,
+  #contact.contact-v2{
+    padding-top:30px !important;
+    padding-bottom:18px !important;
+  }
+
+  #contact.contact-redesign .contact-v2-hero{
+    padding-top:18px !important;
+    padding-bottom:18px !important;
+  }
+}
+
+/* =========================================================
+   NAVBAR CONTACT — HITAM
+   Tidak mengubah section atau coding lainnya
+========================================================= */
+
+.hero-reference-style .hero-nav-wrap.nav-dark-mode{
+  background:#11110f !important;
+}
+
+.hero-reference-style .hero-nav-wrap.nav-dark-mode .hero-logo,
+.hero-reference-style .hero-nav-wrap.nav-dark-mode .hero-menu a,
+.hero-reference-style .hero-nav-wrap.nav-dark-mode .hero-contact,
+.hero-reference-style .hero-nav-wrap.nav-dark-mode .hero-contact i{
+  color:#fff !important;
+}
