@@ -8,12 +8,12 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600;6..96,700&family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600;6..96,700&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20260923-hero-fixed">
   <link
-    href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
     rel="stylesheet"
 >
 </head>
@@ -64,7 +64,7 @@
         <nav class="hero-menu">
             <a href="#work">Work</a>
             <a href="#about">About</a>
-            <a href="#skills">Stack</a>
+            <a href="#stack">Stack</a>
             <a href="#life">Life</a>
         </nav>
 
@@ -72,6 +72,24 @@
             Contact
             <i class="bi bi-arrow-up-right"></i>
         </a>
+
+        <button
+            type="button"
+            class="hero-mobile-toggle"
+            aria-label="Buka menu"
+            aria-expanded="false"
+        >
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="hero-mobile-menu" aria-hidden="true">
+            <a href="#work">Work</a>
+            <a href="#about">About</a>
+            <a href="#stack">Stack</a>
+            <a href="#life">Life</a>
+            <a href="#contact">Contact</a>
+        </div>
     </div>
 
 
@@ -335,297 +353,2465 @@
     <section id="work" class="section shell">
       <div class="section-head reveal">
         <div>
-          <span class="section-number">02 / SELECTED WORK</span>
-          <h2>Things I've<br><em>actually made.</em></h2>
+          <span class="section-number">02 / PROJECT WEBSITE</span>
+          <h2>Project yang<br><em>saya buat.</em></h2>
         </div>
         <p>
-          Bukan cuma mockup. Ini kumpulan project, latihan, dan hal yang pernah saya kerjakan
-          selama belajar membuat website.
+          Dua project website yang benar-benar saya kerjakan selama belajar.
+          Preview dibuat seperti landing page dan nanti bisa dihubungkan ke website
+          yang sudah saya upload.
         </p>
       </div>
 
-      <div class="work-grid">
-        <article class="work-card work-card-large reveal-card">
-          <a href="#contact" class="work-media">
-            <img src="img/projects/website.jpg" alt="Project website Fahri" loading="lazy">
+      <div class="work-grid project-work-grid">
+
+        <article
+          class="work-card work-card-large reveal-card project-card"
+          data-project-year="2025"
+          data-project-url=""
+        >
+          <div class="work-media project-preview">
+            <img
+              src="img/projects/website2.jpg"
+              alt="Preview project website 2025"
+              loading="lazy"
+            >
+
+            <div class="project-browser-bar" aria-hidden="true">
+              <div class="project-browser-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <span class="project-browser-label">WEBSITE / 2025</span>
+            </div>
+
+            <div class="project-preview-label">
+              <span>PROJECT WEBSITE</span>
+              <strong>2025</strong>
+            </div>
+
+            <iframe
+              class="project-live-frame"
+              title="Preview project website 2025"
+              loading="lazy"
+              allowfullscreen
+            ></iframe>
+
             <span class="media-corner">01</span>
-            <span class="media-arrow"><i class="bi bi-arrow-up-right"></i></span>
-          </a>
+
+            <a
+              href="#contact"
+              class="media-arrow"
+              aria-label="Project 2025"
+            >
+              <i class="bi bi-arrow-up-right"></i>
+            </a>
+          </div>
+
           <div class="work-meta">
             <div>
-              <span>WEB DEVELOPMENT</span>
-              <h3>Website Projects</h3>
+              <span>PENGEMBANGAN WEB / 2025</span>
+              <h3>Project Website 2025</h3>
             </div>
-            <p>HTML / CSS / Bootstrap / JavaScript / PHP / MySQL</p>
+            <p>
+              HTML / CSS / Bootstrap / JavaScript / PHP / MySQL
+            </p>
+
+            <a
+              href="#contact"
+              class="project-view-button"
+              data-project-link
+              aria-label="Lihat project website 2025"
+            >
+              <span>Lihat Project</span>
+              <i class="bi bi-arrow-up-right"></i>
+            </a>
           </div>
         </article>
 
-        <article class="work-card reveal-card">
-          <a href="#life" class="work-media dual-media">
-            <img src="img/projects/alam.jpg" alt="Gunung Sibayak" loading="lazy">
-            <img src="img/projects/airterjun.jpg" alt="Air Terjun Dua Warna" loading="lazy">
+        <article
+          class="work-card work-card-offset reveal-card project-card"
+          data-project-year="2026"
+          data-project-url=""
+        >
+          <div class="work-media project-preview">
+<img
+  src="img/projects/website.jpg"
+  alt="Preview project website 2026"
+  loading="eager"
+  decoding="async"
+>
+
+            <div class="project-browser-bar" aria-hidden="true">
+              <div class="project-browser-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <span class="project-browser-label">WEBSITE / 2026</span>
+            </div>
+
+            <div class="project-preview-label">
+              <span>PROJECT WEBSITE</span>
+              <strong>2026</strong>
+            </div>
+
+            <iframe
+              class="project-live-frame"
+              title="Preview project website 2026"
+              loading="lazy"
+              allowfullscreen
+            ></iframe>
+
             <span class="media-corner">02</span>
-            <span class="media-arrow"><i class="bi bi-arrow-up-right"></i></span>
-          </a>
+
+            <a
+              href="#contact"
+              class="media-arrow"
+              aria-label="Project 2026"
+            >
+              <i class="bi bi-arrow-up-right"></i>
+            </a>
+          </div>
+
           <div class="work-meta">
             <div>
-              <span>OUTSIDE CODE</span>
-              <h3>Alam</h3>
+              <span>PENGEMBANGAN WEB / 2026</span>
+              <h3>Project Website 2026</h3>
             </div>
-            <p>Sibayak / Dua Warna</p>
+            <p>
+              HTML / CSS / Bootstrap / JavaScript / PHP / MySQL
+            </p>
+
+            <a
+              href="#contact"
+              class="project-view-button"
+              data-project-link
+              aria-label="Lihat project website 2026"
+            >
+              <span>Lihat Project</span>
+              <i class="bi bi-arrow-up-right"></i>
+            </a>
           </div>
         </article>
 
-        <article class="work-card work-card-offset reveal-card">
-          <a href="#life" class="work-media work-media-dark">
-            <img src="img/projects/ml.jpg" alt="Mobile Legends" loading="lazy">
-            <span class="media-corner">03</span>
-            <span class="media-arrow"><i class="bi bi-arrow-up-right"></i></span>
-          </a>
-          <div class="work-meta">
-            <div>
-              <span>HOBBY / TOURNAMENT</span>
-              <h3>Mobile Legends</h3>
-            </div>
-            <p>Gaming / tournament experience</p>
-          </div>
-        </article>
       </div>
 
       <div class="work-bottom-line reveal">
-        <span>More will come as I build more.</span>
+        <span>Project berikutnya menyusul.</span>
         <i class="bi bi-arrow-down-right"></i>
       </div>
     </section>
 
-    <!-- ==================================================
-         STACK
-    =================================================== -->
-    <section id="stack" class="section shell">
-      <div class="section-head reveal">
-        <div>
-          <span class="section-number">03 / STACK</span>
-          <h2>What I use<br><em>to build.</em></h2>
-        </div>
-        <p>
-          Tidak ada progress bar 97%. Ini teknologi yang memang sedang saya pelajari dan gunakan
-          di project-project saya.
+<!-- ==================================================
+     STACK / STACK EXPLORER
+=================================================== -->
+<!-- ==================================================
+     STACK LAB
+=================================================== -->
+
+<section
+  id="stack"
+  class="section shell stack-lab"
+>
+
+  <!-- ================================================
+       HEADER
+  ================================================= -->
+
+  <div class="stack-lab-heading reveal">
+
+    <div class="stack-lab-index">
+
+    </div>
+
+
+    <div class="stack-lab-title">
+
+
+      <h2>
+        Bahasa Yang
+        <em>saya gunakan.</em>
+      </h2>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================================================
+       STACK LAB CONSOLE
+  ================================================= -->
+
+  <div
+    class="stack-lab-console"
+    data-stack-lab
+  >
+
+
+    <!-- ==============================================
+         LEFT DIRECTORY
+    =============================================== -->
+
+    <aside class="stack-lab-directory">
+
+      <div class="stack-directory-label">
+        <span>BAHASA</span>
+        <span>SELECT</span>
+      </div>
+
+
+      <!-- HTML -->
+
+      <button
+        type="button"
+        class="stack-lab-item is-active"
+        data-stack-item
+        data-name="HTML"
+        data-type="STRUCTURE / CORE"
+        data-number="01"
+        data-difficulty="2"
+        data-description="Struktur halaman, semantic markup, section, form, dan fondasi utama website."
+        data-logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+      >
+
+        <span class="stack-lab-no">
+          01
+        </span>
+
+        <span class="stack-lab-item-logo">
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+            alt="HTML"
+          >
+        </span>
+
+        <span class="stack-lab-item-name">
+          HTML
+        </span>
+
+        <i class="bi bi-arrow-up-right"></i>
+
+      </button>
+
+
+      <!-- CSS -->
+
+      <button
+        type="button"
+        class="stack-lab-item"
+        data-stack-item
+        data-name="CSS"
+        data-type="VISUAL / CORE"
+        data-number="02"
+        data-difficulty="3"
+        data-description="Layout, responsive design, spacing, typography, transition, dan detail visual interface."
+        data-logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+      >
+
+        <span class="stack-lab-no">
+          02
+        </span>
+
+        <span class="stack-lab-item-logo">
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+            alt="CSS"
+          >
+        </span>
+
+        <span class="stack-lab-item-name">
+          CSS
+        </span>
+
+        <i class="bi bi-arrow-up-right"></i>
+
+      </button>
+
+
+      <!-- BOOTSTRAP -->
+
+      <button
+        type="button"
+        class="stack-lab-item"
+        data-stack-item
+        data-name="Bootstrap"
+        data-type="SYSTEM / CORE"
+        data-number="03"
+        data-difficulty="2"
+        data-description="Komponen interface, responsive grid, utility, dan sistem layout yang membantu development."
+        data-logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg"
+      >
+
+        <span class="stack-lab-no">
+          03
+        </span>
+
+        <span class="stack-lab-item-logo">
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg"
+            alt="Bootstrap"
+          >
+        </span>
+
+        <span class="stack-lab-item-name">
+          Bootstrap
+        </span>
+
+        <i class="bi bi-arrow-up-right"></i>
+
+      </button>
+
+
+      <!-- JAVASCRIPT -->
+
+      <button
+        type="button"
+        class="stack-lab-item"
+        data-stack-item
+        data-name="JavaScript"
+        data-type="INTERACTION / CORE"
+        data-number="04"
+        data-difficulty="4"
+        data-description="Interaksi, DOM, event, logic, dynamic behavior, dan animasi pada halaman."
+        data-logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+      >
+
+        <span class="stack-lab-no">
+          04
+        </span>
+
+        <span class="stack-lab-item-logo">
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+            alt="JavaScript"
+          >
+        </span>
+
+        <span class="stack-lab-item-name">
+          JavaScript
+        </span>
+
+        <i class="bi bi-arrow-up-right"></i>
+
+      </button>
+
+
+      <!-- PHP -->
+
+      <button
+        type="button"
+        class="stack-lab-item"
+        data-stack-item
+        data-name="PHP"
+        data-type="SERVER / CORE"
+        data-number="05"
+        data-difficulty="4"
+        data-description="Form handling, authentication, session, proses server, dan alur data pada website."
+        data-logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg"
+      >
+
+        <span class="stack-lab-no">
+          05
+        </span>
+
+        <span class="stack-lab-item-logo">
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg"
+            alt="PHP"
+          >
+        </span>
+
+        <span class="stack-lab-item-name">
+          PHP
+        </span>
+
+        <i class="bi bi-arrow-up-right"></i>
+
+      </button>
+
+
+      <!-- MYSQL -->
+
+      <button
+        type="button"
+        class="stack-lab-item"
+        data-stack-item
+        data-name="MySQL"
+        data-type="DATABASE / CORE"
+        data-number="06"
+        data-difficulty="3"
+        data-description="Database, CRUD, query, penyimpanan data, dan alur informasi project."
+        data-logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
+      >
+
+        <span class="stack-lab-no">
+          06
+        </span>
+
+        <span class="stack-lab-item-logo">
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
+            alt="MySQL"
+          >
+        </span>
+
+        <span class="stack-lab-item-name">
+          MySQL
+        </span>
+
+        <i class="bi bi-arrow-up-right"></i>
+
+      </button>
+
+    </aside>
+
+
+    <!-- ==============================================
+         CENTER STAGE
+    =============================================== -->
+
+    <div
+      class="stack-lab-stage"
+      data-stack-stage
+    >
+
+      <div
+        class="stack-stage-grid"
+        aria-hidden="true"
+      ></div>
+
+
+      <div
+        class="stack-stage-glow"
+        aria-hidden="true"
+      ></div>
+
+
+      <div
+        class="stack-stage-crosshair"
+        aria-hidden="true"
+      >
+
+        <span></span>
+        <span></span>
+
+      </div>
+
+
+      <div class="stack-stage-top">
+
+        <span>
+          SYSTEM / MODULE
+        </span>
+
+        <span data-stack-stage-number>
+          01
+        </span>
+
+      </div>
+
+
+      <div
+        class="stack-stage-orbit orbit-one"
+        aria-hidden="true"
+      ></div>
+
+      <div
+        class="stack-stage-orbit orbit-two"
+        aria-hidden="true"
+      ></div>
+
+
+      <div
+        class="stack-stage-logo"
+        data-stack-stage-logo
+      >
+
+        <span class="stack-stage-logo-line"></span>
+
+        <img
+          src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+          alt="HTML"
+          data-stack-stage-image
+        >
+
+      </div>
+
+
+      <div class="stack-stage-data">
+
+        <span
+          data-stack-stage-type
+          class="stack-stage-type"
+        >
+          STRUCTURE / CORE
+        </span>
+
+        <h3
+          data-stack-stage-name
+        >
+          HTML
+        </h3>
+
+        <p
+          data-stack-stage-description
+        >
+          Struktur halaman, semantic markup,
+          section, form, dan fondasi utama
+          website.
         </p>
+
       </div>
 
-      <div class="stack-list">
-        <div class="stack-row reveal-row">
-          <span class="stack-no">01</span>
-          <strong>HTML</strong>
-          <span>Structure / semantic markup</span>
-          <i class="bi bi-arrow-up-right"></i>
-        </div>
-        <div class="stack-row reveal-row">
-          <span class="stack-no">02</span>
-          <strong>CSS</strong>
-          <span>Layout / responsive / visual polish</span>
-          <i class="bi bi-arrow-up-right"></i>
-        </div>
-        <div class="stack-row reveal-row">
-          <span class="stack-no">03</span>
-          <strong>Bootstrap</strong>
-          <span>Components / responsive systems</span>
-          <i class="bi bi-arrow-up-right"></i>
-        </div>
-        <div class="stack-row reveal-row">
-          <span class="stack-no">04</span>
-          <strong>JavaScript</strong>
-          <span>Interactions / logic / motion</span>
-          <i class="bi bi-arrow-up-right"></i>
-        </div>
-        <div class="stack-row reveal-row">
-          <span class="stack-no">05</span>
-          <strong>PHP</strong>
-          <span>Back-end fundamentals</span>
-          <i class="bi bi-arrow-up-right"></i>
-        </div>
-        <div class="stack-row reveal-row">
-          <span class="stack-no">06</span>
-          <strong>MySQL</strong>
-          <span>Database / CRUD / data flow</span>
-          <i class="bi bi-arrow-up-right"></i>
-        </div>
-      </div>
 
-      <div class="now-card reveal">
-        <div class="now-marker"><span></span> NOW</div>
+      <div class="stack-stage-footer">
+
+        <span>
+          MOVE / EXPLORE
+        </span>
+
         <div>
-          <span class="section-number">CURRENTLY LEARNING</span>
-          <h3>Cleaner layouts, better responsive design, stronger logic, and more project experience.</h3>
+          <i class="bi bi-arrow-down"></i>
+          <i class="bi bi-arrow-down"></i>
+          <i class="bi bi-arrow-down"></i>
         </div>
+
       </div>
-    </section>
 
-    <!-- ==================================================
-         JOURNEY
-    =================================================== -->
-    <section id="journey" class="section journey-section">
-      <div class="shell">
-        <div class="section-head reveal">
-          <div>
-            <span class="section-number">04 / JOURNEY</span>
-            <h2>From “kok gak<br><em>muncul?” to “jadi.”</em></h2>
-          </div>
-          <p>
-            Belajar coding buat saya banyak berkutat dengan mencoba, menemukan error, mencari penyebab,
-            lalu memperbaikinya sampai akhirnya bekerja.
-          </p>
-        </div>
+    </div>
 
-        <div class="journey-list">
-          <article class="journey-item reveal-row">
-            <div class="journey-no">01</div>
-            <div class="journey-main">
-              <span>START</span>
-              <h3>Kenalan dengan struktur website</h3>
-              <p>Mulai memahami HTML, elemen, atribut, section, form, dan bagaimana halaman tersusun dari bagian kecil.</p>
-            </div>
-            <i class="bi bi-filetype-html"></i>
-          </article>
 
-          <article class="journey-item reveal-row">
-            <div class="journey-no">02</div>
-            <div class="journey-main">
-              <span>STYLE</span>
-              <h3>Belajar membuat layout yang rapi</h3>
-              <p>Masuk ke CSS, spacing, typography, flexbox, grid, responsive design, sampai mencoba membuat halaman lebih punya karakter.</p>
-            </div>
-            <i class="bi bi-palette"></i>
-          </article>
+    <!-- ==============================================
+         RIGHT READOUT
+    =============================================== -->
 
-          <article class="journey-item reveal-row">
-            <div class="journey-no">03</div>
-            <div class="journey-main">
-              <span>LOGIC</span>
-              <h3>Membuat halaman mulai hidup</h3>
-              <p>JavaScript dipakai untuk interaksi, sedangkan PHP mulai mengenalkan saya pada proses data dan sisi server.</p>
-            </div>
-            <i class="bi bi-braces"></i>
-          </article>
+    <aside class="stack-lab-readout">
 
-          <article class="journey-item reveal-row">
-            <div class="journey-no">04</div>
-            <div class="journey-main">
-              <span>DATABASE</span>
-              <h3>Belajar menghubungkan data</h3>
-              <p>MySQL dan CRUD membuat saya mulai memahami bahwa sebuah website bukan hanya tampilan, tapi juga data yang harus dikelola.</p>
-            </div>
-            <i class="bi bi-database"></i>
-          </article>
-
-          <article class="journey-item reveal-row">
-            <div class="journey-no">05</div>
-            <div class="journey-main">
-              <span>NEXT</span>
-              <h3>Project berikutnya harus lebih baik</h3>
-              <p>Saya belum selesai belajar. Target saya sederhana: setiap project baru harus punya satu hal yang lebih baik dari project sebelumnya.</p>
-            </div>
-            <i class="bi bi-arrow-right"></i>
-          </article>
-        </div>
+      <div class="stack-readout-heading">
+        <span>READOUT</span>
+        <span>LIVE</span>
       </div>
-    </section>
+
+
+      <div class="stack-readout-main">
+
+        <span class="stack-readout-small">
+          ACTIVE LAYER
+        </span>
+
+        <strong data-stack-readout-name>
+          HTML
+        </strong>
+
+      </div>
+
+
+      <div class="stack-readout-list">
+
+        <div>
+          <span>01</span>
+          <strong>STRUCTURE</strong>
+        </div>
+
+        <div>
+          <span>02</span>
+          <strong>VISUAL</strong>
+        </div>
+
+        <div>
+          <span>03</span>
+          <strong>INTERACTION</strong>
+        </div>
+
+        <div>
+          <span>04</span>
+          <strong>SERVER</strong>
+        </div>
+
+        <div>
+          <span>05</span>
+          <strong>DATABASE</strong>
+        </div>
+
+      </div>
+
+
+      <div class="stack-readout-bottom">
+
+        <div class="stack-difficulty-head">
+
+          <span>
+            TINGKAT KESULITAN
+          </span>
+
+          <strong
+            data-stack-difficulty-label
+          >
+            MUDAH
+          </strong>
+
+        </div>
+
+        <div
+          class="stack-difficulty"
+          data-stack-difficulty
+          aria-label="Tingkat kesulitan"
+        >
+
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+
+        </div>
+
+        <div class="stack-difficulty-scale">
+
+          <span>
+            MUDAH
+          </span>
+
+          <span>
+            MENENGAH
+          </span>
+
+          <span>
+            SULIT
+          </span>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+  </div>
+
+
+  <!-- ================================================
+       LIBRARIES / MOTION LAYER
+  ================================================= -->
+
+  <div class="stack-libraries reveal">
+
+    <div class="stack-libraries-heading">
+
+      <div>
+
+        <span class="stack-lab-kicker">
+          LIBRARY / MOTION
+        </span>
+
+        <h3>
+          Library yang 
+          <em>saya pakai.</em>
+        </h3>
+
+      </div>
+
+      <p>
+        Library yang dipakai untuk
+        scrolling, animation, typography,
+        dan interaction di portfolio ini.
+      </p>
+
+    </div>
+
+
+    <div class="stack-library-track">
+
+
+      <!-- GSAP -->
+
+      <div
+        class="stack-library"
+        data-library
+      >
+
+        <span class="stack-library-index">
+          01
+        </span>
+
+        <div class="stack-library-symbol">
+          GS
+        </div>
+
+        <div class="stack-library-name">
+
+          <span>
+            ANIMATION
+          </span>
+
+          <strong>
+            GSAP
+          </strong>
+
+        </div>
+
+        <i class="bi bi-arrow-up-right"></i>
+
+      </div>
+
+
+      <!-- SCROLLTRIGGER -->
+
+      <div
+        class="stack-library"
+        data-library
+      >
+
+        <span class="stack-library-index">
+          02
+        </span>
+
+        <div class="stack-library-symbol">
+          ST
+        </div>
+
+        <div class="stack-library-name">
+
+          <span>
+            SCROLL MOTION
+          </span>
+
+          <strong>
+            ScrollTrigger
+          </strong>
+
+        </div>
+
+        <i class="bi bi-arrow-up-right"></i>
+
+      </div>
+
+
+      <!-- SPLITTEXT -->
+
+      <div
+        class="stack-library"
+        data-library
+      >
+
+        <span class="stack-library-index">
+          03
+        </span>
+
+        <div class="stack-library-symbol">
+          TX
+        </div>
+
+        <div class="stack-library-name">
+
+          <span>
+            TYPOGRAPHY
+          </span>
+
+          <strong>
+            SplitText
+          </strong>
+
+        </div>
+
+        <i class="bi bi-arrow-up-right"></i>
+
+      </div>
+
+
+      <!-- LENIS -->
+
+      <div
+        class="stack-library"
+        data-library
+      >
+
+        <span class="stack-library-index">
+          04
+        </span>
+
+        <div class="stack-library-symbol">
+          LN
+        </div>
+
+        <div class="stack-library-name">
+
+          <span>
+            SMOOTH SCROLL
+          </span>
+
+          <strong>
+            Lenis
+          </strong>
+
+        </div>
+
+        <i class="bi bi-arrow-up-right"></i>
+
+      </div>
+
+
+      <!-- BOOTSTRAP ICONS -->
+
+      <div
+        class="stack-library"
+        data-library
+      >
+
+        <span class="stack-library-index">
+          05
+        </span>
+
+        <div class="stack-library-symbol">
+          <i class="bi bi-bootstrap"></i>
+        </div>
+
+        <div class="stack-library-name">
+
+          <span>
+            UI ICONS
+          </span>
+
+          <strong>
+            Bootstrap Icons
+          </strong>
+
+        </div>
+
+        <i class="bi bi-arrow-up-right"></i>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+  <!-- ================================================
+       CURRENTLY LEARNING
+  ================================================= -->
+
+  <div class="now-card reveal">
+
+    <div class="now-marker">
+
+      <span></span>
+
+      NOW
+
+    </div>
+
+    <div>
+
+      <span class="section-number">
+        CURRENTLY LEARNING
+      </span>
+
+      <h3>
+        Cleaner layouts, better responsive design,
+        stronger logic, and more project experience.
+      </h3>
+
+    </div>
+
+  </div>
+
 
     <!-- ==================================================
          OUTSIDE CODE
     =================================================== -->
-    <section id="life" class="section section-paper">
-      <div class="shell">
-        <div class="section-head reveal">
-          <div>
-            <span class="section-number">05 / OUTSIDE CODE</span>
-            <h2>Not everything<br><em>is code.</em></h2>
-          </div>
-          <p>
-            Portfolio ini juga punya bagian untuk hal yang saya suka saat laptop sudah ditutup:
-            jalan, melihat tempat baru, dan main game.
-          </p>
-        </div>
+<!-- ==================================================
+     LIFE / OUTSIDE CODE
+=================================================== -->
+<section id="life" class="section section-paper life-section">
 
-        <div class="life-grid">
-          <div class="life-card life-card-photo reveal-image">
-            <img src="img/projects/alam.jpg" alt="Gunung Sibayak" loading="lazy">
-            <div class="life-caption">
-              <span>01 — EXPLORING</span>
-              <strong>Gunung Sibayak</strong>
-            </div>
-          </div>
+  <!-- ATMOSPHERE / BACKGROUND -->
+  <div class="life-atmosphere" aria-hidden="true">
+    <div class="life-bg-image">
+      <img src="img/life/dua-warna-bg.jpg" alt="">
+    </div>
 
-          <div class="life-card life-card-text reveal">
-            <span class="life-symbol">✦</span>
-            <span class="section-number">OFF SCREEN</span>
-            <h3>Alam bikin kepala istirahat dari layar.</h3>
-            <p>
-              Saya pernah mengunjungi Gunung Sibayak dan Air Terjun Dua Warna. Dua tempat ini saya simpan
-              karena keduanya punya pengalaman sendiri dan jadi bagian dari cerita saya di luar coding.
-            </p>
-          </div>
+    <div class="life-bg-veil"></div>
+    <div class="life-bg-mist life-bg-mist-a"></div>
+    <div class="life-bg-mist life-bg-mist-b"></div>
+    <div class="life-bg-glow"></div>
 
-          <div class="life-card life-card-photo reveal-image">
-            <img src="img/projects/ml.jpg" alt="Mobile Legends" loading="lazy">
-            <div class="life-caption">
-              <span>02 — GAMING</span>
-              <strong>Mobile Legends</strong>
-            </div>
-          </div>
+    <span class="life-particle life-particle-1"></span>
+    <span class="life-particle life-particle-2"></span>
+    <span class="life-particle life-particle-3"></span>
+    <span class="life-particle life-particle-4"></span>
 
-          <div class="life-card life-card-quote reveal">
-            <span class="section-number">A SMALL NOTE</span>
-            <blockquote>
-              “Nggak harus langsung jago. Project berikutnya cukup lebih rapi dari yang sebelumnya.”
-            </blockquote>
-          </div>
+    <div class="life-bg-line life-bg-line-a"></div>
+    <div class="life-bg-line life-bg-line-b"></div>
+  </div>
+
+
+  <div class="shell life-shell">
+
+    <!-- ================================================
+         LIFE HEADER
+    ================================================= -->
+    <header class="life-header">
+
+      <div class="life-header-kicker">
+        <span class="life-header-orbit">
+          <i class="bi bi-compass"></i>
+        </span>
+
+        <div>
+          <span class="section-number life-section-number">04 / LIFE OUTSIDE CODE</span>
+          <p>PLACES / PLAY / PAUSE</p>
         </div>
       </div>
+
+      <div class="life-header-title">
+        <h2>
+          Life outside<br>
+          <em>the screen.</em>
+        </h2>
+      </div>
+
+      <div class="life-header-side">
+        <span class="life-header-side-icon">
+          <i class="bi bi-stars"></i>
+        </span>
+        <p>
+          Saat laptop ditutup, saya tetap mencari dua hal:
+          tempat baru untuk dilihat dan game untuk dimainkan.
+        </p>
+      </div>
+
+    </header>
+
+
+    <!-- ================================================
+         TRAVEL
+    ================================================= -->
+<!-- =========================================================
+     LIFE / DI LUAR LAYAR
+========================================================= -->
+<section
+  id="life"
+  class="section life-section"
+>
+
+
+  <!-- =======================================================
+       LATAR BELAKANG
+  ======================================================== -->
+
+  <div
+    class="life-background"
+    aria-hidden="true"
+  >
+
+    <div class="life-bg-image"></div>
+
+    <div class="life-bg-gradient"></div>
+
+    <div class="life-bg-glow"></div>
+
+    <div class="life-bg-mist life-bg-mist-a"></div>
+
+    <div class="life-bg-mist life-bg-mist-b"></div>
+
+    <div class="life-bg-orb life-bg-orb-a"></div>
+
+    <div class="life-bg-orb life-bg-orb-b"></div>
+
+    <span class="life-particle life-particle-01"></span>
+    <span class="life-particle life-particle-02"></span>
+    <span class="life-particle life-particle-03"></span>
+    <span class="life-particle life-particle-04"></span>
+    <span class="life-particle life-particle-05"></span>
+    <span class="life-particle life-particle-06"></span>
+
+  </div>
+
+
+
+  <!-- =======================================================
+       ISI UTAMA
+  ======================================================== -->
+
+  <div class="shell">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <section class="life-header">
+
+      <div class="life-header-title">
+
+        <span class="section-number">
+          05 / DI LUAR LAYAR
+        </span>
+
+
+        <h2>
+          Hidup tidak<br>
+          cuma <em>tentang kode.</em>
+        </h2>
+
+      </div>
+
+
+      <p>
+        Ada waktu ketika layar ditutup dan perjalanan dimulai.
+        Ada juga waktu untuk bermain, santai, dan menikmati hal
+        yang sederhana.
+      </p>
+
+
+      <!-- ICON ORBIT -->
+
+      <div
+        class="life-header-orbit"
+        aria-hidden="true"
+      >
+
+        <span class="life-orbit-ring"></span>
+
+        <span class="life-orbit-icon">
+          <i class="bi bi-compass"></i>
+        </span>
+
+      </div>
+
     </section>
 
+
+
+    <!-- =====================================================
+         PERJALANAN
+    ====================================================== -->
+
+    <section class="life-travel">
+
+
+      <!-- ================= HEADER PERJALANAN ================= -->
+
+      <div class="life-chapter-head">
+
+        <div>
+
+          <span class="life-chapter-number">
+            01
+          </span>
+
+
+          <div>
+
+            <span class="life-kicker">
+              PERJALANAN
+            </span>
+
+
+            <h3>
+              Pergi sebentar,<br>
+              pulang bawa cerita.
+            </h3>
+
+          </div>
+
+        </div>
+
+
+        <div class="life-travel-heading-icon">
+
+          <i class="bi bi-signpost-2"></i>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =====================================================
+           AREA PERJALANAN
+      ====================================================== -->
+
+      <div class="life-travel-stage">
+
+
+        <!-- GARIS PERJALANAN -->
+
+        <div
+          class="life-route-line"
+          aria-hidden="true"
+        >
+
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+
+        </div>
+
+
+
+        <!-- ===================================================
+             FOTO SIBAYAK 01
+        ==================================================== -->
+
+        <section
+          class="life-travel-main life-travel-card life-social-post"
+          data-travel-card="sibayak-1"
+>
+
+
+          <div class="life-social-head">
+            <div class="life-social-profile">
+              <span class="life-social-avatar">F</span>
+              <strong>Fahri</strong>
+            </div>
+
+            <button
+              type="button"
+              class="life-social-more"
+              aria-label="Menu postingan"
+            >
+              <i class="bi bi-three-dots"></i>
+            </button>
+          </div>
+
+          <div class="life-travel-image">
+
+            <img
+              src="img/projects/alam.jpg"
+              alt="Gunung Sibayak"
+              loading="lazy"
+            >
+
+
+            <div class="life-travel-overlay"></div>
+
+
+            <div class="life-travel-index">
+              01
+            </div>
+
+
+            <div
+              class="life-travel-icon"
+              aria-hidden="true"
+            >
+
+              <i class="bi bi-triangle"></i>
+
+            </div>
+
+
+            <div class="life-travel-place">
+
+              <span>
+                GUNUNG SIBAYAK
+              </span>
+
+              <strong>
+                Perjalanan<br>
+                pertama.
+              </strong>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="life-social-bottom">
+            <div class="life-social-actions">
+              <div class="life-social-actions-left">
+                <button
+                  type="button"
+                  class="life-social-btn life-social-like"
+                  data-social-like
+                  aria-label="Suka postingan"
+                  aria-pressed="false"
+                >
+                  <i class="bi bi-heart"></i>
+                </button>
+
+                <button
+                  type="button"
+                  class="life-social-btn"
+                  data-social-action="comment"
+                  aria-label="Komentar"
+                >
+                  <i class="bi bi-chat"></i>
+                </button>
+
+                <button
+                  type="button"
+                  class="life-social-btn"
+                  data-social-action="share"
+                  aria-label="Bagikan"
+                >
+                  <i class="bi bi-send"></i>
+                </button>
+              </div>
+
+              <button
+                type="button"
+                class="life-social-btn life-social-save"
+                data-social-save
+                aria-label="Simpan postingan"
+                aria-pressed="false"
+              >
+                <i class="bi bi-bookmark"></i>
+              </button>
+            </div>
+
+            <div
+              class="life-social-likes"
+              data-like-count="128"
+              data-like-base="128"
+            >
+              128 suka
+            </div>
+
+            <div class="life-social-caption">
+              <strong>Gunung Sibayak</strong>
+              <span>Perjalanan pertama.</span>
+            </div>
+          </div>
+
+
+          <div class="life-travel-meta">
+
+            <span>
+              MENDAKI
+            </span>
+
+            <span>
+              PEGUNUNGAN
+            </span>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- ===================================================
+             FOTO SIBAYAK 02
+        ==================================================== -->
+
+        <section
+          class="life-travel-secondary life-travel-card life-travel-card-sibayak-2 life-social-post"
+          data-travel-card="sibayak-2"
+>
+
+
+          <div class="life-social-head">
+            <div class="life-social-profile">
+              <span class="life-social-avatar">F</span>
+              <strong>Fahri</strong>
+            </div>
+
+            <button
+              type="button"
+              class="life-social-more"
+              aria-label="Menu postingan"
+            >
+              <i class="bi bi-three-dots"></i>
+            </button>
+          </div>
+
+          <div class="life-travel-image">
+
+            <img
+              src="img/projects/alam2.jpg"
+              alt="Gunung Sibayak dari jalur perjalanan"
+              loading="lazy"
+            >
+
+
+            <div class="life-travel-overlay"></div>
+
+
+            <div class="life-travel-index">
+              02
+            </div>
+
+
+            <div
+              class="life-travel-icon"
+              aria-hidden="true"
+            >
+
+              <i class="bi bi-clouds"></i>
+
+            </div>
+
+
+            <div class="life-travel-place">
+
+              <span>
+                GUNUNG SIBAYAK
+              </span>
+
+              <strong>
+                Kabut dan<br>
+                ketinggian.
+              </strong>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="life-social-bottom">
+            <div class="life-social-actions">
+              <div class="life-social-actions-left">
+                <button
+                  type="button"
+                  class="life-social-btn life-social-like"
+                  data-social-like
+                  aria-label="Suka postingan"
+                  aria-pressed="false"
+                >
+                  <i class="bi bi-heart"></i>
+                </button>
+
+                <button
+                  type="button"
+                  class="life-social-btn"
+                  data-social-action="comment"
+                  aria-label="Komentar"
+                >
+                  <i class="bi bi-chat"></i>
+                </button>
+
+                <button
+                  type="button"
+                  class="life-social-btn"
+                  data-social-action="share"
+                  aria-label="Bagikan"
+                >
+                  <i class="bi bi-send"></i>
+                </button>
+              </div>
+
+              <button
+                type="button"
+                class="life-social-btn life-social-save"
+                data-social-save
+                aria-label="Simpan postingan"
+                aria-pressed="false"
+              >
+                <i class="bi bi-bookmark"></i>
+              </button>
+            </div>
+
+            <div
+              class="life-social-likes"
+              data-like-count="96"
+              data-like-base="96"
+            >
+              96 suka
+            </div>
+
+            <div class="life-social-caption">
+              <strong>Gunung Sibayak</strong>
+              <span>Kabut dan ketinggian.</span>
+            </div>
+          </div>
+
+
+          <div class="life-travel-meta">
+
+            <span>
+              SUASANA
+            </span>
+
+            <span>
+              ALAM
+            </span>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- ===================================================
+             FOTO SIBAYAK 03
+        ==================================================== -->
+
+        <section
+          class="life-travel-sibayak-three life-travel-card life-social-post"
+          data-travel-card="sibayak-3"
+>
+
+
+          <div class="life-social-head">
+            <div class="life-social-profile">
+              <span class="life-social-avatar">F</span>
+              <strong>Fahri</strong>
+            </div>
+
+            <button
+              type="button"
+              class="life-social-more"
+              aria-label="Menu postingan"
+            >
+              <i class="bi bi-three-dots"></i>
+            </button>
+          </div>
+
+          <div class="life-travel-image">
+
+            <img
+              src="img/projects/alam3.jpg"
+              alt="Pemandangan Gunung Sibayak"
+              loading="lazy"
+            >
+
+
+            <div class="life-travel-overlay"></div>
+
+
+            <div class="life-travel-index">
+              03
+            </div>
+
+
+            <div
+              class="life-travel-icon"
+              aria-hidden="true"
+            >
+
+              <i class="bi bi-binoculars"></i>
+
+            </div>
+
+
+            <div class="life-travel-place">
+
+              <span>
+                GUNUNG SIBAYAK
+              </span>
+
+              <strong>
+                Pemandangan<br>
+                yang disimpan.
+              </strong>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="life-social-bottom">
+            <div class="life-social-actions">
+              <div class="life-social-actions-left">
+                <button
+                  type="button"
+                  class="life-social-btn life-social-like"
+                  data-social-like
+                  aria-label="Suka postingan"
+                  aria-pressed="false"
+                >
+                  <i class="bi bi-heart"></i>
+                </button>
+
+                <button
+                  type="button"
+                  class="life-social-btn"
+                  data-social-action="comment"
+                  aria-label="Komentar"
+                >
+                  <i class="bi bi-chat"></i>
+                </button>
+
+                <button
+                  type="button"
+                  class="life-social-btn"
+                  data-social-action="share"
+                  aria-label="Bagikan"
+                >
+                  <i class="bi bi-send"></i>
+                </button>
+              </div>
+
+              <button
+                type="button"
+                class="life-social-btn life-social-save"
+                data-social-save
+                aria-label="Simpan postingan"
+                aria-pressed="false"
+              >
+                <i class="bi bi-bookmark"></i>
+              </button>
+            </div>
+
+            <div
+              class="life-social-likes"
+              data-like-count="114"
+              data-like-base="114"
+            >
+              114 suka
+            </div>
+
+            <div class="life-social-caption">
+              <strong>Gunung Sibayak</strong>
+              <span>Pemandangan yang disimpan.</span>
+            </div>
+          </div>
+
+
+          <div class="life-travel-meta">
+
+            <span>
+              PEMANDANGAN
+            </span>
+
+            <span>
+              SIBAYAK
+            </span>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- ===================================================
+             FOTO AIR TERJUN
+        ==================================================== -->
+
+        <section
+          class="life-travel-waterfall life-travel-card life-social-post"
+          data-travel-card="air-terjun"
+>
+
+
+          <div class="life-social-head">
+            <div class="life-social-profile">
+              <span class="life-social-avatar">F</span>
+              <strong>Fahri</strong>
+            </div>
+
+            <button
+              type="button"
+              class="life-social-more"
+              aria-label="Menu postingan"
+            >
+              <i class="bi bi-three-dots"></i>
+            </button>
+          </div>
+
+          <div class="life-travel-image">
+
+            <img
+              src="img/projects/airterjun.jpg"
+              alt="Air Terjun Dua Warna"
+              loading="lazy"
+            >
+
+
+            <div class="life-travel-overlay"></div>
+
+
+            <div class="life-travel-index">
+              04
+            </div>
+
+
+            <div
+              class="life-travel-icon"
+              aria-hidden="true"
+            >
+
+              <i class="bi bi-water"></i>
+
+            </div>
+
+
+            <div class="life-travel-place">
+
+              <span>
+                AIR TERJUN DUA WARNA
+              </span>
+
+              <strong>
+                Air dan<br>
+                alam.
+              </strong>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="life-social-bottom">
+            <div class="life-social-actions">
+              <div class="life-social-actions-left">
+                <button
+                  type="button"
+                  class="life-social-btn life-social-like"
+                  data-social-like
+                  aria-label="Suka postingan"
+                  aria-pressed="false"
+                >
+                  <i class="bi bi-heart"></i>
+                </button>
+
+                <button
+                  type="button"
+                  class="life-social-btn"
+                  data-social-action="comment"
+                  aria-label="Komentar"
+                >
+                  <i class="bi bi-chat"></i>
+                </button>
+
+                <button
+                  type="button"
+                  class="life-social-btn"
+                  data-social-action="share"
+                  aria-label="Bagikan"
+                >
+                  <i class="bi bi-send"></i>
+                </button>
+              </div>
+
+              <button
+                type="button"
+                class="life-social-btn life-social-save"
+                data-social-save
+                aria-label="Simpan postingan"
+                aria-pressed="false"
+              >
+                <i class="bi bi-bookmark"></i>
+              </button>
+            </div>
+
+            <div
+              class="life-social-likes"
+              data-like-count="142"
+              data-like-base="142"
+            >
+              142 suka
+            </div>
+
+            <div class="life-social-caption">
+              <strong>Air Terjun Dua Warna</strong>
+              <span>Air, suara, dan perjalanan.</span>
+            </div>
+          </div>
+
+
+          <div class="life-travel-meta">
+
+            <span>
+              AIR TERJUN
+            </span>
+
+            <span>
+              DUA WARNA
+            </span>
+
+          </div>
+
+
+          <!-- GELOMBANG AIR -->
+
+          <div
+            class="life-water-ripple life-water-ripple-a"
+            aria-hidden="true"
+          ></div>
+
+          <div
+            class="life-water-ripple life-water-ripple-b"
+            aria-hidden="true"
+          ></div>
+
+        </section>
+
+
+
+        <!-- ===================================================
+             CATATAN PERJALANAN
+        ==================================================== -->
+
+        <section
+          class="life-travel-stamp life-travel-card"
+        >
+
+          <div class="life-stamp-icon">
+
+            <i class="bi bi-compass"></i>
+
+          </div>
+
+
+          <strong>
+            04
+          </strong>
+
+
+          <span>
+            TEMPAT
+          </span>
+
+
+          <small>
+            Tiga cerita dari Gunung Sibayak
+            dan satu cerita dari air.
+          </small>
+
+        </section>
+
+
+
+        <!-- ===================================================
+             PENANDA LOKASI
+        ==================================================== -->
+
+        <section
+          class="life-travel-marker"
+          aria-hidden="true"
+        >
+
+          <i class="bi bi-geo-alt-fill"></i>
+
+          <span>
+            SUMATERA UTARA
+          </span>
+
+        </section>
+
+
+
+        <!-- ===================================================
+             ICON DEKORASI
+        ==================================================== -->
+
+        <span
+          class="life-travel-doodle life-travel-doodle-01"
+          aria-hidden="true"
+        >
+          <i class="bi bi-tree"></i>
+        </span>
+
+
+        <span
+          class="life-travel-doodle life-travel-doodle-02"
+          aria-hidden="true"
+        >
+          <i class="bi bi-stars"></i>
+        </span>
+
+
+        <span
+          class="life-travel-doodle life-travel-doodle-03"
+          aria-hidden="true"
+        >
+          <i class="bi bi-water"></i>
+        </span>
+
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         PEMISAH
+    ====================================================== -->
+
+    <div
+      class="life-divider"
+      aria-hidden="true"
+    >
+
+      <span></span>
+
+      <div class="life-divider-icon">
+
+        <i class="bi bi-arrow-down"></i>
+
+      </div>
+
+      <span></span>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PERMAINAN
+    ====================================================== -->
+
+    <section class="life-gaming">
+
+
+      <!-- ================= HEADER PERMAINAN ================= -->
+
+      <div class="life-chapter-head">
+
+        <div>
+
+          <span class="life-chapter-number">
+            02
+          </span>
+
+
+          <div>
+
+            <span class="life-kicker">
+              PERMAINAN
+            </span>
+
+
+            <h3>
+              Saat bukan<br>
+              bikin website.
+            </h3>
+
+          </div>
+
+        </div>
+
+
+        <!-- TOMBOL -->
+
+        <div class="life-gaming-controls">
+
+
+          <button
+            type="button"
+            class="life-game-arrow"
+            data-game-prev
+            aria-label="Permainan sebelumnya"
+          >
+
+            <i class="bi bi-arrow-left"></i>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="life-game-arrow"
+            data-game-next
+            aria-label="Permainan berikutnya"
+          >
+
+            <i class="bi bi-arrow-right"></i>
+
+          </button>
+
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =====================================================
+           KARTU PERMAINAN
+      ====================================================== -->
+
+      <div class="life-game-window">
+
+
+        <div
+          class="life-game-track"
+          data-game-track
+        >
+
+
+
+          <!-- =================================================
+               MOBILE LEGENDS
+          ================================================== -->
+
+          <section
+            class="life-game-card"
+            data-game-card
+          >
+
+            <div class="life-game-image">
+
+
+              <img
+                src="img/projects/ml.jpg"
+                alt="Mobile Legends"
+                loading="lazy"
+              >
+
+
+              <div class="life-game-image-shade"></div>
+
+
+              <div class="life-game-number">
+                01
+              </div>
+
+
+              <div
+                class="life-game-icon"
+                aria-hidden="true"
+              >
+
+                <i class="bi bi-controller"></i>
+
+              </div>
+
+
+              <div class="life-game-bottom">
+
+                <span>
+                  MOBILE LEGENDS
+                </span>
+
+
+                <strong>
+                  Main bareng,<br>
+                  kalah menang tetap seru.
+                </strong>
+
+              </div>
+
+            </div>
+
+          </section>
+
+
+
+          <!-- =================================================
+               ROBLOX
+          ================================================== -->
+
+          <section
+            class="life-game-card"
+            data-game-card
+          >
+
+            <div class="life-game-image">
+
+
+              <img
+                src="img/projects/roblox.jpg"
+                alt="Roblox"
+                loading="lazy"
+              >
+
+
+              <div class="life-game-image-shade"></div>
+
+
+              <div class="life-game-number">
+                02
+              </div>
+
+
+              <div
+                class="life-game-icon"
+                aria-hidden="true"
+              >
+
+                <i class="bi bi-joystick"></i>
+
+              </div>
+
+
+              <div class="life-game-bottom">
+
+                <span>
+                  ROBLOX
+                </span>
+
+
+                <strong>
+                  Masuk dunia lain,<br>
+                  bikin cerita sendiri.
+                </strong>
+
+              </div>
+
+            </div>
+
+          </section>
+
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =====================================================
+           BAGIAN BAWAH PERMAINAN
+      ====================================================== -->
+
+      <div class="life-game-footer">
+
+
+        <div class="life-game-progress">
+
+          <span
+            data-game-progress
+          ></span>
+
+        </div>
+
+
+        <span
+          class="life-game-counter"
+          data-game-counter
+        >
+          01 / 02
+        </span>
+
+
+        <div
+          class="life-game-footer-icon"
+          aria-hidden="true"
+        >
+
+          <i class="bi bi-controller"></i>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ICON BESAR -->
+
+      <span
+        class="life-game-doodle"
+        aria-hidden="true"
+      >
+
+        <i class="bi bi-controller"></i>
+
+      </span>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         KALIMAT PENUTUP
+    ====================================================== -->
+
+    <section class="life-closing">
+
+      <div class="life-closing-icon">
+
+        <i class="bi bi-sparkles"></i>
+
+      </div>
+
+
+      <h3>
+        Di luar layar pun<br>
+        tetap ada cerita.
+      </h3>
+
+
+      <p>
+        Dari jalur gunung sampai layar permainan,
+        semuanya menjadi bagian kecil dari keseharian saya.
+      </p>
+
+    </section>
+
+
+  </div>
+
+</section>
+
+</section>
     <!-- ==================================================
          CONTACT
     =================================================== -->
-    <section id="contact" class="contact-section">
-      <div class="shell">
-        <div class="contact-top reveal">
-          <span class="section-number">06 / CONTACT</span>
-          <span>LET'S TALK</span>
+    <!-- ==================================================
+         CONTACT — SOCIAL + MESSAGE
+    =================================================== -->
+    <section id="contact" class="contact-section contact-v2">
+
+      <div class="contact-noise" aria-hidden="true"></div>
+      <div class="contact-grid-bg" aria-hidden="true"></div>
+      <div class="contact-orb contact-orb-a" aria-hidden="true"></div>
+      <div class="contact-orb contact-orb-b" aria-hidden="true"></div>
+
+      <div class="shell contact-v2-shell">
+
+        <!-- TOP -->
+        <div class="contact-v2-top contact-v2-reveal">
+          <div class="contact-v2-label">
+            <span class="contact-live-dot"></span>
+            <span>06 / CONTACT</span>
+          </div>
+
+          <span class="contact-v2-top-note">
+            Ngobrol langsung
+          </span>
         </div>
 
-        <div class="contact-main">
-          <h2 class="contact-title split-target">Let's build<br><em>something.</em></h2>
-          <p class="contact-intro reveal">
-            Project sekolah, ngobrol soal website, kolaborasi kecil, atau sekadar bertukar ide —
-            semuanya boleh.
-          </p>
-          <a class="contact-email" href="mailto:your@email.com" data-magnetic>
-            your@email.com <i class="bi bi-arrow-up-right"></i>
+
+        <!-- HERO -->
+        <div class="contact-v2-hero">
+
+          <div class="contact-v2-copy contact-v2-reveal">
+
+            <p class="contact-v2-kicker">
+              Ada yang mau dibahas?
+            </p>
+
+            <h2 class="contact-v2-title">
+              <span>Let's</span>
+              <span class="contact-v2-title-accent">connect.</span>
+            </h2>
+
+            <p class="contact-v2-intro">
+              Mau tanya soal website, ngobrol tentang project, kolaborasi,
+              atau sekadar menyapa? Kirim pesan lewat form di samping.
+            </p>
+
+            <div class="contact-v2-arrow-line" aria-hidden="true">
+              <span></span>
+              <i class="bi bi-arrow-down-right"></i>
+            </div>
+
+          </div>
+
+
+          <!-- SOCIALS -->
+          <div class="contact-v2-socials contact-v2-reveal">
+
+            <a
+              class="contact-v2-social"
+              href="https://www.instagram.com/pyoovll_/"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-contact-social
+            >
+              <span class="contact-v2-social-icon">
+                <i class="bi bi-instagram"></i>
+              </span>
+
+              <span class="contact-v2-social-copy">
+                <small>Instagram</small>
+                <strong>pyoovll_</strong>
+              </span>
+
+              <span class="contact-v2-social-arrow">
+                <i class="bi bi-arrow-up-right"></i>
+              </span>
+            </a>
+
+
+            <a
+              class="contact-v2-social"
+              href="https://www.tiktok.com/@skyfzz_"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-contact-social
+            >
+              <span class="contact-v2-social-icon">
+                <i class="bi bi-tiktok"></i>
+              </span>
+
+              <span class="contact-v2-social-copy">
+                <small>TikTok</small>
+                <strong>skyfzz_</strong>
+              </span>
+
+              <span class="contact-v2-social-arrow">
+                <i class="bi bi-arrow-up-right"></i>
+              </span>
+            </a>
+
+
+            <a
+              class="contact-v2-social"
+              href="https://github.com/Fahrifayfay"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-contact-social
+            >
+              <span class="contact-v2-social-icon">
+                <i class="bi bi-github"></i>
+              </span>
+
+              <span class="contact-v2-social-copy">
+                <small>GitHub</small>
+                <strong>Fahrifayfay</strong>
+              </span>
+
+              <span class="contact-v2-social-arrow">
+                <i class="bi bi-arrow-up-right"></i>
+              </span>
+            </a>
+
+
+            <a
+              class="contact-v2-social contact-v2-email-card"
+              href="mailto:frilz4501@email.com"
+              data-contact-email
+            >
+              <span class="contact-v2-social-icon">
+                <i class="bi bi-envelope"></i>
+              </span>
+
+              <span class="contact-v2-social-copy">
+                <small>Email</small>
+                <strong>your@email.com</strong>
+              </span>
+
+              <span class="contact-v2-social-arrow">
+                <i class="bi bi-arrow-up-right"></i>
+              </span>
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <!-- MESSAGE / FORM -->
+        <div class="contact-v2-message contact-v2-reveal">
+
+          <div class="contact-v2-form-intro">
+            <span class="contact-v2-form-no">01</span>
+
+            <div>
+              <p class="contact-v2-form-kicker">Kirim pesan</p>
+              <h3>
+                Ceritakan
+                <em>apa yang kamu butuhkan.</em>
+              </h3>
+            </div>
+          </div>
+
+
+          <form
+            class="contact-v2-form"
+            data-contact-form
+            novalidate
+          >
+
+            <div class="contact-v2-field">
+              <label for="contactName">Nama</label>
+
+              <div class="contact-v2-input-wrap">
+                <input
+                  id="contactName"
+                  name="name"
+                  type="text"
+                  autocomplete="name"
+                  placeholder="Nama kamu"
+                  required
+                >
+                <span class="contact-v2-field-line"></span>
+              </div>
+            </div>
+
+
+            <div class="contact-v2-field">
+              <label for="contactSenderEmail">Email</label>
+
+              <div class="contact-v2-input-wrap">
+                <input
+                  id="contactSenderEmail"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="nama@email.com"
+                  required
+                >
+                <span class="contact-v2-field-line"></span>
+              </div>
+            </div>
+
+
+            <div class="contact-v2-field">
+              <label for="contactSubject">Subjek</label>
+
+              <div class="contact-v2-input-wrap">
+                <input
+                  id="contactSubject"
+                  name="subject"
+                  type="text"
+                  placeholder="Contoh: Tanya soal website"
+                  required
+                >
+                <span class="contact-v2-field-line"></span>
+              </div>
+            </div>
+
+
+            <div class="contact-v2-field contact-v2-field-message">
+              <label for="contactMessage">Pesan</label>
+
+              <div class="contact-v2-input-wrap">
+                <textarea
+                  id="contactMessage"
+                  name="message"
+                  rows="5"
+                  placeholder="Tulis pesan kamu di sini..."
+                  required
+                ></textarea>
+                <span class="contact-v2-field-line"></span>
+              </div>
+            </div>
+
+
+            <div class="contact-v2-form-bottom">
+
+              <p class="contact-v2-form-note">
+                Pesan akan dibuka melalui aplikasi email kamu.
+              </p>
+
+              <button
+                type="submit"
+                class="contact-v2-submit"
+                data-contact-submit
+              >
+                <span>Kirim pesan</span>
+                <i class="bi bi-arrow-up-right"></i>
+              </button>
+
+            </div>
+
+            <p
+              class="contact-v2-form-status"
+              data-contact-status
+              aria-live="polite"
+            ></p>
+
+          </form>
+
+        </div>
+
+
+        <!-- FOOTER LINE -->
+        <div class="contact-v2-bottom contact-v2-reveal">
+
+          <span>
+            Instagram / TikTok / GitHub / Email
+          </span>
+
+          <a
+            href="#home"
+            class="contact-v2-back"
+            data-magnetic
+          >
+            Kembali ke atas
+            <i class="bi bi-arrow-up-right"></i>
           </a>
+
         </div>
 
-        <div class="contact-bottom">
-          <p>Open for conversations, school projects, collaborations, and new things to learn.</p>
-          <a href="#home" class="back-top" data-magnetic>Back to top <i class="bi bi-arrow-up"></i></a>
-        </div>
       </div>
+
     </section>
   </main>
-
-  <footer class="site-footer">
-    <div class="shell footer-inner">
-      <div><strong>Fahri Rahmadhan</strong></div>
-      <div>Student / RPL / Indonesia</div>
-      <div>Made with HTML, CSS &amp; curiosity.</div>
-      <div>© 2026</div>
-    </div>
-  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js"></script>
   <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
-  <script src="index.js"></script>
+  <script src="index.js?v=20260923-hero-fixed"></script>
+
+  <script>
+    /* =========================================================
+       PROJECT INTERACTION — POINTER TILT / SPOTLIGHT / PARALLAX
+       Additive only: existing portfolio JS remains untouched.
+       ========================================================= */
+    (() => {
+      const cards = document.querySelectorAll(".project-card");
+      if (!cards.length) return;
+
+      const finePointer = window.matchMedia("(pointer: fine)").matches;
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (!finePointer || reduceMotion) return;
+
+      cards.forEach((card) => {
+        const preview = card.querySelector(".project-preview");
+        const image = card.querySelector(".project-preview img");
+        if (!preview) return;
+
+        let raf = 0;
+        let targetX = 0;
+        let targetY = 0;
+        let currentX = 0;
+        let currentY = 0;
+
+        const render = () => {
+          currentX += (targetX - currentX) * 0.12;
+          currentY += (targetY - currentY) * 0.12;
+
+          preview.style.setProperty("--tilt-x", `${currentY.toFixed(2)}deg`);
+          preview.style.setProperty("--tilt-y", `${currentX.toFixed(2)}deg`);
+
+          if (image) {
+            image.style.setProperty("--image-x", `${(currentX * 1.6).toFixed(2)}px`);
+            image.style.setProperty("--image-y", `${(currentY * 1.6).toFixed(2)}px`);
+          }
+
+          raf = requestAnimationFrame(render);
+        };
+
+        const start = () => {
+          if (!raf) raf = requestAnimationFrame(render);
+        };
+
+        const stop = () => {
+          if (raf) {
+            cancelAnimationFrame(raf);
+            raf = 0;
+          }
+        };
+
+        preview.addEventListener("pointerenter", () => {
+          start();
+          card.classList.add("is-hovered");
+        });
+
+        preview.addEventListener("pointermove", (event) => {
+          const rect = preview.getBoundingClientRect();
+          const px = (event.clientX - rect.left) / rect.width;
+          const py = (event.clientY - rect.top) / rect.height;
+
+          targetX = (px - 0.5) * 3.2;
+          targetY = (0.5 - py) * 3.2;
+
+          preview.style.setProperty("--spot-x", `${(px * 100).toFixed(2)}%`);
+          preview.style.setProperty("--spot-y", `${(py * 100).toFixed(2)}%`);
+        });
+
+        preview.addEventListener("pointerleave", () => {
+          targetX = 0;
+          targetY = 0;
+          preview.style.setProperty("--spot-x", "50%");
+          preview.style.setProperty("--spot-y", "50%");
+          card.classList.remove("is-hovered");
+
+          window.setTimeout(() => {
+            if (!card.matches(":hover")) stop();
+          }, 450);
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
