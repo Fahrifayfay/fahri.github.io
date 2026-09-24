@@ -1,369 +1,4 @@
 
-/* =========================================================
-   HERO MOBILE NAV — FAILSAFE BOOT
-   Jalan tanpa GSAP supaya navbar HP tidak pernah hilang.
-========================================================= */
-
-(function(){
-    "use strict";
-
-    const bootMobileHeroNav = () => {
-
-        const hero =
-            document.querySelector(
-                "#hero.hero-reference-style"
-            );
-
-        if(!hero){
-            return;
-        }
-
-        const nav =
-            hero.querySelector(
-                ".hero-nav-wrap"
-            );
-
-        if(!nav){
-            return;
-        }
-
-        let toggle =
-            nav.querySelector(
-                ".hero-mobile-toggle"
-            );
-
-        let menu =
-            nav.querySelector(
-                ".hero-mobile-menu"
-            );
-
-        if(!toggle){
-
-            toggle =
-                document.createElement(
-                    "button"
-                );
-
-            toggle.type =
-                "button";
-
-            toggle.className =
-                "hero-mobile-toggle";
-
-            toggle.setAttribute(
-                "aria-label",
-                "Buka menu"
-            );
-
-            toggle.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
-            toggle.innerHTML =
-                "<span></span><span></span>";
-
-            nav.appendChild(
-                toggle
-            );
-        }
-
-        if(!menu){
-
-            menu =
-                document.createElement(
-                    "div"
-                );
-
-            menu.className =
-                "hero-mobile-menu";
-
-            menu.setAttribute(
-                "aria-hidden",
-                "true"
-            );
-
-            menu.innerHTML =
-                `
-                    <a href="#work">Work</a>
-                    <a href="#about">About</a>
-                    <a href="#stack">Stack</a>
-                    <a href="#life">Life</a>
-                    <a href="#contact">Contact</a>
-                `;
-
-            nav.appendChild(
-                menu
-            );
-        }
-
-        if(
-            nav.dataset.mobileFailsafeReady ===
-            "true"
-        ){
-            return;
-        }
-
-        nav.dataset.mobileFailsafeReady =
-            "true";
-
-        let open =
-            false;
-
-        const sync =
-            () => {
-
-                const isMobile =
-                    window.innerWidth <= 900;
-
-                nav.classList.toggle(
-                    "hero-mobile-active",
-                    isMobile
-                );
-
-                if(!isMobile){
-
-                    open = false;
-
-                    toggle.classList.remove(
-                        "is-open"
-                    );
-
-                    toggle.setAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
-
-                    menu.classList.remove(
-                        "is-open"
-                    );
-
-                    menu.setAttribute(
-                        "aria-hidden",
-                        "true"
-                    );
-
-                    menu.style.removeProperty(
-                        "display"
-                    );
-
-                    return;
-                }
-
-                /* paksa state mobile yang stabil */
-                if(
-                    !open
-                ){
-                    menu.classList.remove(
-                        "is-open"
-                    );
-
-                    menu.setAttribute(
-                        "aria-hidden",
-                        "true"
-                    );
-                }
-            };
-
-        toggle.addEventListener(
-            "click",
-            event => {
-
-                event.preventDefault();
-                event.stopPropagation();
-
-                if(
-                    window.innerWidth >
-                    900
-                ){
-                    return;
-                }
-
-                open =
-                    !open;
-
-                toggle.classList.toggle(
-                    "is-open",
-                    open
-                );
-
-                toggle.setAttribute(
-                    "aria-expanded",
-                    String(open)
-                );
-
-                toggle.setAttribute(
-                    "aria-label",
-                    open
-                        ? "Tutup menu"
-                        : "Buka menu"
-                );
-
-                menu.classList.toggle(
-                    "is-open",
-                    open
-                );
-
-                menu.setAttribute(
-                    "aria-hidden",
-                    String(!open)
-                );
-            }
-        );
-
-        menu.querySelectorAll(
-            "a"
-        ).forEach(
-            link => {
-
-                link.addEventListener(
-                    "click",
-                    () => {
-
-                        open = false;
-
-                        toggle.classList.remove(
-                            "is-open"
-                        );
-
-                        toggle.setAttribute(
-                            "aria-expanded",
-                            "false"
-                        );
-
-                        toggle.setAttribute(
-                            "aria-label",
-                            "Buka menu"
-                        );
-
-                        menu.classList.remove(
-                            "is-open"
-                        );
-
-                        menu.setAttribute(
-                            "aria-hidden",
-                            "true"
-                        );
-                    }
-                );
-            }
-        );
-
-        document.addEventListener(
-            "pointerdown",
-            event => {
-
-                if(
-                    !open ||
-                    window.innerWidth >
-                    900
-                ){
-                    return;
-                }
-
-                if(
-                    !nav.contains(
-                        event.target
-                    )
-                ){
-
-                    open = false;
-
-                    toggle.classList.remove(
-                        "is-open"
-                    );
-
-                    toggle.setAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
-
-                    menu.classList.remove(
-                        "is-open"
-                    );
-
-                    menu.setAttribute(
-                        "aria-hidden",
-                        "true"
-                    );
-                }
-            }
-        );
-
-        document.addEventListener(
-            "keydown",
-            event => {
-
-                if(
-                    event.key === "Escape" &&
-                    open
-                ){
-
-                    open = false;
-
-                    toggle.classList.remove(
-                        "is-open"
-                    );
-
-                    toggle.setAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
-
-                    menu.classList.remove(
-                        "is-open"
-                    );
-
-                    menu.setAttribute(
-                        "aria-hidden",
-                        "true"
-                    );
-                }
-            }
-        );
-
-        window.addEventListener(
-            "resize",
-            sync,
-            {
-                passive:true
-            }
-        );
-
-        window.addEventListener(
-            "orientationchange",
-            sync,
-            {
-                passive:true
-            }
-        );
-
-        sync();
-    };
-
-    if(
-        document.readyState ===
-        "loading"
-    ){
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            bootMobileHeroNav,
-            {
-                once:true
-            }
-        );
-
-    }
-    else{
-
-        bootMobileHeroNav();
-
-    }
-
-})();
-
-
 document.addEventListener("DOMContentLoaded",
 ()=>{
     "use strict";
@@ -471,7 +106,10 @@ document.addEventListener("DOMContentLoaded",
 
         initWorkCards();
 
+        initProjectsV2();
+
         initLifeAnimation();
+        initLifeV3();
 
         initLifeSocialInteractions();
 
@@ -557,6 +195,12 @@ document.addEventListener("DOMContentLoaded",
                 referenceHero
             );
 
+        const isMobileHeroNav=
+            () => window.innerWidth <= 900;
+
+        const getNavXPercent=
+            () => isMobileHeroNav() ? 0 : -50;
+
         if(
             !nav ||
             !mini ||
@@ -627,7 +271,7 @@ will-change:transform,opacity;
         gsap.set(
             nav,
             {
-                xPercent:-50,
+                xPercent:getNavXPercent(),
                 y:shouldRunNavIntro?-55:0,
                 scale:shouldRunNavIntro?.94:1,
                 opacity:shouldRunNavIntro?0:1,
@@ -750,7 +394,7 @@ will-change:transform,opacity;
             intro.to(
                 nav,
                 {
-                    xPercent:-50,
+                    xPercent:getNavXPercent(),
                     y:0,
                     scale:1,
                     opacity:1,
@@ -1266,10 +910,7 @@ background:#fff !important;
 
             const getNavbarWideWidth=
                 ()=>window.innerWidth<=900
-                    ? Math.max(
-                        250,
-                        window.innerWidth-24
-                    )
+                    ? (window.innerWidth<=560 ? 46 : 48)
                     : Math.min(
                         1080,
                         window.innerWidth-40
@@ -1278,10 +919,7 @@ background:#fff !important;
 
             const getNavbarSmallWidth=
                 ()=>window.innerWidth<=900
-                    ? Math.max(
-                        232,
-                        window.innerWidth-34
-                    )
+                    ? (window.innerWidth<=560 ? 46 : 48)
                     : Math.min(
                         920,
                         window.innerWidth-64
@@ -1300,13 +938,34 @@ background:#fff !important;
                 {
                     width:
                         `${navbarWideWidth}px`,
-                    borderRadius:"999px"
+                    borderRadius:
+                        window.innerWidth<=900
+                            ? "50%"
+                            : "999px",
+                    xPercent:getNavXPercent()
                 }
             );
 
 
             const setNavbarScrollState=
                 progress=>{
+
+                    if(isMobileHeroNav()){
+
+                        gsap.set(
+                            nav,
+                            {
+                                width:`${getNavbarWideWidth()}px`,
+                                borderRadius:"50%",
+                                xPercent:0,
+                                clipPath:"none"
+                            }
+                        );
+
+                        return;
+
+                    }
+
 
                     const safeProgress=
                         Math.max(
@@ -1447,12 +1106,21 @@ background:#fff !important;
                         gsap.set(
                             nav,
                             {
+                                xPercent:getNavXPercent(),
                                 y:0,
                                 scale:1,
                                 opacity:1,
                                 filter:"blur(0px)",
                                 clipPath:
-                                    "inset(0 0 0% 0 round 999px)"
+                                    isMobileHeroNav()
+                                        ? "none"
+                                        : "inset(0 0 0% 0 round 999px)",
+                                borderRadius:
+                                    isMobileHeroNav()
+                                        ? "50%"
+                                        : "999px",
+                                width:
+                                    `${getNavbarWideWidth()}px`
                             }
                         );
 
@@ -1556,6 +1224,18 @@ background:#fff !important;
 
                     navbarSmallWidth=
                         getNavbarSmallWidth();
+
+                    gsap.set(
+                        nav,
+                        {
+                            xPercent:getNavXPercent(),
+                            width:`${navbarWideWidth}px`,
+                            borderRadius:
+                                isMobileHeroNav()
+                                    ? "50%"
+                                    : "999px"
+                        }
+                    );
 
                     ScrollTrigger.refresh();
 
@@ -1787,6 +1467,22 @@ stroke:rgba(255,255,255,.18);
 stroke-width:.8;
 }
 
+#about .about-svg-frame .about-svg-motion-path{
+stroke:rgba(255,255,255,.68);
+stroke-width:1.35;
+stroke-linecap:round;
+stroke-linejoin:round;
+stroke-dasharray:52 348;
+stroke-dashoffset:0;
+opacity:0;
+}
+
+#about .about-svg-frame.back .about-svg-motion-path{
+stroke:rgba(255,255,255,.22);
+stroke-width:1;
+stroke-dasharray:34 366;
+}
+
 #about .image-note{
 position:relative !important;
 z-index:10 !important;
@@ -1896,6 +1592,36 @@ top:-14px !important;
                 );
 
 
+                const motionPath=
+                    document.createElementNS(
+                        "http://www.w3.org/2000/svg",
+                        "path"
+                    );
+
+                motionPath.classList.add(
+                    "about-svg-motion-path"
+                );
+
+                motionPath.setAttribute(
+                    "d",
+                    "M 9 0 H 91 L 100 9 V 91 L 91 100 H 9 L 0 91 V 9 Z"
+                );
+
+                motionPath.setAttribute(
+                    "fill",
+                    "none"
+                );
+
+                motionPath.setAttribute(
+                    "vector-effect",
+                    "non-scaling-stroke"
+                );
+
+                svg.appendChild(
+                    motionPath
+                );
+
+
                 imageWrap.prepend(
                     svg
                 );
@@ -1939,7 +1665,19 @@ top:-14px !important;
 
         const backPath=
             q(
-                "path",
+                "path:not(.about-svg-motion-path)",
+                backFrame
+            );
+
+        const mainMotionPath=
+            q(
+                ".about-svg-motion-path",
+                mainFrame
+            );
+
+        const backMotionPath=
+            q(
+                ".about-svg-motion-path",
                 backFrame
             );
 
@@ -1953,6 +1691,8 @@ top:-14px !important;
             image,
             mainFrame,
             backFrame,
+            mainMotionPath,
+            backMotionPath,
             imageNote,
             copy,
             bigText,
@@ -2090,6 +1830,15 @@ top:-14px !important;
                 scale:.985,
                 rotate:-4,
                 transformOrigin:"center center"
+            }
+        );
+
+
+        gsap.set(
+            [mainMotionPath, backMotionPath].filter(Boolean),
+            {
+                opacity:0,
+                strokeDashoffset:0
             }
         );
 
@@ -2367,6 +2116,28 @@ top:-14px !important;
 
 
         aboutTimeline.to(
+            mainMotionPath,
+            {
+                opacity:0.78,
+                duration:.75,
+                ease:"power2.out"
+            },
+            1.02
+        );
+
+
+        aboutTimeline.to(
+            backMotionPath,
+            {
+                opacity:0.30,
+                duration:.85,
+                ease:"power2.out"
+            },
+            .92
+        );
+
+
+        aboutTimeline.to(
             mainFrame,
             {
                 x:1.5,
@@ -2503,6 +2274,64 @@ top:-14px !important;
         }
 
 
+        let mainMotionTween=null;
+        let backMotionTween=null;
+
+
+        const startBorderMotion=()=>{
+
+            if(mainMotionTween){
+                mainMotionTween.kill();
+            }
+
+            if(backMotionTween){
+                backMotionTween.kill();
+            }
+
+            if(mainMotionPath){
+                mainMotionTween=
+                    gsap.to(
+                        mainMotionPath,
+                        {
+                            strokeDashoffset:-400,
+                            duration:3.8,
+                            repeat:-1,
+                            ease:"none"
+                        }
+                    );
+            }
+
+            if(backMotionPath){
+                backMotionTween=
+                    gsap.to(
+                        backMotionPath,
+                        {
+                            strokeDashoffset:-400,
+                            duration:5.6,
+                            repeat:-1,
+                            ease:"none"
+                        }
+                    );
+            }
+
+        };
+
+
+        const stopBorderMotion=()=>{
+
+            if(mainMotionTween){
+                mainMotionTween.kill();
+                mainMotionTween=null;
+            }
+
+            if(backMotionTween){
+                backMotionTween.kill();
+                backMotionTween=null;
+            }
+
+        };
+
+
         const floatTimeline=
             gsap.timeline({
                 paused:true,
@@ -2551,6 +2380,7 @@ top:-14px !important;
         ){
 
             aboutTimeline.play(0);
+            startBorderMotion();
 
             gsap.delayedCall(
                 2.15,
@@ -2584,6 +2414,8 @@ top:-14px !important;
                 aboutTimeline
                     .pause()
                     .restart();
+
+                startBorderMotion();
 
 
                 gsap.delayedCall(
@@ -2624,6 +2456,16 @@ top:-14px !important;
 
                 gsap.killTweensOf(
                     backFrame
+                );
+
+                stopBorderMotion();
+
+                gsap.set(
+                    [mainMotionPath, backMotionPath].filter(Boolean),
+                    {
+                        opacity:0,
+                        strokeDashoffset:0
+                    }
                 );
 
                 aboutTimeline.pause(0);
@@ -3390,106 +3232,80 @@ top:-14px !important;
 
     function initWorkCards(){
 
-        const cards=
-            qa(
-                ".work-card"
-            );
+        const cards=qa(".work-card");
 
+        cards.forEach(card=>{
 
-        cards.forEach(
-            card=>{
+            const preview=q(".project-preview",card);
+            const images=qa(".work-media img",card);
+            const coords=q(".project-hud-coords",card);
 
-                const images=
-                    qa(
-                        ".work-media img",
-                        card
-                    );
+            if(!preview){
+                return;
+            }
 
+            if(!reducedMotion && typeof ScrollTrigger!=="undefined"){
 
-                if(
-                    !reducedMotion &&
-                    typeof ScrollTrigger!=="undefined"
-                ){
-
-                    images.forEach(
-                        img=>{
-
-                            gsap.to(
-                                img,
-                                {
-                                    yPercent:5,
-                                    ease:"none",
-
-                                    scrollTrigger:{
-                                        trigger:card,
-                                        start:"top bottom",
-                                        end:"bottom top",
-                                        scrub:true
-                                    }
-                                }
-                            );
-
+                images.forEach(img=>{
+                    gsap.to(img,{
+                        yPercent:5,
+                        ease:"none",
+                        scrollTrigger:{
+                            trigger:card,
+                            start:"top bottom",
+                            end:"bottom top",
+                            scrub:.55
                         }
-                    );
-
-                }
-
-
-                card.addEventListener(
-                    "mouseenter",
-                    ()=>{
-
-                        gsap.to(
-                            card,
-                            {
-                                y:-7,
-                                duration:.35,
-                                ease:"power3.out"
-                            }
-                        );
-
-
-                        gsap.to(
-                            images,
-                            {
-                                scale:1.04,
-                                duration:.65,
-                                ease:"power3.out"
-                            }
-                        );
-
-                    }
-                );
-
-
-                card.addEventListener(
-                    "mouseleave",
-                    ()=>{
-
-                        gsap.to(
-                            card,
-                            {
-                                y:0,
-                                duration:.45,
-                                ease:"power3.out"
-                            }
-                        );
-
-
-                        gsap.to(
-                            images,
-                            {
-                                scale:1,
-                                duration:.65,
-                                ease:"power3.out"
-                            }
-                        );
-
-                    }
-                );
+                    });
+                });
 
             }
-        );
+
+            const resetPointer=()=>{
+                card.classList.remove("is-hovered");
+                preview.style.setProperty("--tilt-x","0deg");
+                preview.style.setProperty("--tilt-y","0deg");
+                preview.style.setProperty("--spot-x","50%");
+                preview.style.setProperty("--spot-y","50%");
+                preview.style.setProperty("--image-x","0px");
+                preview.style.setProperty("--image-y","0px");
+                if(coords){ coords.textContent="Y 00 / X 00"; }
+                gsap.to(card,{y:0,duration:.65,ease:"power3.out"});
+            };
+
+            card.addEventListener("pointerenter",event=>{
+                card.classList.add("is-hovered");
+                gsap.to(card,{y:-5,duration:.55,ease:"power3.out"});
+            });
+
+            card.addEventListener("pointermove",event=>{
+                const rect=preview.getBoundingClientRect();
+                const px=Math.max(0,Math.min(1,(event.clientX-rect.left)/rect.width));
+                const py=Math.max(0,Math.min(1,(event.clientY-rect.top)/rect.height));
+                const rotateY=(px-.5)*5.4;
+                const rotateX=(.5-py)*5.4;
+                const imageX=(px-.5)*-8;
+                const imageY=(py-.5)*-7;
+
+                preview.style.setProperty("--tilt-x",`${rotateX.toFixed(2)}deg`);
+                preview.style.setProperty("--tilt-y",`${rotateY.toFixed(2)}deg`);
+                preview.style.setProperty("--spot-x",`${(px*100).toFixed(1)}%`);
+                preview.style.setProperty("--spot-y",`${(py*100).toFixed(1)}%`);
+                preview.style.setProperty("--image-x",`${imageX.toFixed(1)}px`);
+                preview.style.setProperty("--image-y",`${imageY.toFixed(1)}px`);
+
+                if(coords){
+                    coords.textContent=`Y ${String(Math.round(py*99)).padStart(2,"0")} / X ${String(Math.round(px*99)).padStart(2,"0")}`;
+                }
+            });
+
+            card.addEventListener("pointerleave",resetPointer);
+            card.addEventListener("focusin",()=>card.classList.add("is-hovered"));
+            card.addEventListener("focusout",event=>{
+                if(!card.contains(event.relatedTarget)) resetPointer();
+            });
+
+        });
 
     }
 
@@ -4335,72 +4151,302 @@ top:-14px !important;
 
     function initNavigation(){
 
-        const navLinks=
+        const navLinks =
             qa(
-                ".main-nav a"
+                ".hero-menu a"
             );
 
 
-        if(
-            typeof ScrollTrigger==="undefined" ||
-            navLinks.length===0
-        ){
+        const mobileLinks =
+            qa(
+                ".hero-mobile-menu a"
+            );
+
+
+        const allLinks =
+            [...navLinks, ...mobileLinks];
+
+
+        if(!allLinks.length){
             return;
         }
 
 
-        qa(
-            "section[id]"
-        )
-        .forEach(
-            section=>{
+        const targets = [];
+        const seen = new Set();
 
-                ScrollTrigger.create({
 
-                    trigger:section,
+        allLinks.forEach(
+            link => {
 
-                    start:"top 46%",
+                const href =
+                    link.getAttribute("href");
 
-                    end:"bottom 46%",
 
-                    onEnter:()=>{
+                if(
+                    !href ||
+                    href === "#" ||
+                    !href.startsWith("#")
+                ){
+                    return;
+                }
 
-                        setActiveNav(
-                            section.id
-                        );
 
-                    },
+                const target =
+                    document.querySelector(href);
 
-                    onEnterBack:()=>{
 
-                        setActiveNav(
-                            section.id
-                        );
+                if(
+                    !target ||
+                    seen.has(target)
+                ){
+                    return;
+                }
 
-                    }
 
-                });
+                seen.add(target);
+                targets.push(target);
 
             }
         );
 
 
-        function setActiveNav(id){
+        const setActiveNav =
+            id => {
 
-            navLinks.forEach(
-                link=>{
+                allLinks.forEach(
+                    link => {
 
-                    link.classList.toggle(
-                        "is-active",
+                        link.classList.toggle(
+                            "is-active",
+                            link.getAttribute("href") === `#${id}`
+                        );
 
-                        link.getAttribute(
-                            "href"
-                        )===`#${id}`
-                    );
+                    }
+                );
+
+            };
+
+
+        if(
+            typeof ScrollTrigger !== "undefined" &&
+            !reducedMotion
+        ){
+
+            targets.forEach(
+                target => {
+
+                    ScrollTrigger.create({
+                        trigger: target,
+                        start: "top 42%",
+                        end: "bottom 42%",
+
+                        onEnter: () => {
+                            setActiveNav(target.id);
+                        },
+
+                        onEnterBack: () => {
+                            setActiveNav(target.id);
+                        }
+                    });
 
                 }
             );
 
+        }
+        else{
+
+            const updateActiveByScroll = () => {
+
+                const marker = window.scrollY + window.innerHeight * .42;
+                let active = targets[0];
+
+                targets.forEach(
+                    target => {
+                        const rect = target.getBoundingClientRect();
+                        const top = rect.top + window.scrollY;
+                        if(marker >= top){
+                            active = target;
+                        }
+                    }
+                );
+
+                if(active){
+                    setActiveNav(active.id);
+                }
+
+            };
+
+
+            window.addEventListener(
+                "scroll",
+                updateActiveByScroll,
+                {passive:true}
+            );
+
+
+            updateActiveByScroll();
+
+        }
+
+    }
+
+    function initProjectsV2(){
+
+        const section=q("#work.projects-v2");
+        if(!section){
+            return;
+        }
+
+        const cards=qa(".project-v2-card", section);
+        const finePointer=window.matchMedia("(pointer:fine)").matches;
+
+        cards.forEach((card,index)=>{
+
+            const inner=q(".project-v2-card-inner",card);
+            const media=q(".project-v2-media",card);
+            const image=q(".project-v2-media img",card);
+            const focus=q(".project-v2-focus",card);
+            const label=q(".project-v2-floating-label",card);
+            const open=q(".project-v2-open",card);
+
+            if(!inner || !media){
+                return;
+            }
+
+            const reset=()=>{
+                inner.style.setProperty("--rx","0deg");
+                inner.style.setProperty("--ry","0deg");
+                inner.style.setProperty("--mx","50%");
+                inner.style.setProperty("--my","50%");
+                inner.style.setProperty("--ix","0px");
+                inner.style.setProperty("--iy","0px");
+                card.classList.remove("is-active");
+                if(focus){
+                    focus.style.opacity="0";
+                }
+            };
+
+            if(finePointer && !reducedMotion){
+                let raf=0;
+                let px=.5;
+                let py=.5;
+
+                const render=()=>{
+                    raf=0;
+                    const rx=(.5-py)*7.2;
+                    const ry=(px-.5)*8.2;
+                    const ix=(px-.5)*-14;
+                    const iy=(py-.5)*-10;
+                    inner.style.setProperty("--rx",`${rx.toFixed(2)}deg`);
+                    inner.style.setProperty("--ry",`${ry.toFixed(2)}deg`);
+                    inner.style.setProperty("--mx",`${(px*100).toFixed(1)}%`);
+                    inner.style.setProperty("--my",`${(py*100).toFixed(1)}%`);
+                    inner.style.setProperty("--ix",`${ix.toFixed(1)}px`);
+                    inner.style.setProperty("--iy",`${iy.toFixed(1)}px`);
+                    if(focus){
+                        focus.style.opacity="1";
+                    }
+                };
+
+                card.addEventListener("pointerenter",()=>{
+                    card.classList.add("is-active");
+                });
+
+                card.addEventListener("pointermove",event=>{
+                    const rect=media.getBoundingClientRect();
+                    px=Math.max(0,Math.min(1,(event.clientX-rect.left)/rect.width));
+                    py=Math.max(0,Math.min(1,(event.clientY-rect.top)/rect.height));
+                    if(!raf){
+                        raf=requestAnimationFrame(render);
+                    }
+                });
+
+                card.addEventListener("pointerleave",()=>{
+                    if(raf){
+                        cancelAnimationFrame(raf);
+                        raf=0;
+                    }
+                    inner.style.setProperty("--rx","0deg");
+                    inner.style.setProperty("--ry","0deg");
+                    inner.style.setProperty("--mx","50%");
+                    inner.style.setProperty("--my","50%");
+                    inner.style.setProperty("--ix","0px");
+                    inner.style.setProperty("--iy","0px");
+                    card.classList.remove("is-active");
+                    if(focus){
+                        focus.style.opacity="0";
+                    }
+                });
+            }
+
+            if(label){
+                const hoverText=label.querySelector("strong");
+                if(hoverText){
+                    hoverText.textContent="OPEN WEBSITE";
+                }
+            }
+
+            if(open){
+                open.setAttribute("aria-hidden","true");
+            }
+
+            if(image && !reducedMotion){
+                gsap.to(image,{
+                    yPercent:4,
+                    ease:"none",
+                    scrollTrigger: typeof ScrollTrigger!=="undefined" ? {
+                        trigger:card,
+                        start:"top bottom",
+                        end:"bottom top",
+                        scrub:.9
+                    } : undefined
+                });
+            }
+
+            reset();
+        });
+
+        if(!reducedMotion && typeof ScrollTrigger!=="undefined"){
+            const intro=q(".projects-v2-title-wrap",section);
+            const copy=q(".projects-v2-copy",section);
+            const topLine=q(".projects-v2-topline",section);
+            const stage=q(".projects-v2-stage",section);
+            const footer=q(".projects-v2-footer",section);
+
+            gsap.fromTo(
+                [topLine,intro,copy].filter(Boolean),
+                {y:42,opacity:0},
+                {
+                    y:0,
+                    opacity:1,
+                    duration:1.15,
+                    stagger:.08,
+                    ease:"power4.out",
+                    scrollTrigger:{trigger:section,start:"top 72%",once:true}
+                }
+            );
+
+            gsap.fromTo(
+                cards,
+                {y:70,opacity:0,rotationZ:index=>index===0?-2.5:2.5,scale:.965},
+                {
+                    y:0,
+                    opacity:1,
+                    rotationZ:0,
+                    scale:1,
+                    duration:1.25,
+                    stagger:.16,
+                    ease:"expo.out",
+                    scrollTrigger:{trigger:stage,start:"top 76%",once:true}
+                }
+            );
+
+            gsap.fromTo(
+                footer,
+                {y:22,opacity:0},
+                {y:0,opacity:1,duration:.8,ease:"power3.out",scrollTrigger:{trigger:footer,start:"top 90%",once:true}}
+            );
         }
 
     }
@@ -4412,30 +4458,26 @@ top:-14px !important;
             'a[href^="#"]'
         )
         .forEach(
-            link=>{
+            link => {
 
                 link.addEventListener(
                     "click",
-                    event=>{
+                    event => {
 
-                        const selector=
-                            link.getAttribute(
-                                "href"
-                            );
+                        const selector =
+                            link.getAttribute("href");
 
 
                         if(
                             !selector ||
-                            selector==="#"
+                            selector === "#"
                         ){
                             return;
                         }
 
 
-                        const target=
-                            document.querySelector(
-                                selector
-                            );
+                        const target =
+                            document.querySelector(selector);
 
 
                         if(!target){
@@ -4446,26 +4488,130 @@ top:-14px !important;
                         event.preventDefault();
 
 
+                        const offset = -92;
+                        const duration = 1.65;
+
+
+                        /*
+                         * Lenis:
+                         * perpindahan dibuat panjang dan halus,
+                         * jadi section tidak terasa "loncat".
+                         */
                         if(lenis){
 
                             lenis.scrollTo(
                                 target,
                                 {
-                                    offset:-70,
-                                    duration:1.15
+                                    offset,
+                                    duration,
+                                    lock:true,
+                                    easing:
+                                        time =>
+                                            1 -
+                                            Math.pow(
+                                                1 - time,
+                                                4
+                                            )
                                 }
                             );
 
                         }
                         else{
 
-                            target.scrollIntoView(
-                                {
-                                    behavior:"smooth",
-                                    block:"start"
-                                }
+                            /*
+                             * Fallback tanpa Lenis.
+                             * Tetap smooth dengan easing kuartik.
+                             */
+                            const startY =
+                                window.scrollY;
+
+
+                            const targetY =
+                                target.getBoundingClientRect().top +
+                                window.scrollY +
+                                offset;
+
+
+                            const distance =
+                                targetY - startY;
+
+
+                            const startTime =
+                                performance.now();
+
+
+                            const animateScroll =
+                                now => {
+
+                                    const progress =
+                                        Math.min(
+                                            1,
+                                            (now - startTime) /
+                                            (duration * 1000)
+                                        );
+
+
+                                    const eased =
+                                        1 -
+                                        Math.pow(
+                                            1 - progress,
+                                            4
+                                        );
+
+
+                                    window.scrollTo(
+                                        0,
+                                        startY +
+                                        distance * eased
+                                    );
+
+
+                                    if(progress < 1){
+                                        requestAnimationFrame(
+                                            animateScroll
+                                        );
+                                    }
+
+                                };
+
+
+                            requestAnimationFrame(
+                                animateScroll
                             );
 
+                        }
+
+
+                        /*
+                         * Mobile menu ditutup tanpa menunggu
+                         * scroll selesai.
+                         */
+                        const mobileToggle =
+                            document.querySelector(
+                                ".hero-mobile-toggle"
+                            );
+
+
+                        if(
+                            mobileToggle &&
+                            window.innerWidth <= 900
+                        ){
+                            mobileToggle.setAttribute(
+                                "aria-expanded",
+                                "false"
+                            );
+                        }
+
+
+                        if(
+                            window.history &&
+                            window.history.replaceState
+                        ){
+                            window.history.replaceState(
+                                null,
+                                "",
+                                selector
+                            );
                         }
 
                     }
@@ -6212,7 +6358,7 @@ function initLifeAnimation(){
 
 
     /* =====================================================
-       MUSIC PLAYER — 5 LAGU / PILIH & GESER
+       MUSIC PLAYER — 10 LAGU / PILIH & GESER
     ===================================================== */
 
     if(!like){
@@ -6442,6 +6588,291 @@ function initLifeAnimation(){
    FILM + CONTACT SUPPORT
    Kecepatan reveal/tilt dibuat konsisten dengan section baru.
 ========================================================= */
+
+/* =========================================================
+   MOUNTAIN GALLERY V3 — INTERACTION
+   Gentle 3D tilt, image parallax, ambience and video control.
+========================================================= */
+function initLifeV3(){
+
+    const life =
+        document.querySelector(
+            "#life.life-v3"
+        );
+
+    if(!life){
+        return;
+    }
+
+    const reducedMotion =
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+    const finePointer =
+        window.matchMedia(
+            "(hover:hover) and (pointer:fine)"
+        ).matches;
+
+
+    /* ---------- Decorative background motion ---------- */
+    if(
+        !reducedMotion &&
+        typeof gsap !== "undefined"
+    ){
+
+        const orbitA =
+            life.querySelector(".life-v3-orbit-a");
+
+        const orbitB =
+            life.querySelector(".life-v3-orbit-b");
+
+        const glowA =
+            life.querySelector(".life-v3-glow-a");
+
+        const glowB =
+            life.querySelector(".life-v3-glow-b");
+
+        if(orbitA){
+            gsap.to(
+                orbitA,
+                {
+                    rotation:"+=360",
+                    duration:30,
+                    repeat:-1,
+                    ease:"none"
+                }
+            );
+        }
+
+        if(orbitB){
+            gsap.to(
+                orbitB,
+                {
+                    rotation:"-=360",
+                    duration:38,
+                    repeat:-1,
+                    ease:"none"
+                }
+            );
+        }
+
+        if(glowA){
+            gsap.to(
+                glowA,
+                {
+                    x:14,
+                    y:10,
+                    scale:1.04,
+                    duration:8,
+                    repeat:-1,
+                    yoyo:true,
+                    ease:"sine.inOut"
+                }
+            );
+        }
+
+        if(glowB){
+            gsap.to(
+                glowB,
+                {
+                    x:-12,
+                    y:-10,
+                    scale:1.035,
+                    duration:10,
+                    repeat:-1,
+                    yoyo:true,
+                    ease:"sine.inOut"
+                }
+            );
+        }
+
+    }
+
+
+    /* ---------- Photo cards ---------- */
+    if(
+        finePointer &&
+        !reducedMotion
+    ){
+
+        life
+            .querySelectorAll(
+                "[data-life-v3-card]"
+            )
+            .forEach(
+                card=>{
+
+                    const media =
+                        card.querySelector(
+                            ".life-v3-media"
+                        );
+
+                    if(!media){
+                        return;
+                    }
+
+
+                    card.addEventListener(
+                        "pointerenter",
+                        ()=>{
+                            card.classList.add(
+                                "is-hovered"
+                            );
+                        },
+                        {
+                            passive:true
+                        }
+                    );
+
+
+                    card.addEventListener(
+                        "pointermove",
+                        event=>{
+
+                            const rect =
+                                card.getBoundingClientRect();
+
+                            const px =
+                                (
+                                    event.clientX -
+                                    rect.left
+                                ) / rect.width - .5;
+
+                            const py =
+                                (
+                                    event.clientY -
+                                    rect.top
+                                ) / rect.height - .5;
+
+
+                            card.style.setProperty(
+                                "--tilt-x",
+                                `${(-py * 3.2).toFixed(2)}deg`
+                            );
+
+                            card.style.setProperty(
+                                "--tilt-y",
+                                `${(px * 4.2).toFixed(2)}deg`
+                            );
+
+                            media.style.setProperty(
+                                "--life-photo-x",
+                                `${(px * -12).toFixed(2)}px`
+                            );
+
+                            media.style.setProperty(
+                                "--life-photo-y",
+                                `${(py * -10).toFixed(2)}px`
+                            );
+
+                        },
+                        {
+                            passive:true
+                        }
+                    );
+
+
+                    card.addEventListener(
+                        "pointerleave",
+                        ()=>{
+
+                            card.classList.remove(
+                                "is-hovered"
+                            );
+
+                            card.style.setProperty(
+                                "--tilt-x",
+                                "0deg"
+                            );
+
+                            card.style.setProperty(
+                                "--tilt-y",
+                                "0deg"
+                            );
+
+                            media.style.setProperty(
+                                "--life-photo-x",
+                                "0px"
+                            );
+
+                            media.style.setProperty(
+                                "--life-photo-y",
+                                "0px"
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* ---------- Video viewport playback ---------- */
+    const video =
+        life.querySelector(
+            "[data-life-v3-video] video"
+        );
+
+    if(video){
+
+        video.muted=true;
+
+        if(
+            "IntersectionObserver" in window
+        ){
+
+            const videoObserver =
+                new IntersectionObserver(
+                    entries=>{
+
+                        entries.forEach(
+                            entry=>{
+
+                                if(
+                                    entry.isIntersecting
+                                ){
+
+                                    const promise =
+                                        video.play();
+
+                                    if(
+                                        promise &&
+                                        typeof promise.catch==="function"
+                                    ){
+                                        promise.catch(
+                                            ()=>{}
+                                        );
+                                    }
+
+                                }
+                                else{
+
+                                    video.pause();
+
+                                }
+
+                            }
+                        );
+
+                    },
+                    {
+                        threshold:.15
+                    }
+                );
+
+            videoObserver.observe(
+                video
+            );
+
+        }
+
+    }
+
+}
+
 
 function initLifeSocialInteractions(){
 
@@ -7639,11 +8070,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const audio = like.querySelector("[data-music-audio]");
         const playButton = like.querySelector("[data-music-play]");
+        const prevButton = like.querySelector("[data-music-prev]");
+        const nextButton = like.querySelector("[data-music-next]");
         const progress = like.querySelector("[data-music-progress]");
         const timeLabel = like.querySelector("[data-music-time]");
+        const currentTimeLabel = like.querySelector(".like-music-time-current");
         const status = like.querySelector("[data-music-status]");
         const title = like.querySelector("[data-music-title]");
-        const label = like.querySelector("[data-music-label]");
+        const currentImage = like.querySelector("[data-music-current-image]");
         const disc = like.querySelector("[data-music-disc]");
         const tracks = [...like.querySelectorAll("[data-music-track]")];
 
@@ -7677,8 +8111,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     `${Math.min(100, Math.max(0, ratio * 100))}%`;
             }
 
+            if(currentTimeLabel){
+                currentTimeLabel.textContent = formatTime(current);
+            }
+
             if(timeLabel){
-                timeLabel.textContent = formatTime(current);
+                timeLabel.textContent = formatTime(duration);
             }
 
             if(icon){
@@ -7690,6 +8128,14 @@ document.addEventListener("DOMContentLoaded", () => {
             if(disc){
                 disc.classList.toggle("is-playing", !audio.paused);
             }
+
+            const activeTrack = like.querySelector("[data-music-track].is-active");
+            if(activeTrack){
+                const activeDisc = activeTrack.querySelector(".like-music-track-disc");
+                if(activeDisc){
+                    activeDisc.classList.toggle("is-playing", !audio.paused);
+                }
+            }
         };
 
         const setActiveTrack = (track, shouldPlay) => {
@@ -7700,6 +8146,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const src = (track.dataset.src || "").trim();
             const trackTitle = track.dataset.title || "Judul lagu";
             const artist = track.dataset.artist || "Pilihan saya";
+            const imageSrc = (track.dataset.musicImage || "").trim();
 
             if(!src){
                 if(status){
@@ -7722,8 +8169,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 title.textContent = trackTitle;
             }
 
-            if(label){
-                label.textContent = "PUTAR LAGU";
+            if(currentImage && imageSrc){
+                currentImage.src = imageSrc;
             }
 
             if(status){
@@ -7732,6 +8179,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if(progress){
                 progress.style.width = "0%";
+            }
+
+            if(currentTimeLabel){
+                currentTimeLabel.textContent = "00:00";
             }
 
             if(timeLabel){
@@ -7760,11 +8211,34 @@ document.addEventListener("DOMContentLoaded", () => {
             syncUI();
         };
 
+        const getActiveIndex = () => {
+            const active = tracks.findIndex(
+                track => track.classList.contains("is-active")
+            );
+            return active >= 0 ? active : 0;
+        };
+
         tracks.forEach(track => {
             track.addEventListener("click", () => {
                 setActiveTrack(track, true);
             });
         });
+
+        if(prevButton){
+            prevButton.addEventListener("click", () => {
+                const index = getActiveIndex();
+                const nextIndex = (index - 1 + tracks.length) % tracks.length;
+                setActiveTrack(tracks[nextIndex], true);
+            });
+        }
+
+        if(nextButton){
+            nextButton.addEventListener("click", () => {
+                const index = getActiveIndex();
+                const nextIndex = (index + 1) % tracks.length;
+                setActiveTrack(tracks[nextIndex], true);
+            });
+        }
 
         playButton.addEventListener("click", async () => {
             const active =
@@ -7807,6 +8281,12 @@ document.addEventListener("DOMContentLoaded", () => {
         audio.addEventListener("timeupdate", syncUI);
         audio.addEventListener("play", syncUI);
         audio.addEventListener("pause", syncUI);
+
+        audio.addEventListener("ended", () => {
+            const index = getActiveIndex();
+            const nextIndex = (index + 1) % tracks.length;
+            setActiveTrack(tracks[nextIndex], true);
+        });
 
         audio.addEventListener("error", () => {
             const active =
@@ -7851,4 +8331,1314 @@ document.addEventListener("DOMContentLoaded", () => {
     }else{
         boot();
     }
+})();;
+
+/* =========================================================
+   FILM TRAILER MODAL — KEEP USER ON THE PORTFOLIO PAGE
+========================================================= */
+document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.querySelector("[data-film-modal]");
+  const cards = [...document.querySelectorAll("[data-youtube-id]")];
+
+  if (!modal || !cards.length) return;
+
+  const iframe = modal.querySelector("[data-film-iframe]");
+  const title = modal.querySelector("[data-film-modal-title]");
+  const closeButtons = [...modal.querySelectorAll("[data-film-close]")];
+  const originalTitle = document.title;
+  let lastFocused = null;
+
+  const openTrailer = (card) => {
+    const videoId = card.dataset.youtubeId;
+    const filmTitle = card.dataset.filmTitle || "Trailer";
+
+    if (!videoId || !iframe) return;
+
+    lastFocused = document.activeElement;
+
+    if (title) {
+      title.textContent = filmTitle;
+    }
+
+    iframe.src = `https://www.youtube.com/embed/${encodeURIComponent(videoId)}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("film-modal-open");
+
+    window.setTimeout(() => {
+      closeButtons.find(button => button.tagName === "BUTTON")?.focus();
+    }, 60);
+  };
+
+  const closeTrailer = () => {
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("film-modal-open");
+
+    if (iframe) {
+      iframe.src = "about:blank";
+    }
+
+    if (lastFocused && typeof lastFocused.focus === "function") {
+      lastFocused.focus();
+    }
+  };
+
+  cards.forEach((card) => {
+    card.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      openTrailer(card);
+    });
+  });
+
+  closeButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      closeTrailer();
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && modal.classList.contains("is-open")) {
+      closeTrailer();
+    }
+  });
+
+  window.addEventListener("pagehide", closeTrailer);
+});
+
+
+/* =========================================================
+   MUSIC STORY LYRICS — REAL SYNC
+   ---------------------------------------------------------
+   Display text: user-provided lyrics.
+   Timing: synchronized LRC timestamps from LRCLIB.
+   Inspired by open synchronized-lyrics players such as
+   Braccato/Lyricer: track currentTime and switch the
+   active line smoothly.
+========================================================= */
+(function initRealMusicStoryLyrics(){
+
+  "use strict";
+
+  const boot = () => {
+
+    const root =
+      document.querySelector("#love.like-redesign");
+
+    const lyricNode =
+      document.querySelector("#user-provided-music-lyrics");
+
+    if(!root || !lyricNode){
+      return;
+    }
+
+    const audio =
+      root.querySelector("[data-music-audio]");
+
+    const story =
+      root.querySelector("[data-music-story]");
+
+    const currentEl =
+      root.querySelector("[data-lyric-current]");
+
+    const prevEl =
+      root.querySelector("[data-lyric-prev]");
+
+    const nextEl =
+      root.querySelector("[data-lyric-next]");
+
+    const counterEl =
+      root.querySelector("[data-lyric-counter]");
+
+    const titleEl =
+      root.querySelector("[data-lyric-title]");
+
+    const stateEl =
+      root.querySelector("[data-lyric-state]");
+
+    const tracks = [
+      ...root.querySelectorAll("[data-music-track]")
+    ];
+
+    if(
+      !audio ||
+      !story ||
+      !currentEl ||
+      !tracks.length
+    ){
+      return;
+    }
+
+    let userLyrics = {};
+
+    try{
+      userLyrics =
+        JSON.parse(
+          lyricNode.textContent || "{}"
+        );
+    }catch(error){
+      userLyrics = {};
+    }
+
+    let activeTrack = null;
+    let syncedLines = [];
+    let alignedLines = [];
+    let activeLineIndex = -1;
+    let requestId = 0;
+
+    const MANUAL_SYNC_TIMES = {
+      1: [1.17, 4.69, 7.66, 9.45, 12.07, 16.23, 19.37, 22.70, 35.72, 38.79, 43.30, 49.26, 55.25, 61.66, 67.24, 74.31, 79.43, 84.96, 87.98, 94.63, 97.64, 102.77, 106.30, 124.73, 129.78, 135.29, 140.33, 145.82]
+    };
+
+    const buildManualLines = (trackNumber,userLines) => {
+      const times=MANUAL_SYNC_TIMES[trackNumber];
+      if(!Array.isArray(times) || !Array.isArray(userLines) || !userLines.length){
+        return null;
+      }
+      const count=Math.min(times.length,userLines.length);
+      const lines=[];
+      for(let i=0;i<count;i++){
+        lines.push({time:Number(times[i]),text:userLines[i]});
+      }
+      if(userLines.length>count){
+        const base=lines.length?lines[lines.length-1].time:0;
+        for(let i=count;i<userLines.length;i++){
+          lines.push({time:base+(i-count+1)*.75,text:userLines[i]});
+        }
+      }
+      for(let i=1;i<lines.length;i++){
+        if(lines[i].time<=lines[i-1].time){
+          lines[i].time=lines[i-1].time+.08;
+        }
+      }
+      return lines;
+    };
+
+    const cacheKey = track => {
+
+      const title =
+        (track?.dataset.title || "").trim();
+
+      const artist =
+        (track?.dataset.artist || "").trim();
+
+      return (
+        "fahri-music-sync-v4-slower::" +
+        title.toLowerCase() +
+        "::" +
+        artist.toLowerCase()
+      );
+
+    };
+
+    const normalise = value =>
+      String(value || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[’‘`´]/g, "'")
+        .replace(/&/g, " and ")
+        .replace(/[^a-z0-9\s']/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+    const similarity = (a, b) => {
+
+      const left = normalise(a);
+      const right = normalise(b);
+
+      if(!left || !right){
+        return 0;
+      }
+
+      if(left === right){
+        return 1;
+      }
+
+      const aWords = new Set(left.split(" "));
+      const bWords = new Set(right.split(" "));
+
+      let common = 0;
+
+      aWords.forEach(word => {
+        if(bWords.has(word)){
+          common++;
+        }
+      });
+
+      const union =
+        new Set([
+          ...aWords,
+          ...bWords
+        ]).size;
+
+      const jaccard =
+        union
+          ? common / union
+          : 0;
+
+      const prefix =
+        left.startsWith(right) ||
+        right.startsWith(left)
+          ? .18
+          : 0;
+
+      return Math.min(
+        1,
+        jaccard * .82 + prefix
+      );
+    };
+
+    const parseLrc = text => {
+
+      const lines = [];
+
+      String(text || "")
+        .replace(/\r/g, "")
+        .split("\n")
+        .forEach(raw => {
+
+          const stamps = [
+            ...raw.matchAll(
+              /\[(\d{1,3}):(\d{2})(?:[.:](\d{1,3}))?\]/g
+            )
+          ];
+
+          if(!stamps.length){
+            return;
+          }
+
+          const lyricText =
+            raw.replace(
+              /\[\d{1,3}:\d{2}(?:[.:]\d{1,3})?\]/g,
+              ""
+            ).trim();
+
+          if(!lyricText){
+            return;
+          }
+
+          stamps.forEach(stamp => {
+
+            const minutes =
+              Number(stamp[1]);
+
+            const seconds =
+              Number(stamp[2]);
+
+            const fraction =
+              stamp[3]
+                ? Number(
+                    `0.${stamp[3]}`
+                  )
+                : 0;
+
+            lines.push({
+              time:
+                minutes * 60 +
+                seconds +
+                fraction,
+              apiText:lyricText
+            });
+
+          });
+
+        });
+
+      return lines.sort(
+        (a,b) => a.time - b.time
+      );
+    };
+
+    const alignUserTextToSync = (
+      userLines,
+      apiLines,
+      duration = 0
+    ) => {
+
+      if(
+        !Array.isArray(userLines) ||
+        !userLines.length
+      ){
+        return [];
+      }
+
+      const usableApiLines =
+        Array.isArray(apiLines)
+          ? apiLines.filter(line =>
+              line &&
+              Number.isFinite(Number(line.time)) &&
+              Number(line.time) >= 0
+            )
+          : [];
+
+      /*
+       * IMPORTANT:
+       * The user-provided lyric list is the source of truth for
+       * displayed text. LRCLIB only supplies timing anchors.
+       * No user lyric line is discarded.
+       */
+
+      if(!usableApiLines.length){
+
+        const totalDuration =
+          Number.isFinite(duration) && duration > 0
+            ? duration
+            : Math.max(1, userLines.length - 1);
+
+        const step =
+          userLines.length > 1
+            ? totalDuration / (userLines.length - 1)
+            : 0;
+
+        return userLines.map((text,index) => ({
+          time:index * step,
+          text
+        }));
+
+      }
+
+      /*
+       * Find monotonic text/timestamp anchors. We are allowed to
+       * skip an API timestamp, but NEVER a user lyric line.
+       */
+      const anchors = [];
+      let userCursor = 0;
+
+      for(let apiIndex = 0; apiIndex < usableApiLines.length; apiIndex++){
+
+        if(userCursor >= userLines.length){
+          break;
+        }
+
+        let bestUserIndex = -1;
+        let bestScore = -1;
+
+        const lookAhead =
+          Math.min(
+            userLines.length - 1,
+            userCursor + 7
+          );
+
+        for(
+          let candidate = userCursor;
+          candidate <= lookAhead;
+          candidate++
+        ){
+
+          const score = similarity(
+            userLines[candidate],
+            usableApiLines[apiIndex].apiText
+          );
+
+          if(score > bestScore){
+            bestScore = score;
+            bestUserIndex = candidate;
+          }
+
+        }
+
+        if(
+          bestUserIndex >= userCursor &&
+          bestScore >= .28
+        ){
+
+          anchors.push({
+            userIndex:bestUserIndex,
+            time:Number(usableApiLines[apiIndex].time)
+          });
+
+          userCursor = bestUserIndex + 1;
+
+        }
+
+      }
+
+      const cleanAnchors = [];
+      for(const anchor of anchors){
+
+        const previous =
+          cleanAnchors[cleanAnchors.length - 1];
+
+        if(
+          previous &&
+          anchor.userIndex <= previous.userIndex
+        ){
+          continue;
+        }
+
+        if(
+          previous &&
+          anchor.time < previous.time
+        ){
+          anchor.time = previous.time;
+        }
+
+        cleanAnchors.push(anchor);
+
+      }
+
+      const result = userLines.map(text => ({
+        time:0,
+        text
+      }));
+
+      if(!cleanAnchors.length){
+
+        const totalDuration =
+          Number.isFinite(duration) && duration > 0
+            ? duration
+            : Math.max(
+                1,
+                Number(
+                  usableApiLines[usableApiLines.length - 1].time
+                )
+              );
+
+        const step =
+          userLines.length > 1
+            ? totalDuration / (userLines.length - 1)
+            : 0;
+
+        result.forEach((line,index) => {
+          line.time = index * step;
+        });
+
+      }else{
+
+        const first = cleanAnchors[0];
+
+        // User lines before the first real API anchor.
+        if(first.userIndex === 0){
+
+          result[0].time = Math.max(0, first.time);
+
+        }else{
+
+          const count = first.userIndex;
+
+          for(let i = 0; i <= count; i++){
+
+            result[i].time =
+              first.time * (i / count);
+
+          }
+
+        }
+
+        // User lines between real API anchors.
+        for(
+          let a = 0;
+          a < cleanAnchors.length - 1;
+          a++
+        ){
+
+          const current = cleanAnchors[a];
+          const next = cleanAnchors[a + 1];
+
+          const gap =
+            next.userIndex - current.userIndex;
+
+          if(gap <= 0){
+            continue;
+          }
+
+          for(let offset = 0; offset <= gap; offset++){
+
+            const index =
+              current.userIndex + offset;
+
+            const ratio =
+              offset / gap;
+
+            result[index].time =
+              current.time +
+              (next.time - current.time) * ratio;
+
+          }
+
+        }
+
+        // User lines after the last API anchor.
+        const last =
+          cleanAnchors[cleanAnchors.length - 1];
+
+        const trailingCount =
+          userLines.length - 1 - last.userIndex;
+
+        if(trailingCount > 0){
+
+          const fallbackEnd =
+            Number.isFinite(duration) &&
+            duration > last.time
+              ? duration
+              : Math.max(
+                  last.time + trailingCount * 1.8,
+                  Number(
+                    usableApiLines[
+                      usableApiLines.length - 1
+                    ]?.time || last.time
+                  )
+                );
+
+          const span =
+            Math.max(
+              0,
+              fallbackEnd - last.time
+            );
+
+          for(
+            let offset = 1;
+            offset <= trailingCount;
+            offset++
+          ){
+
+            const index =
+              last.userIndex + offset;
+
+            result[index].time =
+              last.time +
+              span *
+              (offset / trailingCount);
+
+          }
+
+        }
+
+      }
+
+      /*
+       * Make every timestamp strictly increasing.
+       * This prevents renderAtTime() from jumping past a line
+       * when two lines happen to receive the same timestamp.
+       */
+      const minimumGap = .08;
+
+      for(let i = 1; i < result.length; i++){
+
+        if(
+          !Number.isFinite(result[i].time) ||
+          result[i].time <= result[i - 1].time
+        ){
+
+          result[i].time =
+            result[i - 1].time + minimumGap;
+
+        }
+
+      }
+
+      /*
+       * If interpolation overshoots the audio duration, compress
+       * the generated timeline while preserving every lyric line
+       * and its order.
+       */
+      if(
+        Number.isFinite(duration) &&
+        duration > 0 &&
+        result.length > 1 &&
+        result[result.length - 1].time > duration
+      ){
+
+        const startTime =
+          Math.max(0, result[0].time);
+
+        const oldEnd =
+          result[result.length - 1].time;
+
+        const availableSpan =
+          Math.max(
+            minimumGap * (result.length - 1),
+            duration - startTime
+          );
+
+        const oldSpan =
+          Math.max(.001, oldEnd - startTime);
+
+        for(let i = 0; i < result.length; i++){
+
+          const ratio =
+            Math.max(
+              0,
+              Math.min(
+                1,
+                (result[i].time - startTime) / oldSpan
+              )
+            );
+
+          result[i].time =
+            startTime +
+            availableSpan * ratio;
+
+        }
+
+        for(let i = 1; i < result.length; i++){
+
+          if(
+            result[i].time <=
+            result[i - 1].time
+          ){
+
+            result[i].time =
+              result[i - 1].time + minimumGap;
+
+          }
+
+        }
+
+      }
+
+      return result;
+
+    };
+
+    const renderEmpty = (
+      title,
+      state="PAUSED"
+    ) => {
+
+      if(prevEl){
+        prevEl.textContent = "...";
+      }
+
+      if(currentEl){
+        currentEl.classList.remove(
+          "is-changing"
+        );
+
+        currentEl.textContent = "...";
+      }
+
+      if(nextEl){
+        nextEl.textContent = "...";
+      }
+
+      if(counterEl){
+        counterEl.textContent = "...";
+      }
+
+      if(titleEl){
+        titleEl.textContent =
+          title || "...";
+      }
+
+      if(stateEl){
+        stateEl.textContent = state;
+      }
+
+      story.dataset.hasLyrics = "false";
+    };
+
+    const fetchRealSyncedLyrics = async (
+      track,
+      duration
+    ) => {
+
+      if(
+        !track ||
+        !Number.isFinite(duration) ||
+        duration <= 0
+      ){
+        return null;
+      }
+
+      const title =
+        (track.dataset.title || "").trim();
+
+      const artist =
+        (track.dataset.artist || "").trim();
+
+      if(!title || !artist){
+        return null;
+      }
+
+      const key =
+        cacheKey(track) +
+        "::" +
+        Math.round(duration);
+
+      try{
+
+        const cached =
+          sessionStorage.getItem(key);
+
+        if(cached){
+          const parsed =
+            JSON.parse(cached);
+
+          if(
+            parsed &&
+            Array.isArray(parsed.lines)
+          ){
+            return parsed.lines;
+          }
+
+        }
+
+      }catch(error){}
+
+      const params =
+        new URLSearchParams({
+          track_name:title,
+          artist_name:artist,
+          duration:String(
+            Number(duration.toFixed(2))
+          )
+        });
+
+      // LRCLIB recommends exact matching with duration.
+      const endpoint =
+        "https://lrclib.net/api/get?" +
+        params.toString();
+
+      try{
+
+        const response =
+          await fetch(
+            endpoint,
+            {
+              method:"GET",
+              headers:{
+                "X-User-Agent":
+                  "FahriPortfolioMusic/1.0"
+              },
+              cache:"no-store"
+            }
+          );
+
+        if(response.ok){
+
+          const data =
+            await response.json();
+
+          if(
+            data &&
+            typeof data.syncedLyrics ===
+              "string" &&
+            data.syncedLyrics.trim()
+          ){
+
+            const lines =
+              parseLrc(
+                data.syncedLyrics
+              );
+
+            if(lines.length){
+
+              try{
+                sessionStorage.setItem(
+                  key,
+                  JSON.stringify({
+                    lines,
+                    fetchedAt:Date.now()
+                  })
+                );
+              }catch(error){}
+
+              return lines;
+            }
+
+          }
+
+        }
+
+      }catch(error){
+        /* Continue to search fallback below. */
+      }
+
+      // Search fallback for tracks with metadata variants.
+      try{
+
+        const searchParams =
+          new URLSearchParams({
+            track_name:title,
+            artist_name:artist
+          });
+
+        const response =
+          await fetch(
+            "https://lrclib.net/api/search?" +
+            searchParams.toString(),
+            {
+              method:"GET",
+              headers:{
+                "X-User-Agent":
+                  "FahriPortfolioMusic/1.0"
+              },
+              cache:"no-store"
+            }
+          );
+
+        if(!response.ok){
+          return null;
+        }
+
+        const results =
+          await response.json();
+
+        if(!Array.isArray(results)){
+          return null;
+        }
+
+        const scored =
+          results
+            .filter(item =>
+              item &&
+              typeof item.syncedLyrics ===
+                "string" &&
+              item.syncedLyrics.trim()
+            )
+            .map(item => {
+
+              const titleScore =
+                similarity(
+                  title,
+                  item.trackName
+                );
+
+              const artistScore =
+                similarity(
+                  artist,
+                  item.artistName
+                );
+
+              const durationScore =
+                Number.isFinite(
+                  Number(item.duration)
+                )
+                  ? Math.max(
+                      0,
+                      1 -
+                      Math.abs(
+                        Number(item.duration) -
+                        duration
+                      ) / 30
+                    )
+                  : 0;
+
+              return {
+                item,
+                score:
+                  titleScore * .48 +
+                  artistScore * .32 +
+                  durationScore * .20
+              };
+
+            })
+            .sort(
+              (a,b) =>
+                b.score - a.score
+            );
+
+        const best =
+          scored[0]?.item;
+
+        if(
+          best &&
+          typeof best.syncedLyrics ===
+            "string"
+        ){
+
+          const lines =
+            parseLrc(
+              best.syncedLyrics
+            );
+
+          if(lines.length){
+
+            try{
+              sessionStorage.setItem(
+                key,
+                JSON.stringify({
+                  lines,
+                  fetchedAt:Date.now()
+                })
+              );
+            }catch(error){}
+
+            return lines;
+          }
+
+        }
+
+      }catch(error){}
+
+      return null;
+    };
+
+    const renderAtTime = () => {
+
+      if(!activeTrack){
+        return;
+      }
+
+      const title =
+        activeTrack.dataset.title ||
+        "Judul lagu";
+
+      // Explicit user requirement: track 09 is ...
+      if(
+        activeTrack.dataset.title
+          ?.toLowerCase()
+          .includes("love in the air")
+      ){
+
+        renderEmpty(
+          title,
+          "NO LYRICS"
+        );
+
+        return;
+      }
+
+      if(!alignedLines.length){
+
+        renderEmpty(
+          title,
+          !audio.paused
+            ? "SYNCING"
+            : "PAUSED"
+        );
+
+        return;
+      }
+
+      let index = -1;
+
+      for(
+        let i = 0;
+        i < alignedLines.length;
+        i++
+      ){
+
+        if(
+          audio.currentTime >=
+          alignedLines[i].time
+        ){
+          index = i;
+        }else{
+          break;
+        }
+
+      }
+
+      if(audio.paused){
+        index = -1;
+      }
+
+      if(index < 0){
+
+        renderEmpty(
+          title,
+          audio.paused
+            ? "PAUSED"
+            : "SYNCING"
+        );
+
+        return;
+      }
+
+      const line =
+        alignedLines[index];
+
+      if(
+        currentEl.textContent !==
+        line.text
+      ){
+
+        currentEl.classList.remove(
+          "is-changing"
+        );
+
+        void currentEl.offsetWidth;
+
+        currentEl.textContent =
+          line.text;
+
+        currentEl.classList.add(
+          "is-changing"
+        );
+
+      }
+
+      if(prevEl){
+        prevEl.textContent =
+          alignedLines[index - 1]?.text ||
+          "...";
+      }
+
+      if(nextEl){
+        nextEl.textContent =
+          alignedLines[index + 1]?.text ||
+          "...";
+      }
+
+      if(counterEl){
+        counterEl.textContent =
+          `${String(index + 1).padStart(2,"0")} / ${String(alignedLines.length).padStart(2,"0")}`;
+      }
+
+      if(titleEl){
+        titleEl.textContent = title;
+      }
+
+      if(stateEl){
+        stateEl.textContent = "PLAYING";
+      }
+
+      story.dataset.hasLyrics = "true";
+      story.dataset.playing = "true";
+      activeLineIndex = index;
+
+    };
+
+    const prepareTrack = async track => {
+
+      if(!track){
+        return;
+      }
+
+      const token =
+        ++requestId;
+
+      activeTrack = track;
+      alignedLines = [];
+      syncedLines = [];
+      activeLineIndex = -1;
+
+      const title =
+        track.dataset.title ||
+        "Judul lagu";
+
+      if(titleEl){
+        titleEl.textContent = title;
+      }
+
+      // Love in the air => "..."
+      if(
+        title
+          .toLowerCase()
+          .includes("love in the air")
+      ){
+
+        renderEmpty(
+          title,
+          "NO LYRICS"
+        );
+
+        return;
+      }
+
+      // Wait for metadata if needed.
+      const duration =
+        Number.isFinite(audio.duration)
+          ? audio.duration
+          : 0;
+
+      if(duration <= 0){
+
+        renderEmpty(
+          title,
+          "LOADING"
+        );
+
+        return;
+      }
+
+      const nMatch =
+        (track.dataset.src || "")
+          .match(/lagu(\d+)\.mp3/i);
+
+      const n =
+        nMatch
+          ? Number(nMatch[1])
+          : 1;
+
+      const userLines =
+        Array.isArray(userLyrics[n])
+          ? userLyrics[n]
+          : [];
+
+      if(!userLines.length){
+
+        renderEmpty(
+          title,
+          "NO LYRICS"
+        );
+
+        return;
+      }
+
+      const manualLines = buildManualLines(n,userLines);
+
+      if(manualLines){
+        syncedLines = manualLines;
+        alignedLines = manualLines;
+        if(token !== requestId){
+          return;
+        }
+        renderAtTime();
+        return;
+      }
+
+      const apiLines =
+        await fetchRealSyncedLyrics(
+          track,
+          duration
+        );
+
+      if(token !== requestId){
+        return;
+      }
+
+      if(!apiLines || !apiLines.length){
+        renderEmpty(title,"SYNC UNAVAILABLE");
+        return;
+      }
+
+      syncedLines = apiLines;
+      alignedLines = alignUserTextToSync(userLines,apiLines,duration);
+
+      if(!alignedLines.length){
+
+        renderEmpty(
+          title,
+          "SYNC UNAVAILABLE"
+        );
+
+        return;
+      }
+
+      renderAtTime();
+
+    };
+
+    const syncSelectedTrack = () => {
+
+      const selected =
+        root.querySelector(
+          "[data-music-track].is-active"
+        );
+
+      if(
+        selected &&
+        selected !== activeTrack
+      ){
+        prepareTrack(selected);
+      }
+
+    };
+
+    audio.addEventListener(
+      "loadedmetadata",
+      () => {
+        const selected =
+          root.querySelector(
+            "[data-music-track].is-active"
+          );
+
+        if(selected){
+          prepareTrack(selected);
+        }
+      }
+    );
+
+    audio.addEventListener(
+      "timeupdate",
+      () => {
+        syncSelectedTrack();
+        renderAtTime();
+      }
+    );
+
+    audio.addEventListener(
+      "play",
+      () => {
+        renderAtTime();
+      }
+    );
+
+    audio.addEventListener(
+      "pause",
+      () => {
+        renderAtTime();
+      }
+    );
+
+    audio.addEventListener(
+      "ended",
+      () => {
+        renderAtTime();
+      }
+    );
+
+    tracks.forEach(track => {
+      track.addEventListener(
+        "click",
+        () => {
+          setTimeout(
+            () => {
+              syncSelectedTrack();
+              renderAtTime();
+            },
+            40
+          );
+        }
+      );
+    });
+
+    const observer =
+      new MutationObserver(
+        () => syncSelectedTrack()
+      );
+
+    tracks.forEach(track => {
+      observer.observe(
+        track,
+        {
+          attributes:true,
+          attributeFilter:["class"]
+        }
+      );
+    });
+
+    const first =
+      root.querySelector(
+        "[data-music-track].is-active"
+      ) || tracks[0];
+
+    if(first){
+      activeTrack = first;
+      renderEmpty(
+        first.dataset.title ||
+        "Staying",
+        "PAUSED"
+      );
+
+      // Delay a bit so the existing player has set metadata.
+      setTimeout(
+        () => prepareTrack(first),
+        120
+      );
+    }
+
+  };
+
+  if(
+    document.readyState ===
+    "loading"
+  ){
+    document.addEventListener(
+      "DOMContentLoaded",
+      boot,
+      {once:true}
+    );
+  }else{
+    boot();
+  }
+
 })();
+
