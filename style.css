@@ -29079,3 +29079,2244 @@ body.nav-click-scrolling {
     box-shadow .45s ease,
     transform .45s cubic-bezier(.2,.8,.2,1) !important;
 }
+
+
+/* =========================================================
+   MUSIC CARD REFINEMENT — STORY SCREEN V3
+   Keeps the uploaded JS untouched.
+   Focus:
+   - cleaner premium player frame
+   - stronger depth / glass treatment
+   - lyric ghost text sits BEHIND the active lyric
+   - active lyric stays crisp and dominant
+   - previous/next lyrics fade into the background
+========================================================= */
+
+#love.like-redesign .like-music-device{
+  padding:10px !important;
+  border:1px solid rgba(243,241,236,.16) !important;
+  border-radius:30px !important;
+  background:
+    radial-gradient(circle at 22% 8%, rgba(255,255,255,.08), transparent 30%),
+    linear-gradient(145deg,#292a25 0%,#171814 48%,#0e0f0d 100%) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05),
+    inset 0 -1px 0 rgba(0,0,0,.45),
+    0 28px 58px rgba(0,0,0,.42),
+    0 0 0 1px rgba(0,0,0,.16) !important;
+}
+
+#love.like-redesign .like-music-device-top{
+  height:20px !important;
+}
+
+#love.like-redesign .like-music-device-speaker{
+  width:54px !important;
+  height:3px !important;
+  background:linear-gradient(90deg,rgba(255,255,255,.10),rgba(255,255,255,.30),rgba(255,255,255,.10)) !important;
+  box-shadow:0 1px 4px rgba(0,0,0,.35) !important;
+}
+
+#love.like-redesign .like-music-device-camera{
+  right:8px !important;
+  width:6px !important;
+  height:6px !important;
+  background:#55584f !important;
+  box-shadow:
+    0 0 0 2px rgba(0,0,0,.42),
+    inset 0 1px 1px rgba(255,255,255,.12) !important;
+}
+
+#love.like-redesign .like-music-device-screen{
+  aspect-ratio:4 / 4.85 !important;
+  border:1px solid rgba(255,255,255,.14) !important;
+  border-radius:22px !important;
+  background:#090a08 !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.025),
+    inset 0 0 28px rgba(0,0,0,.36),
+    0 10px 26px rgba(0,0,0,.22) !important;
+  isolation:isolate !important;
+}
+
+#love.like-redesign .like-music-device-screen::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 46%, transparent 25%, rgba(0,0,0,.11) 63%, rgba(0,0,0,.48) 100%),
+    linear-gradient(180deg,rgba(255,255,255,.055),transparent 18%,transparent 72%,rgba(0,0,0,.26));
+}
+
+#love.like-redesign .like-music-device-screen::after{
+  z-index:3 !important;
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,.08) 36%,rgba(0,0,0,.72) 100%),
+    linear-gradient(120deg,rgba(255,255,255,.09),transparent 28%,transparent 72%,rgba(255,255,255,.025));
+}
+
+#love.like-redesign .like-music-device-screen > img{
+  z-index:1 !important;
+  opacity:.30 !important;
+  filter:
+    saturate(.76)
+    contrast(1.07)
+    brightness(.72)
+    blur(.05px) !important;
+  transform:scale(1.055) !important;
+}
+
+#love.like-redesign .like-music-device-screen[data-story-playing="true"] > img{
+  opacity:.27 !important;
+  transform:scale(1.065) !important;
+}
+
+#love.like-redesign .like-music-story-screen{
+  z-index:10 !important;
+  padding:11px 11px 10px !important;
+  background:
+    linear-gradient(180deg,
+      rgba(0,0,0,.10) 0%,
+      rgba(0,0,0,0) 30%,
+      rgba(0,0,0,.08) 56%,
+      rgba(0,0,0,.88) 100%
+    ) !important;
+  text-shadow:
+    0 2px 12px rgba(0,0,0,.88),
+    0 0 1px rgba(255,255,255,.22) !important;
+}
+
+#love.like-redesign .like-music-story-lines{
+  position:relative !important;
+  display:block !important;
+  padding:0 !important;
+  margin:0 !important;
+  overflow:hidden !important;
+}
+
+#love.like-redesign .like-music-story-line{
+  position:absolute !important;
+  left:0 !important;
+  right:0 !important;
+  max-width:none !important;
+  margin:0 !important;
+  text-align:left !important;
+  transform-origin:center center !important;
+  pointer-events:none !important;
+  overflow-wrap:anywhere !important;
+}
+
+#love.like-redesign .like-music-story-line-prev{
+  top:50% !important;
+  z-index:1 !important;
+  transform:translateY(-106%) scale(.86) !important;
+  color:rgba(255,255,255,.20) !important;
+  opacity:.38 !important;
+  filter:blur(2.8px) !important;
+  letter-spacing:-.035em !important;
+  line-height:1 !important;
+}
+
+#love.like-redesign .like-music-story-line-current{
+  top:50% !important;
+  z-index:3 !important;
+  transform:translateY(-50%);
+  width:100% !important;
+  font-size:clamp(22px,3.1vw,34px) !important;
+  color:#fff !important;
+  opacity:1;
+  filter:none;
+  line-height:.88 !important;
+  will-change:transform,opacity,filter;
+  letter-spacing:-.055em !important;
+  text-shadow:
+    0 5px 20px rgba(0,0,0,.82),
+    0 0 1px rgba(255,255,255,.28) !important;
+}
+
+#love.like-redesign .like-music-story-line-next{
+  top:50% !important;
+  z-index:1 !important;
+  transform:translateY(7%) scale(.80) !important;
+  color:rgba(255,255,255,.13) !important;
+  opacity:.24 !important;
+  filter:blur(3.4px) !important;
+  letter-spacing:-.030em !important;
+  line-height:1 !important;
+}
+
+#love.like-redesign .like-music-story-line-current.is-changing{
+  animation:musicStoryLyricInV3 .58s cubic-bezier(.18,.78,.2,1) both !important;
+}
+
+@keyframes musicStoryLyricInV3{
+  0%{
+    opacity:0;
+    transform:translateY(-43%) scale(.965);
+    filter:blur(4px);
+  }
+  100%{
+    opacity:1;
+    transform:translateY(-50%) scale(1);
+    filter:blur(0);
+  }
+}
+
+/* A subtle center glow behind the active lyric makes the hierarchy clearer. */
+#love.like-redesign .like-music-story-lines::after{
+  content:"";
+  position:absolute;
+  left:-15%;
+  right:-15%;
+  top:50%;
+  height:42%;
+  z-index:0;
+  transform:translateY(-50%);
+  pointer-events:none;
+  background:radial-gradient(
+    ellipse at center,
+    rgba(255,255,255,.075) 0%,
+    rgba(158,175,136,.035) 28%,
+    transparent 72%
+  );
+  filter:blur(18px);
+}
+
+#love.like-redesign .like-music-story-meta{
+  position:relative;
+  z-index:4;
+  margin-top:7px !important;
+  font-size:6px !important;
+  color:rgba(255,255,255,.70) !important;
+}
+
+#love.like-redesign .like-music-story-footer{
+  position:relative;
+  z-index:4;
+  padding:0 1px !important;
+}
+
+#love.like-redesign .like-music-story-footer > span:first-child{
+  color:rgba(255,255,255,.78) !important;
+}
+
+#love.like-redesign .like-music-story-footer > span:last-child{
+  padding:5px 7px;
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:999px;
+  background:rgba(0,0,0,.20);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+
+#love.like-redesign .like-music-screen-glass{
+  z-index:11 !important;
+  opacity:.52 !important;
+}
+
+#love.like-redesign .like-music-device-bottom{
+  padding:9px 3px 1px !important;
+  color:rgba(243,241,236,.34) !important;
+}
+
+@media(max-width:620px){
+  #love.like-redesign .like-music-device{
+    padding:9px !important;
+    border-radius:27px !important;
+  }
+
+  #love.like-redesign .like-music-device-screen{
+    aspect-ratio:4 / 4.9 !important;
+    border-radius:20px !important;
+  }
+
+  #love.like-redesign .like-music-story-screen{
+    padding:10px 9px 9px !important;
+  }
+
+  #love.like-redesign .like-music-story-line-current{
+    font-size:21px !important;
+    line-height:.9 !important;
+  }
+
+  #love.like-redesign .like-music-story-line-prev{
+    transform:translateY(-104%) scale(.84) !important;
+  }
+
+  #love.like-redesign .like-music-story-line-next{
+    transform:translateY(9%) scale(.78) !important;
+  }
+}
+
+
+/* =========================================================
+   MUSIC CARD — FINAL POLISH
+   Remove the top segmented lyric bar and refine the
+   portable-player card without touching lyric timing/JS.
+========================================================= */
+
+/* Remove the segmented white/grey line above the lyric title. */
+#love.like-redesign .like-music-story-bars{
+  display:none !important;
+}
+
+/* Cleaner device shell with more depth and a tighter silhouette. */
+#love.like-redesign .like-music-device{
+  padding:10px !important;
+  border:1px solid rgba(255,255,255,.15) !important;
+  border-radius:29px !important;
+  background:
+    linear-gradient(155deg,rgba(255,255,255,.045),rgba(255,255,255,.012) 42%,rgba(0,0,0,.22)),
+    #11120f !important;
+  box-shadow:
+    0 30px 70px rgba(0,0,0,.42),
+    inset 0 1px 0 rgba(255,255,255,.055),
+    inset 0 -14px 24px rgba(0,0,0,.20) !important;
+}
+
+/* Remove the decorative speaker slit so the top is visually quieter. */
+#love.like-redesign .like-music-device-speaker{
+  width:42px !important;
+  height:2px !important;
+  background:rgba(255,255,255,.12) !important;
+  opacity:.72;
+}
+
+/* Camera becomes a tiny hardware detail. */
+#love.like-redesign .like-music-device-camera{
+  width:5px !important;
+  height:5px !important;
+  right:9px !important;
+  background:#4e514a !important;
+  box-shadow:
+    0 0 0 2px rgba(0,0,0,.45),
+    inset 0 1px 1px rgba(255,255,255,.14) !important;
+}
+
+/* Screen: stronger glass/depth, but keep the photograph visible. */
+#love.like-redesign .like-music-device-screen{
+  aspect-ratio:4 / 4.9 !important;
+  border:1px solid rgba(255,255,255,.14) !important;
+  border-radius:22px !important;
+  background:#080908 !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.03),
+    inset 0 0 38px rgba(0,0,0,.40),
+    0 14px 32px rgba(0,0,0,.26) !important;
+}
+
+/* Richer photographic treatment. */
+#love.like-redesign .like-music-device-screen > img{
+  opacity:.36 !important;
+  filter:
+    saturate(.78)
+    contrast(1.08)
+    brightness(.70) !important;
+  transform:scale(1.045) !important;
+}
+
+#love.like-redesign .like-music-device-screen[data-story-playing="true"] > img{
+  opacity:.32 !important;
+  transform:scale(1.055) !important;
+}
+
+/* Layered vignette: darker edges, cleaner center for lyrics. */
+#love.like-redesign .like-music-device-screen::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:
+    radial-gradient(
+      ellipse at 50% 49%,
+      rgba(0,0,0,0) 0%,
+      rgba(0,0,0,.05) 32%,
+      rgba(0,0,0,.25) 72%,
+      rgba(0,0,0,.62) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.10) 0%,
+      transparent 24%,
+      transparent 56%,
+      rgba(0,0,0,.42) 100%
+    );
+}
+
+/* Soft glass highlight stays subtle and never competes with lyrics. */
+#love.like-redesign .like-music-screen-glass{
+  z-index:11 !important;
+  opacity:.28 !important;
+}
+
+/* Top labels: cleaner and easier to read. */
+#love.like-redesign .like-music-screen-overline{
+  left:13px !important;
+  top:13px !important;
+  z-index:12 !important;
+  color:rgba(255,255,255,.70) !important;
+  font:600 7px/1 "DM Mono",monospace !important;
+  letter-spacing:.13em !important;
+  text-shadow:0 2px 11px rgba(0,0,0,.76);
+}
+
+/* Top-right circular control becomes a refined glass button. */
+#love.like-redesign .like-music-screen-time{
+  right:12px !important;
+  top:12px !important;
+  z-index:12 !important;
+  width:27px !important;
+  height:27px !important;
+  border:1px solid rgba(255,255,255,.17) !important;
+  background:rgba(8,9,8,.28) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 8px 18px rgba(0,0,0,.24);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+
+/* Lyric layer: preserve the animated current line and improve hierarchy. */
+#love.like-redesign .like-music-story-screen{
+  z-index:10 !important;
+  padding:11px 11px 10px !important;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.02) 0%,
+      rgba(0,0,0,0) 24%,
+      rgba(0,0,0,.05) 55%,
+      rgba(0,0,0,.82) 100%
+    ) !important;
+}
+
+/* More breathing room around the lyric stack. */
+#love.like-redesign .like-music-story-lines{
+  position:relative !important;
+  min-height:0 !important;
+  padding:0 0 3px !important;
+  margin:0 !important;
+  overflow:hidden !important;
+}
+
+/* Previous/next remain behind the main lyric, but softer and more centered. */
+#love.like-redesign .like-music-story-line-prev{
+  font-size:clamp(8px,1.15vw,11px) !important;
+  color:rgba(255,255,255,.18) !important;
+  opacity:.30 !important;
+  filter:blur(3px) !important;
+  text-shadow:none !important;
+}
+
+#love.like-redesign .like-music-story-line-next{
+  font-size:clamp(8px,1.15vw,11px) !important;
+  color:rgba(255,255,255,.11) !important;
+  opacity:.18 !important;
+  filter:blur(3.8px) !important;
+  text-shadow:none !important;
+}
+
+/* Main lyric: stronger presence without overwhelming the photo. */
+#love.like-redesign .like-music-story-line-current{
+  width:100% !important;
+  max-width:100% !important;
+  color:#fff !important;
+  font-size:clamp(21px,3.15vw,35px) !important;
+  font-weight:800 !important;
+  line-height:.92 !important;
+  letter-spacing:-.058em !important;
+  text-shadow:
+    0 4px 22px rgba(0,0,0,.88),
+    0 0 1px rgba(255,255,255,.30) !important;
+}
+
+/* Keep the entrance animation enabled for lyric changes. */
+#love.like-redesign .like-music-story-line-current.is-changing{
+  animation:musicStoryLyricInV3 .48s cubic-bezier(.18,.78,.2,1) !important;
+}
+
+/* Subtle center glow behind the active lyric. */
+#love.like-redesign .like-music-story-lines::after{
+  left:-12% !important;
+  right:-12% !important;
+  height:48% !important;
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(255,255,255,.075) 0%,
+      rgba(158,175,136,.035) 30%,
+      transparent 72%
+    ) !important;
+  filter:blur(20px) !important;
+}
+
+/* Footer information sits cleaner on the lower gradient. */
+#love.like-redesign .like-music-story-footer{
+  padding:0 1px !important;
+  font-size:6.5px !important;
+}
+
+#love.like-redesign .like-music-story-footer > span:last-child{
+  padding:6px 8px !important;
+  border:1px solid rgba(255,255,255,.13) !important;
+  border-radius:999px !important;
+  background:rgba(0,0,0,.23) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+
+/* Device footer: understated hardware label. */
+#love.like-redesign .like-music-device-bottom{
+  padding:9px 3px 1px !important;
+  color:rgba(243,241,236,.30) !important;
+  font-size:6px !important;
+  letter-spacing:.19em !important;
+}
+
+/* Desktop: slightly larger, premium player proportions. */
+@media(min-width:901px){
+  #love.like-redesign .like-music-now{
+    grid-template-columns:242px minmax(0,1fr) !important;
+    gap:34px !important;
+    padding:34px !important;
+    border-radius:30px !important;
+    box-shadow:
+      0 34px 78px rgba(0,0,0,.30),
+      inset 0 1px 0 rgba(255,255,255,.025) !important;
+  }
+
+  #love.like-redesign .like-music-device{
+    max-width:242px;
+    justify-self:start;
+  }
+}
+
+/* Mobile: make the screen feel like a real premium handheld player. */
+@media(max-width:620px){
+  #love.like-redesign .like-music-now{
+    padding:18px !important;
+    gap:18px !important;
+    border-radius:25px !important;
+  }
+
+  #love.like-redesign .like-music-device{
+    width:min(205px,68vw) !important;
+    margin:0 auto !important;
+    padding:9px !important;
+    border-radius:25px !important;
+  }
+
+  #love.like-redesign .like-music-device-screen{
+    aspect-ratio:4 / 4.95 !important;
+    border-radius:20px !important;
+  }
+
+  #love.like-redesign .like-music-story-line-current{
+    font-size:20px !important;
+    line-height:.90 !important;
+  }
+
+  #love.like-redesign .like-music-story-line-prev{
+    transform:translateY(-104%) scale(.82) !important;
+  }
+
+  #love.like-redesign .like-music-story-line-next{
+    transform:translateY(9%) scale(.76) !important;
+  }
+
+  #love.like-redesign .like-music-screen-time{
+    width:26px !important;
+    height:26px !important;
+  }
+}
+
+
+/* =========================================================
+   MUSIC CARD — NOW PLAYING / LYRICS SPACING
+========================================================= */
+
+/* Keep NOW PLAYING on its own clean line. */
+#love.like-redesign .like-music-screen-overline{
+  top:13px !important;
+  left:13px !important;
+  z-index:13 !important;
+  line-height:1.15 !important;
+  white-space:nowrap !important;
+}
+
+/* Put LYRICS clearly underneath instead of sticking to the label. */
+#love.like-redesign .like-music-story-meta{
+  position:absolute !important;
+  top:16px !important;
+  left:13px !important;
+  right:13px !important;
+  margin:0 !important;
+  padding:0 !important;
+  z-index:13 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  line-height:1.2 !important;
+  height:9px !important;
+}
+
+/* Give the lyric stack a little more breathing room from the header. */
+#love.like-redesign .like-music-story-lines{
+  padding-top:10px !important;
+}
+
+/* Mobile spacing. */
+@media(max-width:620px){
+  #love.like-redesign .like-music-screen-overline{
+    top:12px !important;
+    left:11px !important;
+  }
+
+  #love.like-redesign .like-music-story-meta{
+    top:29px !important;
+    left:11px !important;
+    right:11px !important;
+  }
+
+  #love.like-redesign .like-music-story-lines{
+    padding-top:12px !important;
+  }
+}
+
+
+/* =========================================================
+   PREMIUM POLISH LAYER (added — additive only)
+   Purpose: refine typography rhythm, spacing consistency,
+   button/card/nav hover polish and small responsive safety
+   nets. Nothing above this line was removed or renamed —
+   every selector below already exists in the file, so this
+   only refines values already in play. Safe by construction:
+   no class/id renamed, no structural or animation rule touched.
+   ========================================================= */
+
+:root {
+  --ease: cubic-bezier(.16,.84,.44,1);
+  --ease-soft: cubic-bezier(.22,.61,.36,1);
+  --shadow-sm: 0 6px 18px rgba(17,17,15,.06);
+  --shadow-md: 0 18px 40px rgba(17,17,15,.10);
+  --shadow-lg: 0 28px 70px rgba(17,17,15,.14);
+  --radius-sm: 14px;
+  --radius-md: 22px;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+  --space-5: 64px;
+}
+
+/* Smoother font rendering across the whole site */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Slightly calmer, more premium selection + scrollbar */
+::selection { background: var(--ink); color: #fff; }
+html { scrollbar-width: thin; scrollbar-color: rgba(17,17,15,.28) transparent; }
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(17,17,15,.22);
+  border-radius: 999px;
+  border: 2px solid var(--paper);
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(17,17,15,.36); }
+
+/* Typography rhythm: slightly more generous line-height on
+   long-form copy, tighter tracking left as-is on display type */
+.hero-statement,
+.about-details p,
+.life-card-text p,
+.section-head p {
+  line-height: 1.65;
+}
+.section-head h2 { font-weight: 700; }
+
+/* Buttons: smoother, more "expensive" hover/active feel.
+   Same selectors, refined easing/timing only. */
+.pill-button,
+.hero-contact,
+.under-link,
+.project-view-button {
+  transition:
+    transform .38s var(--ease),
+    box-shadow .38s var(--ease),
+    background-color .3s var(--ease-soft),
+    opacity .3s ease;
+}
+.pill-button:hover,
+.hero-contact:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.pill-button:active,
+.hero-contact:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+.under-link:hover { opacity: .7; }
+
+/* Navbar: consistent, subtle hover weight — structure untouched */
+.hero-menu a,
+.main-nav a {
+  transition: color .3s var(--ease-soft);
+}
+.hero-logo:hover { transform: translateY(-1px); }
+
+/* Cards: refined shadow + lift on hover, no layout change */
+.project-card,
+.life-card,
+.now-card {
+  transition:
+    transform .45s var(--ease),
+    box-shadow .45s var(--ease);
+}
+.project-card:hover,
+.now-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+.life-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Images inside cards: guarantee no stretching regardless of
+   markup variations already in the file (safety net only) */
+.project-card img,
+.life-card img,
+.now-card img,
+.hero-portrait,
+.portrait-frame img {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Section rhythm: keep sections from ever feeling too tight
+   or too empty on ultra-wide / narrow viewports */
+.section-head { row-gap: var(--space-2); }
+
+/* Small responsive safety nets — never overflow horizontally,
+   text and media always shrink gracefully */
+img, video, svg { max-width: 100%; height: auto; }
+.shell { max-width: 100%; }
+
+@media (max-width: 720px) {
+  .hero-statement,
+  .about-details p,
+  .life-card-text p,
+  .section-head p {
+    line-height: 1.6;
+  }
+  .project-card:hover,
+  .now-card:hover {
+    transform: none; /* avoid layout jitter on touch devices */
+  }
+}
+
+/* Respect users who prefer reduced motion, without touching
+   the core animation system (index.js / GSAP untouched) */
+@media (prefers-reduced-motion: reduce) {
+  .pill-button, .hero-contact, .project-card, .life-card, .now-card {
+    transition-duration: .01ms !important;
+  }
+}
+
+
+/* =========================================================
+   MUSIC STORY — LYRIC HEADER SAFE ZONE
+   ---------------------------------------------------------
+   Keeps active lyric safely below NOW PLAYING + metadata.
+   Visual-only: no audio/timestamp behavior changed.
+========================================================= */
+
+#love.like-redesign .like-music-story-screen{
+  overflow:hidden !important;
+}
+
+#love.like-redesign .like-music-story-lines{
+  box-sizing:border-box !important;
+  padding-top:34px !important;
+  padding-bottom:20px !important;
+  overflow:hidden !important;
+}
+
+/* Main lyric starts clearly below the header metadata. */
+#love.like-redesign .like-music-story-line-current{
+  top:calc(50% + 19px) !important;
+  left:11px !important;
+  right:11px !important;
+  width:calc(100% - 22px) !important;
+  max-width:calc(100% - 22px) !important;
+  box-sizing:border-box !important;
+}
+
+/* Ghost lines stay around the center without entering the header. */
+#love.like-redesign .like-music-story-line-prev{
+  top:calc(50% - 8px) !important;
+}
+
+#love.like-redesign .like-music-story-line-next{
+  top:calc(50% + 27px) !important;
+}
+
+@media(max-width:620px){
+
+  #love.like-redesign .like-music-story-lines{
+    padding-top:38px !important;
+    padding-bottom:18px !important;
+  }
+
+  #love.like-redesign .like-music-story-line-current{
+    top:calc(50% + 17px) !important;
+    left:9px !important;
+    right:9px !important;
+    width:calc(100% - 18px) !important;
+    max-width:calc(100% - 18px) !important;
+  }
+
+}
+
+
+/* =========================================================
+   MUSIC PLAYER — FINAL HEADER ALIGNMENT
+   ---------------------------------------------------------
+   Clean geometry for:
+     NOW PLAYING
+     LYRICS ........ 02 / 25
+                     [ audio button ]
+
+   No audio / lyric timing / JS behavior changed.
+========================================================= */
+
+#love.like-redesign .like-music-device-screen{
+  position:relative !important;
+}
+
+/* Top-right hardware control */
+#love.like-redesign .like-music-screen-time{
+  position:absolute !important;
+  top:11px !important;
+  right:11px !important;
+
+  width:34px !important;
+  height:34px !important;
+
+  z-index:30 !important;
+
+  display:grid !important;
+  place-items:center !important;
+
+  border:1px solid rgba(255,255,255,.17) !important;
+  border-radius:50% !important;
+
+  background:rgba(9,10,9,.82) !important;
+
+  box-shadow:
+    0 7px 16px rgba(0,0,0,.34),
+    inset 0 1px 0 rgba(255,255,255,.055) !important;
+
+  backdrop-filter:blur(10px) !important;
+  -webkit-backdrop-filter:blur(10px) !important;
+}
+
+/* NOW PLAYING */
+#love.like-redesign .like-music-screen-overline{
+  top:12px !important;
+  left:12px !important;
+  right:auto !important;
+
+  z-index:22 !important;
+
+  line-height:1.1 !important;
+  white-space:nowrap !important;
+}
+
+/* LYRICS + track counter row */
+#love.like-redesign .like-music-story-meta{
+  position:absolute !important;
+
+  top:29px !important;
+  left:12px !important;
+
+  /*
+     Reserve the right side for the circular button.
+     This keeps 02 / 25 from drifting underneath or too
+     close to the icon.
+  */
+  right:56px !important;
+
+  height:10px !important;
+  margin:0 !important;
+  padding:0 !important;
+
+  z-index:21 !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+
+  gap:12px !important;
+
+  line-height:1 !important;
+  white-space:nowrap !important;
+}
+
+#love.like-redesign .like-music-story-meta span{
+  flex:0 0 auto !important;
+}
+
+#love.like-redesign .like-music-story-meta span:first-child{
+  opacity:.72 !important;
+}
+
+#love.like-redesign .like-music-story-meta span:last-child{
+  margin-left:auto !important;
+
+  opacity:.62 !important;
+
+  text-align:right !important;
+
+  /*
+     Never let the counter consume space needed by
+     the left "LYRICS" label.
+  */
+  max-width:70px !important;
+}
+
+/*
+   Keep the lyric stack starting below this two-line header.
+   The existing auto-fit JS can still resize long lyrics.
+*/
+#love.like-redesign .like-music-story-lines{
+  padding-top:16px !important;
+}
+
+@media(max-width:620px){
+
+  #love.like-redesign .like-music-screen-time{
+    top:9px !important;
+    right:9px !important;
+
+    width:32px !important;
+    height:32px !important;
+  }
+
+  #love.like-redesign .like-music-screen-overline{
+    top:11px !important;
+    left:10px !important;
+  }
+
+  #love.like-redesign .like-music-story-meta{
+    top:29px !important;
+    left:10px !important;
+    right:49px !important;
+    height:9px !important;
+    gap:10px !important;
+  }
+
+  #love.like-redesign .like-music-story-lines{
+    padding-top:16px !important;
+  }
+
+}
+
+
+/* =========================================================
+   MUSIC CARD — REMOVE FOCUS RING JUMP / KEDUT
+   ---------------------------------------------------------
+   Cards are focusable so Space can control playback.
+   Browser default focus outline was creating the extra
+   animated-looking line around the card. Keep the existing
+   card border/active state; remove only the external focus ring.
+========================================================= */
+
+#love.like-redesign .like-music-track:focus,
+#love.like-redesign .like-music-track:focus-visible{
+  outline:none !important;
+  outline-offset:0 !important;
+}
+
+/* No focus-only animation or filter. */
+#love.like-redesign .like-music-track:focus{
+  animation:none !important;
+  filter:none !important;
+}
+
+/* Keyboard focus should use the same existing card border,
+   not a second outline around it. */
+#love.like-redesign .like-music-track:focus-visible{
+  border-color:rgba(158,175,136,.50) !important;
+}
+
+/* =========================================================
+   GLOBAL CARET VISIBILITY SAFETY
+   ---------------------------------------------------------
+   Prevents the browser text caret from blinking visibly
+   anywhere in the portfolio UI.
+========================================================= */
+
+body,
+body *{
+  caret-color:transparent !important;
+}
+
+
+/* =========================================================
+   FILM TRAILER — ONLY REDUCE THE VIEW TRAILER WINDOW
+   ---------------------------------------------------------
+   Navbar is intentionally untouched.
+   Only the trailer dialog/container is reduced.
+========================================================= */
+
+.film-trailer-dialog{
+  width:min(820px, 84vw) !important;
+  max-height:78vh !important;
+  overflow:hidden !important;
+}
+
+@media(max-width:700px){
+  .film-trailer-dialog{
+    width:min(94vw, 720px) !important;
+    max-height:80vh !important;
+  }
+}
+
+
+/* =========================================================
+   FULL LYRICS VIEW — SPOTIFY STYLE
+========================================================= */
+
+body.music-lyrics-modal-open{
+  overflow:hidden !important;
+}
+
+.like-music-lyrics-button{
+  flex:0 0 auto;
+  min-width:82px;
+  height:38px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  padding:0 13px;
+  border:1px solid rgba(243,241,236,.13);
+  border-radius:999px;
+  background:rgba(255,255,255,.035);
+  color:rgba(243,241,236,.72);
+  cursor:pointer;
+  transition:
+    background .25s ease,
+    border-color .25s ease,
+    color .25s ease,
+    transform .25s ease;
+}
+
+.like-music-lyrics-button:hover{
+  background:rgba(158,175,136,.10);
+  border-color:rgba(158,175,136,.38);
+  color:#f3f1ec;
+  transform:translateY(-1px);
+}
+
+.like-music-lyrics-button i{
+  font-size:12px;
+}
+
+.like-music-lyrics-button span{
+  font:600 8px "DM Mono",monospace;
+  letter-spacing:.11em;
+}
+
+.music-lyrics-modal{
+  position:fixed;
+  inset:0;
+  z-index:1000002;
+  display:grid;
+  place-items:center;
+  padding:24px;
+  visibility:hidden;
+  opacity:0;
+  pointer-events:none;
+  transition:
+    opacity .28s ease,
+    visibility .28s ease;
+}
+
+.music-lyrics-modal.is-open{
+  visibility:visible;
+  opacity:1;
+  pointer-events:auto;
+}
+
+.music-lyrics-backdrop{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(
+      circle at 50% 15%,
+      rgba(158,175,136,.10),
+      transparent 34%
+    ),
+    rgba(7,8,7,.88);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+
+.music-lyrics-dialog{
+  position:relative;
+  z-index:1;
+  width:min(920px,92vw);
+  height:min(820px,88vh);
+  display:grid;
+  grid-template-rows:auto minmax(0,1fr) auto;
+  overflow:hidden;
+  border:1px solid rgba(243,241,236,.14);
+  border-radius:28px;
+  background:
+    radial-gradient(
+      circle at 78% 12%,
+      rgba(158,175,136,.09),
+      transparent 30%
+    ),
+    linear-gradient(
+      145deg,
+      #191b18,
+      #0f100e 74%
+    );
+  color:#f3f1ec;
+  box-shadow:
+    0 42px 120px rgba(0,0,0,.58),
+    inset 0 1px 0 rgba(255,255,255,.035);
+  transform:translateY(20px) scale(.97);
+  transition:
+    transform .38s cubic-bezier(.2,.75,.2,1);
+}
+
+.music-lyrics-modal.is-open
+.music-lyrics-dialog{
+  transform:translateY(0) scale(1);
+}
+
+.music-lyrics-topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  padding:21px 24px 18px;
+  border-bottom:1px solid rgba(243,241,236,.09);
+}
+
+.music-lyrics-kicker{
+  display:block;
+  margin-bottom:8px;
+  color:rgba(243,241,236,.38);
+  font:500 8px/1 "DM Mono",monospace;
+  letter-spacing:.17em;
+}
+
+.music-lyrics-heading h2{
+  margin:0;
+  color:#f3f1ec;
+  font:
+    400
+    clamp(34px,4.5vw,58px)
+    "Instrument Serif",
+    Georgia,
+    serif;
+  line-height:.9;
+  letter-spacing:-.035em;
+}
+
+.music-lyrics-heading p{
+  margin:8px 0 0;
+  color:rgba(243,241,236,.46);
+  font:500 9px/1.2 "DM Mono",monospace;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.music-lyrics-topbar-actions{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.music-lyrics-counter{
+  color:rgba(243,241,236,.38);
+  font:500 9px "DM Mono",monospace;
+  letter-spacing:.10em;
+}
+
+.music-lyrics-close{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  padding:0;
+  border:1px solid rgba(243,241,236,.14);
+  border-radius:50%;
+  background:rgba(255,255,255,.035);
+  color:#f3f1ec;
+  cursor:pointer;
+  transition:
+    transform .25s ease,
+    background .25s ease,
+    border-color .25s ease;
+}
+
+.music-lyrics-close:hover{
+  transform:rotate(90deg);
+  background:rgba(255,255,255,.08);
+  border-color:rgba(243,241,236,.28);
+}
+
+.music-lyrics-body{
+  min-height:0;
+  overflow:auto;
+  padding:
+    64px
+    clamp(22px,5vw,66px)
+    72px;
+  scrollbar-width:thin;
+  scrollbar-color:
+    rgba(243,241,236,.18)
+    transparent;
+  overscroll-behavior:contain;
+}
+
+.music-lyrics-body::-webkit-scrollbar{
+  width:5px;
+}
+
+.music-lyrics-body::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+.music-lyrics-body::-webkit-scrollbar-thumb{
+  background:rgba(243,241,236,.16);
+  border-radius:999px;
+}
+
+.music-lyrics-line{
+  display:block;
+  width:100%;
+  margin:0;
+  padding:10px 0;
+  border:0;
+  background:transparent;
+  color:rgba(243,241,236,.22);
+  text-align:left;
+  font:
+    700
+    clamp(20px,3.05vw,43px)
+    /1.03
+    Manrope,
+    sans-serif;
+  letter-spacing:-.045em;
+  cursor:pointer;
+  opacity:.62;
+  transition:
+    color .30s ease,
+    transform .30s ease,
+    opacity .30s ease;
+}
+
+.music-lyrics-line:hover{
+  color:rgba(243,241,236,.67);
+  opacity:.9;
+}
+
+.music-lyrics-line.is-past{
+  color:rgba(243,241,236,.37);
+  opacity:.8;
+}
+
+.music-lyrics-line.is-active{
+  color:#f4f2ed;
+  opacity:1;
+  transform:translateX(7px);
+}
+
+.music-lyrics-line.is-next{
+  color:rgba(243,241,236,.20);
+  opacity:.55;
+}
+
+.music-lyrics-empty{
+  min-height:100%;
+  display:grid;
+  place-items:center;
+  align-content:center;
+  gap:10px;
+  text-align:center;
+  color:rgba(243,241,236,.42);
+}
+
+.music-lyrics-empty i{
+  font-size:30px;
+}
+
+.music-lyrics-empty strong{
+  color:#f3f1ec;
+  font-size:22px;
+}
+
+.music-lyrics-empty span{
+  font:500 9px "DM Mono",monospace;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+.music-lyrics-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:12px 24px 15px;
+  border-top:1px solid rgba(243,241,236,.08);
+  color:rgba(243,241,236,.31);
+  font:500 8px "DM Mono",monospace;
+  letter-spacing:.13em;
+}
+
+@media(max-width:700px){
+
+  .like-music-lyrics-button{
+    min-width:40px;
+    width:40px;
+    padding:0;
+  }
+
+  .like-music-lyrics-button span{
+    display:none;
+  }
+
+  .music-lyrics-modal{
+    padding:10px;
+  }
+
+  .music-lyrics-dialog{
+    width:96vw;
+    height:88vh;
+    border-radius:20px;
+  }
+
+  .music-lyrics-topbar{
+    padding:17px 17px 15px;
+  }
+
+  .music-lyrics-heading h2{
+    font-size:34px;
+  }
+
+  .music-lyrics-counter{
+    display:none;
+  }
+
+  .music-lyrics-close{
+    width:36px;
+    height:36px;
+  }
+
+  .music-lyrics-body{
+    padding:
+      48px
+      18px
+      54px;
+  }
+
+  .music-lyrics-line{
+    font-size:
+      clamp(
+        24px,
+        8.2vw,
+        34px
+      );
+    line-height:1;
+    padding:8px 0;
+  }
+
+  .music-lyrics-line.is-active{
+    transform:translateX(4px);
+  }
+
+  .music-lyrics-footer{
+    padding:
+      10px
+      17px
+      12px;
+  }
+
+}
+
+
+/* =========================================================
+   FULL LYRICS VIEW — FULLSCREEN CONTROL — CLEAN UNDO BASE
+   ---------------------------------------------------------
+   Tambahan ini hanya untuk tombol fullscreen pada modal
+   lirik yang sudah ada. Tidak menyentuh navbar/audio.
+========================================================= */
+
+.music-lyrics-fullscreen{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  flex:0 0 auto;
+  padding:0;
+  border:1px solid rgba(243,241,236,.14);
+  border-radius:50%;
+  background:rgba(255,255,255,.035);
+  color:rgba(243,241,236,.78);
+  cursor:pointer;
+  transition:
+    transform .25s ease,
+    background .25s ease,
+    border-color .25s ease,
+    color .25s ease;
+}
+
+.music-lyrics-fullscreen:hover{
+  background:rgba(255,255,255,.08);
+  border-color:rgba(243,241,236,.28);
+  color:#fff;
+  transform:translateY(-1px);
+}
+
+.music-lyrics-dialog:fullscreen{
+  width:100vw !important;
+  height:100vh !important;
+  max-width:none !important;
+  max-height:none !important;
+  border-radius:0 !important;
+}
+
+.music-lyrics-dialog:-webkit-full-screen{
+  width:100vw !important;
+  height:100vh !important;
+  max-width:none !important;
+  max-height:none !important;
+  border-radius:0 !important;
+}
+
+.music-lyrics-modal.is-css-fullscreen{
+  padding:0 !important;
+}
+
+.music-lyrics-modal.is-css-fullscreen
+.music-lyrics-dialog{
+  width:100vw !important;
+  height:100vh !important;
+  max-width:none !important;
+  max-height:none !important;
+  border-radius:0 !important;
+  transform:none !important;
+}
+
+@media(max-width:700px){
+
+  .music-lyrics-fullscreen{
+    width:36px;
+    height:36px;
+  }
+
+}
+
+
+/* =========================================================
+   NAVBAR — SAME GEOMETRY IN LIGHT / DARK MODE
+   ---------------------------------------------------------
+   Warna boleh berubah saat mode berganti, tetapi ukuran,
+   tinggi, spacing, dan posisi navbar tetap identik.
+========================================================= */
+
+@media (min-width:901px){
+
+  /* Same menu item geometry in both modes */
+  .hero-reference-style .hero-nav-wrap.nav-dark-mode .hero-menu-icon,
+  .hero-reference-style .hero-nav-wrap.nav-section-match .hero-menu-icon{
+    width:25px !important;
+    height:25px !important;
+    min-width:25px !important;
+    flex:0 0 25px !important;
+    margin-right:7px !important;
+    border-radius:8px !important;
+  }
+
+  .hero-reference-style .hero-nav-wrap.nav-dark-mode .hero-menu a,
+  .hero-reference-style .hero-nav-wrap.nav-section-match .hero-menu a{
+    min-height:40px !important;
+    padding:0 7px !important;
+    border-radius:12px !important;
+  }
+
+  /* Same Contact geometry */
+  .hero-reference-style .hero-nav-wrap.nav-dark-mode .hero-contact,
+  .hero-reference-style .hero-nav-wrap.nav-section-match .hero-contact{
+    min-height:40px !important;
+    padding:0 7px 0 9px !important;
+    gap:7px !important;
+    border-radius:12px !important;
+  }
+
+  .hero-reference-style .hero-nav-wrap.nav-dark-mode .hero-contact-icon,
+  .hero-reference-style .hero-nav-wrap.nav-section-match .hero-contact-icon{
+    width:26px !important;
+    height:26px !important;
+    min-width:26px !important;
+    flex:0 0 26px !important;
+    border-radius:8px !important;
+    font-size:11px !important;
+  }
+
+  /* Same Contact text metrics */
+  .hero-reference-style .hero-nav-wrap.nav-dark-mode .hero-contact > span:first-child,
+  .hero-reference-style .hero-nav-wrap.nav-section-match .hero-contact > span:first-child{
+    font-size:12px !important;
+    line-height:1 !important;
+  }
+
+  /* Mode switch must never resize/reposition the pill */
+  .hero-reference-style .hero-nav-wrap.nav-dark-mode,
+  .hero-reference-style .hero-nav-wrap.nav-section-match{
+    padding:8px 12px 8px 24px !important;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE APP NAV — PORTFOLIO
+   ---------------------------------------------------------
+   Hanya aktif <= 900px.
+   Desktop navbar tidak berubah.
+========================================================= */
+
+.mobile-bottom-nav{
+  display:none;
+}
+
+@media (max-width:900px){
+
+  body{
+    padding-bottom:
+      calc(88px + env(safe-area-inset-bottom));
+  }
+
+  /*
+     Top hero navbar tetap bisa dipakai untuk logo/menu.
+     Di mobile, visual navigation utama berpindah ke bottom
+     app bar.
+  */
+  .mobile-bottom-nav{
+    position:fixed;
+    left:50%;
+    bottom:
+      calc(
+        9px +
+        env(safe-area-inset-bottom)
+      );
+    z-index:100000;
+    transform:translateX(-50%);
+
+    width:
+      min(
+        calc(100% - 24px),
+        560px
+      );
+    height:68px;
+
+    display:grid;
+    grid-template-columns:
+      repeat(5,1fr);
+    align-items:end;
+
+    padding:
+      7px
+      8px
+      6px;
+
+    border:
+      1px solid
+      rgba(17,17,15,.08);
+    border-radius:23px;
+
+    background:
+      rgba(255,255,255,.88);
+
+    box-shadow:
+      0 20px 48px rgba(17,17,15,.16),
+      inset 0 1px 0 rgba(255,255,255,.92);
+
+    backdrop-filter:
+      blur(22px)
+      saturate(130%);
+    -webkit-backdrop-filter:
+      blur(22px)
+      saturate(130%);
+
+    transition:
+      background-color .45s ease,
+      border-color .45s ease,
+      box-shadow .45s ease;
+  }
+
+  .mobile-bottom-link{
+    min-width:0;
+    height:53px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:4px;
+
+    padding:2px 3px;
+
+    border-radius:15px;
+
+    color:
+      rgba(17,17,15,.52);
+
+    text-decoration:none;
+
+    -webkit-tap-highlight-color:transparent;
+
+    transition:
+      color .25s ease,
+      background-color .25s ease,
+      transform .25s ease;
+  }
+
+  .mobile-bottom-icon{
+    width:28px;
+    height:26px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:9px;
+
+    font-size:14px;
+    line-height:1;
+
+    transition:
+      background-color .25s ease,
+      color .25s ease,
+      transform .25s ease;
+  }
+
+  .mobile-bottom-label{
+    font:
+      600
+      7px
+      "DM Mono",
+      monospace;
+
+    letter-spacing:.05em;
+    line-height:1;
+
+    white-space:nowrap;
+  }
+
+  .mobile-bottom-link:hover,
+  .mobile-bottom-link.is-active{
+    color:#11110f;
+  }
+
+  .mobile-bottom-link.is-active .mobile-bottom-icon{
+    background:
+      rgba(17,17,15,.07);
+    color:#11110f;
+    transform:
+      translateY(-1px);
+  }
+
+  /*
+     Main center button — raised like a mobile app
+     playback/action dock, but it still points to Music.
+  */
+  .mobile-bottom-link-main{
+    position:relative;
+    height:61px;
+
+    margin-top:-20px;
+
+    color:#f3f1ec;
+
+    overflow:visible;
+  }
+
+  .mobile-bottom-main-icon{
+    width:53px;
+    height:53px;
+
+    display:grid;
+    place-items:center;
+
+    border:
+      1px solid
+      rgba(17,17,15,.12);
+    border-radius:17px;
+
+    background:#6f80e9;
+
+    color:#fff;
+
+    font-size:19px;
+    line-height:1;
+
+    box-shadow:
+      0 10px 22px rgba(82,101,210,.27),
+      0 0 0 6px
+      rgba(111,128,233,.10),
+      inset 0 1px 0
+      rgba(255,255,255,.22);
+
+    transition:
+      transform .25s ease,
+      box-shadow .25s ease,
+      background-color .25s ease;
+  }
+
+  .mobile-bottom-link-main .mobile-bottom-label{
+    margin-top:3px;
+    color:
+      rgba(17,17,15,.50);
+  }
+
+  .mobile-bottom-link-main:hover
+  .mobile-bottom-main-icon,
+  .mobile-bottom-link-main.is-active
+  .mobile-bottom-main-icon{
+    transform:
+      translateY(-2px)
+      scale(1.03);
+    box-shadow:
+      0 14px 26px
+      rgba(82,101,210,.31),
+      0 0 0 7px
+      rgba(111,128,233,.11),
+      inset 0 1px 0
+      rgba(255,255,255,.24);
+  }
+
+  /* Dark-section version */
+  .mobile-bottom-nav.is-dark{
+    background:
+      rgba(15,16,14,.90);
+    border-color:
+      rgba(255,255,255,.12);
+    box-shadow:
+      0 20px 52px
+      rgba(0,0,0,.38),
+      inset 0 1px 0
+      rgba(255,255,255,.055);
+  }
+
+  .mobile-bottom-nav.is-dark
+  .mobile-bottom-link{
+    color:
+      rgba(255,255,255,.52);
+  }
+
+  .mobile-bottom-nav.is-dark
+  .mobile-bottom-link.is-active{
+    color:#fff;
+  }
+
+  .mobile-bottom-nav.is-dark
+  .mobile-bottom-link.is-active
+  .mobile-bottom-icon{
+    background:
+      rgba(255,255,255,.09);
+    color:#fff;
+  }
+
+  .mobile-bottom-nav.is-dark
+  .mobile-bottom-link-main
+  .mobile-bottom-label{
+    color:
+      rgba(255,255,255,.52);
+  }
+
+  /*
+     The existing top mobile wrapper becomes only a
+     compact brand/menu layer so the two navigations do
+     not visually fight each other.
+  */
+  .hero-reference-style
+  .hero-nav-wrap{
+    width:
+      calc(100% - 28px) !important;
+
+    min-height:56px !important;
+
+    top:11px !important;
+
+    padding:
+      7px
+      8px
+      7px
+      14px !important;
+
+    background:
+      rgba(255,255,255,.08) !important;
+
+    border-color:
+      rgba(17,17,15,.08) !important;
+
+    box-shadow:
+      0 12px 30px
+      rgba(17,17,15,.10) !important;
+  }
+
+  .hero-reference-style
+  .hero-nav-wrap.nav-dark-mode,
+  .hero-reference-style
+  .hero-nav-wrap.nav-section-match{
+    background:
+      rgba(17,17,15,.52) !important;
+
+    border-color:
+      rgba(255,255,255,.12) !important;
+
+    box-shadow:
+      0 14px 32px
+      rgba(0,0,0,.22) !important;
+  }
+
+  .hero-reference-style
+  .hero-nav-wrap
+  .hero-menu{
+    display:none !important;
+  }
+
+  .hero-reference-style
+  .hero-nav-wrap
+  .hero-contact{
+    display:none !important;
+  }
+
+  .hero-reference-style
+  .hero-nav-wrap
+  .hero-logo{
+    font-size:22px !important;
+  }
+
+  .hero-reference-style
+  .hero-nav-wrap
+  .hero-mobile-toggle{
+    display:grid !important;
+
+    width:36px !important;
+    height:36px !important;
+
+    border-radius:11px !important;
+
+    background:
+      rgba(17,17,15,.055) !important;
+  }
+
+  @media(max-width:560px){
+
+    .mobile-bottom-nav{
+      width:
+        calc(100% - 18px);
+
+      height:66px;
+      bottom:
+        calc(
+          7px +
+          env(safe-area-inset-bottom)
+        );
+
+      padding:
+        6px
+        6px
+        5px;
+
+      border-radius:21px;
+    }
+
+    .mobile-bottom-link{
+      height:51px;
+      gap:3px;
+    }
+
+    .mobile-bottom-icon{
+      width:27px;
+      height:25px;
+      font-size:13px;
+    }
+
+    .mobile-bottom-label{
+      font-size:6.5px;
+    }
+
+    .mobile-bottom-link-main{
+      height:59px;
+      margin-top:-18px;
+    }
+
+    .mobile-bottom-main-icon{
+      width:50px;
+      height:50px;
+      border-radius:16px;
+      font-size:18px;
+    }
+
+    body{
+      padding-bottom:
+        calc(
+          84px +
+          env(safe-area-inset-bottom)
+        );
+    }
+
+  }
+
+}
+
+
+
+/* =========================================================
+   MOBILE TOP MENU — CLEAN / SAME SHAPE IN ALL MODES
+   ---------------------------------------------------------
+   1) Remove the extra wrapper/layer behind the menu button.
+   2) Keep the actual menu control as a rounded rectangle.
+   3) Light and dark mode use the SAME geometry.
+   4) Only colors/shadows change with the section.
+========================================================= */
+
+@media (max-width:900px){
+
+  /* The wrapper is only a positioning shell. */
+  .hero-reference-style .hero-nav-wrap{
+    background:transparent !important;
+    border:0 !important;
+    box-shadow:none !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+    padding:0 !important;
+  }
+
+  .hero-reference-style .hero-nav-wrap.nav-dark-mode,
+  .hero-reference-style .hero-nav-wrap.nav-section-match{
+    background:transparent !important;
+    border:0 !important;
+    box-shadow:none !important;
+  }
+
+  /*
+     Actual menu control:
+     identical rounded-rectangle geometry in light/dark.
+  */
+  .hero-reference-style .hero-mobile-toggle{
+    width:50px !important;
+    min-width:50px !important;
+    max-width:50px !important;
+
+    height:50px !important;
+    min-height:50px !important;
+    max-height:50px !important;
+
+    display:grid !important;
+    place-items:center !important;
+
+    border-radius:14px !important;
+
+    border:
+      1px solid
+      rgba(17,17,15,.09) !important;
+
+    background:
+      rgba(255,255,255,.94) !important;
+
+    color:#11110f !important;
+
+    box-shadow:
+      0 12px 28px
+      rgba(17,17,15,.12),
+      inset 0 1px 0
+      rgba(255,255,255,.95) !important;
+
+    backdrop-filter:
+      blur(16px) !important;
+    -webkit-backdrop-filter:
+      blur(16px) !important;
+  }
+
+  /*
+     Dark mode — SHAPE IS IDENTICAL.
+     Hanya warna dan shadow yang berubah.
+  */
+  .hero-reference-style
+  .hero-nav-wrap.nav-dark-mode
+  .hero-mobile-toggle,
+  .hero-reference-style
+  .hero-nav-wrap.nav-section-match
+  .hero-mobile-toggle{
+    width:50px !important;
+    min-width:50px !important;
+    max-width:50px !important;
+
+    height:50px !important;
+    min-height:50px !important;
+    max-height:50px !important;
+
+    border-radius:14px !important;
+
+    border:
+      1px solid
+      rgba(255,255,255,.12) !important;
+
+    background:
+      rgba(24,25,23,.94) !important;
+
+    color:#fff !important;
+
+    box-shadow:
+      0 14px 32px
+      rgba(0,0,0,.30),
+      inset 0 1px 0
+      rgba(255,255,255,.07) !important;
+  }
+
+  .hero-reference-style
+  .hero-nav-wrap.nav-dark-mode
+  .hero-mobile-toggle span,
+  .hero-reference-style
+  .hero-nav-wrap.nav-section-match
+  .hero-mobile-toggle span{
+    background:#fff !important;
+  }
+
+  .hero-reference-style
+  .hero-nav-wrap:not(.nav-dark-mode):not(.nav-section-match)
+  .hero-mobile-toggle span{
+    background:#11110f !important;
+  }
+
+  /*
+     Saat menu dibuka, pertahankan bentuk rounded rectangle.
+     Jangan berubah jadi lingkaran.
+  */
+  .hero-reference-style .hero-mobile-toggle.is-open,
+  .hero-reference-style
+  .hero-nav-wrap.nav-dark-mode
+  .hero-mobile-toggle.is-open,
+  .hero-reference-style
+  .hero-nav-wrap.nav-section-match
+  .hero-mobile-toggle.is-open{
+    border-radius:14px !important;
+  }
+
+  /*
+     Hilangkan layer visual ekstra dari rule lama yang
+     membuat wrapper terlihat sebagai kotak putih besar.
+  */
+  .hero-reference-style .hero-nav-wrap::before,
+  .hero-reference-style .hero-nav-wrap::after{
+    display:none !important;
+    content:none !important;
+  }
+
+}
+
+
+
+/* =========================================================
+   MOBILE MENU TOGGLE — EXACT SAME SHAPE BOTH MODES
+   ---------------------------------------------------------
+   The older dark-mode selector had higher specificity and
+   forced border-radius:50%. Override it explicitly.
+   Light/dark now share identical geometry:
+   50x50, rounded rectangle, 14px radius.
+========================================================= */
+
+@media (max-width:900px){
+
+  /* LIGHT */
+  .hero-reference-style
+  .hero-nav-wrap:not(.nav-dark-mode):not(.nav-section-match)
+  .hero-mobile-toggle{
+    width:50px !important;
+    min-width:50px !important;
+    max-width:50px !important;
+
+    height:50px !important;
+    min-height:50px !important;
+    max-height:50px !important;
+
+    border-radius:14px !important;
+  }
+
+  /* DARK — same geometry, stronger specificity than old 50% rule */
+  .hero-reference-style
+  .hero-nav-wrap.hero-nav-wrap.nav-dark-mode
+  .hero-mobile-toggle,
+  .hero-reference-style
+  .hero-nav-wrap.hero-nav-wrap.nav-section-match
+  .hero-mobile-toggle{
+    width:50px !important;
+    min-width:50px !important;
+    max-width:50px !important;
+
+    height:50px !important;
+    min-height:50px !important;
+    max-height:50px !important;
+
+    border-radius:14px !important;
+  }
+
+  /* Open state also stays identical */
+  .hero-reference-style
+  .hero-nav-wrap.hero-nav-wrap.nav-dark-mode
+  .hero-mobile-toggle.is-open,
+  .hero-reference-style
+  .hero-nav-wrap.hero-nav-wrap.nav-section-match
+  .hero-mobile-toggle.is-open{
+    width:50px !important;
+    height:50px !important;
+    min-width:50px !important;
+    min-height:50px !important;
+    border-radius:14px !important;
+  }
+
+}
+
+
+
+/* =========================================================
+   HERO NAME POSITION — FINAL RAISE
+   ---------------------------------------------------------
+   Only the big hero name is moved upward.
+   Font, size, animation, photo, greeting and layout remain
+   unchanged.
+========================================================= */
+
+.hero-reference-style .hero-big-name{
+    bottom:24% !important;
+}
+
+@media (max-width:900px){
+
+    .hero-reference-style .hero-big-name{
+        bottom:16% !important;
+    }
+
+}
+
+
+
+
+/* =========================================================
+   MUSIC STORY — INSTRUMENTAL NOTE MARKER
+   "♪" means the current section is instrumental / no lyric.
+   Keep the whole glyph visible; do not auto-fit it like lyric text.
+========================================================= */
+#love.like-redesign .like-music-story-line-current.is-instrumental{
+  width:max-content !important;
+  max-width:none !important;
+  max-height:none !important;
+  left:9% !important;
+  right:auto !important;
+  top:50% !important;
+  transform:translateY(-50%) !important;
+  font-family:"Instrument Serif", Georgia, serif !important;
+  font-size:68px !important;
+  font-weight:400 !important;
+  line-height:1 !important;
+  letter-spacing:0 !important;
+  text-transform:none !important;
+  white-space:nowrap !important;
+  overflow:visible !important;
+  filter:none !important;
+  opacity:1 !important;
+  color:#fff !important;
+  text-shadow:0 5px 22px rgba(0,0,0,.82) !important;
+  animation:none !important;
+}
+
+#love.like-redesign .like-music-story-line-current.is-instrumental.is-changing{
+  animation:none !important;
+}
+
+@media(max-width:620px){
+  #love.like-redesign .like-music-story-line-current.is-instrumental{
+    left:9% !important;
+    font-size:56px !important;
+  }
+}
+
+
+/* =========================================================
+   FULL LYRICS — SPOTIFY-LIKE HOVER / SEEK POLISH
+   ---------------------------------------------------------
+   - Lyrics body remains independently scrollable.
+   - Hovering a lyric shows a clean white underline
+     underneath the lyric text only.
+   - Clicking a lyric seeks the existing audio clock to
+     that line's timestamp (existing JS behavior).
+   - Does not alter lyric timing or audio logic.
+========================================================= */
+
+.music-lyrics-body{
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  overscroll-behavior:contain !important;
+  -webkit-overflow-scrolling:touch !important;
+  scroll-behavior:smooth;
+  cursor:default;
+}
+
+.music-lyrics-line{
+  position:relative !important;
+  text-decoration-line:none !important;
+  text-decoration-color:#fff !important;
+  text-decoration-thickness:2px !important;
+  text-underline-offset:.20em !important;
+  cursor:pointer !important;
+}
+
+.music-lyrics-line:hover{
+  color:#fff !important;
+  opacity:1 !important;
+  text-decoration-line:underline !important;
+  text-decoration-color:rgba(255,255,255,.92) !important;
+  text-decoration-thickness:2px !important;
+  text-underline-offset:.20em !important;
+}
+
+.music-lyrics-line.is-active{
+  cursor:pointer !important;
+}
+
+.music-lyrics-line.is-active:hover{
+  text-decoration-line:underline !important;
+  text-decoration-color:#fff !important;
+}
+
+/* Keep instrumental ♪ marker clickable/hoverable exactly like a lyric row. */
+.music-lyrics-line[data-instrumental="true"]{
+  text-decoration-thickness:2px !important;
+  text-underline-offset:.24em !important;
+}
+
+/* Touch devices don't have a hover state; preserve clean tap behavior. */
+@media (hover:none){
+  .music-lyrics-line:hover{
+    text-decoration-line:none !important;
+  }
+}
