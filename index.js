@@ -1,4 +1,171 @@
 
+/* =========================================================
+   REMOVE VISIBLE PIPE/CARET CHARACTERS — GLOBAL
+   ---------------------------------------------------------
+   Removes literal "|" characters from visible page text.
+   This is intentionally limited to DOM text nodes:
+   - does NOT edit JS/CSS source
+   - does NOT edit attributes / URLs
+   - does NOT touch audio / lyric timing logic
+   - also catches pipes inserted later by animations
+========================================================= */
+
+(() => {
+
+  const skipTags = new Set([
+    "SCRIPT",
+    "STYLE",
+    "NOSCRIPT",
+    "TEXTAREA",
+    "INPUT",
+    "OPTION"
+  ]);
+
+  const cleanTextNode = (node) => {
+
+    if(!node || node.nodeType !== Node.TEXT_NODE){
+      return;
+    }
+
+    const parent = node.parentElement;
+
+    if(!parent || skipTags.has(parent.tagName)){
+      return;
+    }
+
+    if(node.nodeValue && node.nodeValue.includes("|")){
+
+      /*
+         Remove the caret/separator itself and tidy the
+         whitespace it can leave behind at the edges.
+      */
+      const cleaned =
+        node.nodeValue
+          .replace(/\s*\|\s*/g, " ");
+
+      if(cleaned !== node.nodeValue){
+        node.nodeValue = cleaned;
+      }
+    }
+
+  };
+
+  const cleanTree = (root) => {
+
+    if(!root){
+      return;
+    }
+
+    const walker =
+      document.createTreeWalker(
+        root,
+        NodeFilter.SHOW_TEXT
+      );
+
+    const nodes = [];
+
+    let node;
+
+    while(
+      (node = walker.nextNode())
+    ){
+      nodes.push(node);
+    }
+
+    nodes.forEach(cleanTextNode);
+
+  };
+
+  const start = () => {
+
+    cleanTree(document.body);
+
+    /*
+       Some sections may create their "|" after load
+       through animation / interaction. Observe only DOM
+       text changes so those are cleaned too.
+    */
+    const observer =
+      new MutationObserver(
+        mutations => {
+
+          mutations.forEach(
+            mutation => {
+
+              if(
+                mutation.type === "characterData"
+              ){
+
+                cleanTextNode(
+                  mutation.target
+                );
+
+              }
+
+              if(
+                mutation.type === "childList"
+              ){
+
+                mutation.addedNodes.forEach(
+                  added => {
+
+                    if(
+                      added.nodeType ===
+                      Node.TEXT_NODE
+                    ){
+
+                      cleanTextNode(added);
+
+                    }else if(
+                      added.nodeType ===
+                      Node.ELEMENT_NODE
+                    ){
+
+                      cleanTree(added);
+
+                    }
+
+                  }
+                );
+
+              }
+
+            }
+          );
+
+        }
+      );
+
+    observer.observe(
+      document.body,
+      {
+        subtree:true,
+        childList:true,
+        characterData:true
+      }
+    );
+
+  };
+
+  if(
+    document.readyState === "loading"
+  ){
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      start,
+      {once:true}
+    );
+
+  }else{
+
+    start();
+
+  }
+
+})();
+
+
 document.addEventListener("DOMContentLoaded",
 ()=>{
     "use strict";
@@ -346,20 +513,236 @@ will-change:transform,opacity;
         );
 
 
-        nameLayers.forEach(
-            name=>{
+        /*
+         * Greeting reveal:
+         * "halo, saya" masuk sedikit lebih cepat daripada nama,
+         * lalu nama besar menyusul setelah greeting selesai.
+         */
+        const greetingChars=[];
 
-                gsap.set(
-                    name,
-                    {
-                        "--hero-name-y":"60px",
-                        "--hero-name-scale":.965,
-                        "--hero-name-opacity":0
-                    }
+        if(
+            greeting &&
+            greeting.dataset.heroGreetingSplit!=="true"
+        ){
+
+            const sourceGreeting =
+                greeting.textContent
+                    .replace(/\s+/g," ")
+                    .trim();
+
+            const fragment =
+                document.createDocumentFragment();
+
+            for(
+                const char of sourceGreeting
+            ){
+
+                if(char===" "){
+
+                    fragment.append(
+                        document.createTextNode(" ")
+                    );
+
+                    continue;
+
+                }
+
+                const span =
+                    document.createElement(
+                        "span"
+                    );
+
+                span.className=
+                    "hero-greeting-char";
+
+                span.textContent=
+                    char;
+
+                fragment.appendChild(
+                    span
+                );
+
+                greetingChars.push(
+                    span
                 );
 
             }
+
+            greeting.replaceChildren(
+                fragment
+            );
+
+            greeting.dataset.heroGreetingSplit=
+                "true";
+
+        }else{
+
+            qa(
+                ".hero-greeting-char",
+                greeting
+            ).forEach(
+                char=>{
+                    greetingChars.push(
+                        char
+                    );
+                }
+            );
+
+        }
+
+        const heroGreetingStyleId =
+            "hero-greeting-letter-reveal-style";
+
+        if(
+            !document.getElementById(
+                heroGreetingStyleId
+            )
+        ){
+
+            const style =
+                document.createElement(
+                    "style"
+                );
+
+            style.id =
+                heroGreetingStyleId;
+
+            style.textContent=`
+.hero-reference-style .hero-greeting-char{
+    display:inline-block;
+    opacity:0;
+    transform:translateY(85%);
+    filter:blur(5px);
+    will-change:transform,opacity,filter;
+}
+`;
+
+            document.head.appendChild(
+                style
+            );
+
+        }
+
+        if(greetingChars.length){
+
+            gsap.set(
+                greetingChars,
+                {
+                    yPercent:85,
+                    opacity:0,
+                    filter:"blur(5px)",
+                    transformOrigin:"50% 100%"
+                }
+            );
+
+        }
+
+
+        /*
+         * Reference-style name reveal:
+         * split only the characters of the existing hero name.
+         * The original h1 position, font, and composition stay untouched.
+         */
+        const nameChars=[];
+
+        nameLayers.forEach(
+            name=>{
+
+                if(
+                    name.dataset.heroNameSplit==="true"
+                ){
+
+                    qa(
+                        ".char",
+                        name
+                    ).forEach(
+                        char=>{
+                            nameChars.push(char);
+                        }
+                    );
+
+                    return;
+                }
+
+                const sourceText =
+                    name.textContent
+                        .replace(/\s+/g," ")
+                        .trim();
+
+                const fragment =
+                    document.createDocumentFragment();
+
+                for(
+                    const char of sourceText
+                ){
+
+                    if(char===" "){
+
+                        fragment.append(
+                            document.createTextNode(" ")
+                        );
+
+                        continue;
+
+                    }
+
+                    const span =
+                        document.createElement(
+                            "span"
+                        );
+
+                    span.className="char";
+                    span.textContent=char;
+
+                    fragment.appendChild(
+                        span
+                    );
+
+                    nameChars.push(
+                        span
+                    );
+
+                }
+
+                name.replaceChildren(
+                    fragment
+                );
+
+                name.dataset.heroNameSplit="true";
+
+            }
         );
+
+        /*
+         * Keep the parent fully in the existing hero composition.
+         * Only the individual characters are initially hidden.
+         */
+        gsap.set(
+            nameLayers,
+            {
+                "--hero-name-y":"0px",
+                "--hero-name-scale":1,
+                "--hero-name-opacity":0,
+                bottom:
+                    mobile
+                    ? "13%"
+                    : "18%"
+            }
+        );
+
+        if(nameChars.length){
+
+            gsap.set(
+                nameChars,
+                {
+                    yPercent:115,
+                    opacity:0,
+                    filter:"blur(8px)",
+                    transformOrigin:"50% 100%"
+                }
+            );
+
+        }
 
 
         referenceHero.classList.add(
@@ -388,8 +771,38 @@ will-change:transform,opacity;
                 }
             });
 
+        /*
+         * HERO INTRO — DIRECTIONAL / SMOOTH
+         *
+         * Navbar       : atas -> bawah
+         * Image orang  : bawah -> atas
+         * Teks kiri    : kiri -> kanan
+         * Teks kanan   : kanan -> kiri
+         * Greeting     : kiri -> kanan, lebih cepat
+         * Nama         : bawah -> atas, sedikit lebih lambat
+         *
+         * Semua hanya mengubah entrance animation.
+         * Struktur/layout/asset existing tidak diubah.
+         */
+        intro.addLabel(
+            "hero-in",
+            0
+        );
 
+
+        /* NAVBAR — dari atas ke bawah */
         if(shouldRunNavIntro){
+
+            gsap.set(
+                nav,
+                {
+                    xPercent:getNavXPercent(),
+                    y:-70,
+                    scale:1,
+                    opacity:0,
+                    filter:"blur(7px)"
+                }
+            );
 
             intro.to(
                 nav,
@@ -399,13 +812,22 @@ will-change:transform,opacity;
                     scale:1,
                     opacity:1,
                     filter:"blur(0px)",
-                    duration:1.15,
-                    ease:"expo.out"
-                }
+                    duration:1.0,
+                    ease:"power4.out"
+                },
+                "hero-in"
             );
 
 
             if(navItems.length){
+
+                gsap.set(
+                    navItems,
+                    {
+                        opacity:0,
+                        y:-14
+                    }
+                );
 
                 intro.to(
                     navItems,
@@ -413,10 +835,10 @@ will-change:transform,opacity;
                         opacity:1,
                         y:0,
                         duration:.58,
-                        stagger:.07,
+                        stagger:.055,
                         ease:"power3.out"
                     },
-                    "-=.62"
+                    "hero-in+=.16"
                 );
 
             }
@@ -424,20 +846,39 @@ will-change:transform,opacity;
         }
 
 
+        /*
+         * TEKS KECIL / META:
+         * #hero mini-info adalah blok kecil atas/kiri.
+         * Animasi masuk dari kiri ke kanan.
+         */
         intro.to(
             mini,
             {
                 xPercent:-50,
                 y:0,
                 opacity:1,
-                duration:.42,
+                duration:.72,
                 ease:"power3.out"
             },
-            shouldRunNavIntro
-                ? "-=.42"
-                : 0
+            "hero-in+=.14"
         );
 
+
+        /*
+         * IMAGE ORANG — bawah ke atas.
+         * Ini tween ke elemen .hero-person, bukan personImage,
+         * sehingga gambar benar-benar bergerak saat intro.
+         */
+        gsap.set(
+            person,
+            {
+                xPercent:-50,
+                y:92,
+                scale:.975,
+                opacity:0,
+                filter:"blur(6px)"
+            }
+        );
 
         intro.to(
             person,
@@ -446,50 +887,132 @@ will-change:transform,opacity;
                 y:0,
                 scale:1,
                 opacity:1,
-                duration:1.2,
-                ease:"power4.out"
+                filter:"blur(0px)",
+                duration:1.0,
+                ease:"expo.out"
             },
-            "-=.2"
+            "hero-in+=.08"
         );
 
+
+        /*
+         * GREETING — kiri -> kanan, lebih cepat.
+         */
+        gsap.set(
+            greeting,
+            {
+                "--hero-greeting-x":"-42px",
+                "--hero-greeting-y":"28px",
+                opacity:0,
+                filter:"blur(4px)"
+            }
+        );
 
         intro.to(
             greeting,
             {
+                "--hero-greeting-x":"0px",
                 "--hero-greeting-y":"0px",
                 opacity:1,
-                duration:.65,
-                ease:"power3.out"
+                filter:"blur(0px)",
+                duration:.62,
+                ease:"expo.out"
             },
-            "-=.62"
+            "hero-in+=.20"
         );
 
+        if(greetingChars.length){
 
+            gsap.set(
+                greetingChars,
+                {
+                    yPercent:55,
+                    xPercent:-12,
+                    opacity:0,
+                    filter:"blur(4px)"
+                }
+            );
+
+            intro.to(
+                greetingChars,
+                {
+                    yPercent:0,
+                    xPercent:0,
+                    opacity:1,
+                    filter:"blur(0px)",
+                    duration:.52,
+                    stagger:.035,
+                    ease:"expo.out",
+                    overwrite:"auto"
+                },
+                "hero-in+=.20"
+            );
+
+        }
+
+
+        /*
+         * NAMA — bawah -> atas.
+         * Mulai sedikit setelah greeting, tidak terlalu lama.
+         */
         intro.to(
             nameLayers,
             {
-                "--hero-name-y":"0px",
-                "--hero-name-scale":1,
                 "--hero-name-opacity":1,
-                duration:1,
-                ease:"power4.out"
+                duration:.12,
+                ease:"none"
             },
-            "-=.42"
+            "hero-in+=.92"
         );
 
-
-        if(bottom){
+        if(nameChars.length){
 
             intro.to(
+                nameChars,
+                {
+                    yPercent:0,
+                    opacity:1,
+                    filter:"blur(0px)",
+                    duration:.76,
+                    stagger:.045,
+                    ease:"expo.out",
+                    overwrite:"auto"
+                },
+                "hero-in+=.92"
+            );
+
+        }
+
+
+        /*
+         * TEKS KECIL KANAN / BOTTOM INFO:
+         * kanan -> kiri.
+         */
+        if(bottom){
+
+            gsap.set(
                 bottom,
                 {
                     xPercent:-50,
                     y:0,
+                    x:60,
+                    opacity:0,
+                    filter:"blur(4px)"
+                }
+            );
+
+            intro.to(
+                bottom,
+                {
+                    x:0,
+                    xPercent:-50,
+                    y:0,
                     opacity:1,
-                    duration:.42,
-                    ease:"power3.out"
+                    filter:"blur(0px)",
+                    duration:.64,
+                    ease:"expo.out"
                 },
-                "-=.25"
+                "hero-in+=.26"
             );
 
         }
@@ -8130,12 +8653,30 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const activeTrack = like.querySelector("[data-music-track].is-active");
-            if(activeTrack){
-                const activeDisc = activeTrack.querySelector(".like-music-track-disc");
-                if(activeDisc){
-                    activeDisc.classList.toggle("is-playing", !audio.paused);
+
+            tracks.forEach(track => {
+                const actionIcon =
+                    track.querySelector(".like-music-track-action i");
+
+                const isPlaying =
+                    track === activeTrack && !audio.paused;
+
+                if(actionIcon){
+                    actionIcon.className = isPlaying
+                        ? "bi bi-pause-fill"
+                        : "bi bi-play-fill";
                 }
-            }
+
+                const trackDisc =
+                    track.querySelector(".like-music-track-disc");
+
+                if(trackDisc){
+                    trackDisc.classList.toggle(
+                        "is-playing",
+                        isPlaying
+                    );
+                }
+            });
         };
 
         const setActiveTrack = (track, shouldPlay) => {
@@ -8286,6 +8827,93 @@ document.addEventListener("DOMContentLoaded", () => {
             const index = getActiveIndex();
             const nextIndex = (index + 1) % tracks.length;
             setActiveTrack(tracks[nextIndex], true);
+        });
+
+        /*
+           SPACE = toggle play/pause tanpa me-reset posisi lagu.
+           Saat pause, audio.currentTime tetap berada tepat di detik
+           ketika tombol Space ditekan, sehingga lirik berhenti di
+           baris yang sesuai dengan detik tersebut.
+        */
+        document.addEventListener("keydown", (event) => {
+            if(event.code !== "Space" || event.repeat){
+                return;
+            }
+
+            const target = event.target;
+            const tag = target?.tagName?.toLowerCase?.() || "";
+            const musicCard =
+                target?.closest?.("[data-music-track]") || null;
+            const isEditable = Boolean(
+                target?.isContentEditable ||
+                tag === "input" ||
+                tag === "textarea" ||
+                tag === "select" ||
+                target?.getAttribute?.("role") === "textbox"
+            );
+
+            /* Jangan ganggu input/form. Untuk music card, Space justru
+               dipakai sebagai play/pause agar tidak memicu click native
+               pada card/button dan me-reset lagu ke 00:00. */
+            if(isEditable){
+                return;
+            }
+
+            if(!musicCard && (tag === "button" || tag === "a")) {
+                return;
+            }
+
+            const player = document.querySelector("#love.like-redesign");
+            const musicAudio = player?.querySelector("[data-music-audio]");
+            const musicPlayButton = player?.querySelector("[data-music-play]");
+
+            if(!musicAudio || !player){
+                return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            /* =====================================================
+               SPACE SAAT FOKUS DI CARD LAGU
+               - Card aktif + sedang play  -> PAUSE
+               - Card aktif + sedang pause -> PLAY dari posisi terakhir
+               - Card belum aktif          -> pilih card + PLAY
+               - Tidak ada reset currentTime saat toggle pause/play
+            ===================================================== */
+            if(musicCard){
+                const isActiveCard =
+                    musicCard.classList.contains("is-active");
+
+                if(!isActiveCard){
+                    setActiveTrack(musicCard, true);
+                    return;
+                }
+
+                if(musicAudio.paused){
+                    musicAudio.play().catch(() => {});
+                }else{
+                    musicAudio.pause();
+                }
+
+                return;
+            }
+
+            if(musicAudio.paused){
+                const active =
+                    player.querySelector("[data-music-track].is-active") ||
+                    player.querySelector("[data-music-track]");
+
+                if(!musicAudio.src && active && typeof musicPlayButton?.click === "function") {
+                    musicPlayButton.click();
+                    return;
+                }
+
+                musicAudio.play().catch(() => {});
+            }else{
+                /* PAUSE SAJA — currentTime sengaja tidak disentuh. */
+                musicAudio.pause();
+            }
         });
 
         audio.addEventListener("error", () => {
@@ -8459,6 +9087,269 @@ document.addEventListener("DOMContentLoaded", () => {
     const stateEl =
       root.querySelector("[data-lyric-state]");
 
+    /*
+       LYRIC AUTO-FIT — VISUAL ONLY
+       ---------------------------------------------------------
+       Teks pendek tetap besar. Teks panjang otomatis mengecil
+       sampai seluruh kalimat muat di area player/phone.
+       Tidak mengubah audio, timestamp, sync, atau playback.
+    */
+    const fitCurrentLyric = () => {
+
+      if(!currentEl){
+        return;
+      }
+
+      const isMobile =
+        window.matchMedia("(max-width: 600px)").matches;
+
+      const baseSize =
+        isMobile ? 31 : 42;
+
+      const minSize =
+        isMobile ? 18 : 23;
+
+      const host =
+        currentEl.parentElement ||
+        currentEl;
+
+      let availableWidth =
+        host.clientWidth ||
+        currentEl.clientWidth ||
+        0;
+
+      let availableHeight =
+        host.clientHeight ||
+        0;
+
+      if(availableHeight < 80){
+
+        let ancestor =
+          host.parentElement;
+
+        let depth = 0;
+
+        while(
+          ancestor &&
+          ancestor !== root &&
+          depth < 5
+        ){
+
+          const rect =
+            ancestor.getBoundingClientRect();
+
+          if(
+            rect.width > 120 &&
+            rect.height > 160
+          ){
+
+            availableWidth =
+              Math.max(
+                availableWidth,
+                Math.floor(rect.width)
+              );
+
+            availableHeight =
+              Math.max(
+                availableHeight,
+                Math.floor(rect.height)
+              );
+
+            break;
+          }
+
+          ancestor =
+            ancestor.parentElement;
+
+          depth++;
+        }
+      }
+
+      if(
+        availableWidth <= 0 ||
+        availableHeight <= 0
+      ){
+        return;
+      }
+
+      const horizontalSafe =
+        isMobile ? 16 : 22;
+
+      const verticalSafe =
+        isMobile ? 14 : 18;
+
+      const maxWidth =
+        Math.max(
+          120,
+          availableWidth -
+          horizontalSafe * 2
+        );
+
+      const maxHeight =
+        Math.max(
+          80,
+          availableHeight -
+          verticalSafe * 2
+        );
+
+
+      const setLyricStyle = (property, value) => {
+        currentEl.style.setProperty(
+          property,
+          value,
+          "important"
+        );
+      };
+
+      currentEl.style.boxSizing =
+        "border-box";
+
+      setLyricStyle(
+        "width",
+        `${maxWidth}px`
+      );
+
+      setLyricStyle(
+        "max-width",
+        `${maxWidth}px`
+      );
+
+      setLyricStyle(
+        "max-height",
+        `${maxHeight}px`
+      );
+
+      setLyricStyle(
+        "overflow",
+        "hidden"
+      );
+
+      setLyricStyle(
+        "overflow-wrap",
+        "break-word"
+      );
+
+      setLyricStyle(
+        "word-break",
+        "normal"
+      );
+
+      setLyricStyle(
+        "hyphens",
+        "none"
+      );
+
+      setLyricStyle(
+        "white-space",
+        "normal"
+      );
+
+      setLyricStyle(
+        "line-height",
+        "0.94"
+      );
+
+      setLyricStyle(
+        "font-size",
+        `${baseSize}px`
+      );
+
+      let low = minSize;
+      let high = baseSize;
+      let fitted = minSize;
+
+      void currentEl.offsetHeight;
+
+      for(let pass = 0; pass < 8; pass++){
+
+        const mid =
+          (low + high) / 2;
+
+        setLyricStyle(
+          "font-size",
+          `${mid}px`
+        );
+
+        void currentEl.offsetHeight;
+
+        const fitsWidth =
+          currentEl.scrollWidth <=
+          maxWidth + 1;
+
+        const fitsHeight =
+          currentEl.scrollHeight <=
+          maxHeight + 1;
+
+        if(
+          fitsWidth &&
+          fitsHeight
+        ){
+
+          fitted = mid;
+          low = mid;
+
+        }else{
+
+          high = mid;
+
+        }
+
+      }
+
+      setLyricStyle(
+        "font-size",
+        `${Math.floor(fitted * 10) / 10}px`
+      );
+
+      void currentEl.offsetHeight;
+
+      while(
+        (
+          currentEl.scrollWidth >
+            maxWidth + 1 ||
+          currentEl.scrollHeight >
+            maxHeight + 1
+        ) &&
+        fitted > minSize
+      ){
+
+        fitted -= 0.5;
+
+        setLyricStyle(
+          "font-size",
+          `${Math.max(
+            minSize,
+            Math.floor(fitted * 10) / 10
+          )}px`
+        );
+
+        void currentEl.offsetHeight;
+      }
+
+    };
+
+    let lyricFitResizeQueued = false;
+
+    const scheduleLyricFit = () => {
+
+      if(lyricFitResizeQueued){
+        return;
+      }
+
+      lyricFitResizeQueued = true;
+
+      requestAnimationFrame(
+        () => {
+
+          lyricFitResizeQueued = false;
+
+          fitCurrentLyric();
+
+        }
+      );
+
+    };
+
     const tracks = [
       ...root.querySelectorAll("[data-music-track]")
     ];
@@ -8489,31 +9380,346 @@ document.addEventListener("DOMContentLoaded", () => {
     let activeLineIndex = -1;
     let requestId = 0;
 
+    /*
+       ========================================================
+       MANUAL LYRICS SYNC
+       --------------------------------------------------------
+       ATUR TIMING LIRIK DI SINI.
+
+       Format waktu yang mudah dibaca:
+         "0:04"  = 4 detik
+         "1:32"  = 1 menit 32 detik
+
+       Untuk bagian "-" / jeda tanpa lirik, isi text dengan "".
+
+       Track:
+         1  = Staying
+         2  = Keep Me
+         3  = Who Knows
+         4  = Cry
+         5  = K.
+         6  = apocalypse
+         7  = Sparks
+         8  = what if i call
+         9  = Love in the air, pt1
+         10 = sunsetz
+
+       Track 01-03 di bawah sudah diisi sesuai timing yang kamu kasih.
+       Tinggal ubah nilai "time" kalau mau menggeser kemunculan teks.
+       ========================================================
+    */
     const MANUAL_SYNC_TIMES = {
-      1: [1.17, 4.69, 7.66, 9.45, 12.07, 16.23, 19.37, 22.70, 35.72, 38.79, 43.30, 49.26, 55.25, 61.66, 67.24, 74.31, 79.43, 84.96, 87.98, 94.63, 97.64, 102.77, 106.30, 124.73, 129.78, 135.29, 140.33, 145.82]
+      1: [
+        {time:"0:01", text:"Whisper to me, baby"},
+        {time:"0:04", text:"I'm too far gone to care"},
+        {time:"0:07", text:"I wish I could a said what I"},
+        {time:"0:09", text:"meant when it was right there"},
+        {time:"0:13", text:"♪"},
+        {time:"0:15", text:"Now I'm laying in bed with you"},
+        {time:"0:18.7", text:"And you're fallin' asleep"},
+        {time:"0:22", text:"How can you look so peaceful"},
+        // Data yang kamu kasih menulis 0:15 di baris ini setelah 0:21.
+        // Dibuat 0:25 supaya urutan waktunya tetap berjalan normal.
+        {time:"0:26", text:"When you know I'm gonna leave?"},
+        {time:"0:33", text:"♪"},
+        {time:"0:35", text:"What happens when you love me dry?"},
+        {time:"0:42.5", text:"I give myself to help you get by"},
+        {time:"0:50", text:"I keep on lyin' and sweatin' at night"},
+        {time:"0:56.8", text:"Hold me until someone sends me a-"},
+        {time:"1:01.5", text:"sign..."},
+        {time:"1:07", text:"Mm-mm, mm, mm-mm, mm-mm"},
+        {time:"1:11", text:"♪"},
+        {time:"1:32", text:"Maybe I would be okay if I let this go forever"},
+        {time:"1:39", text:"Send it into space and watch the planets turn"},
+        {time:"1:46", text:"Maybe I will, someday, let this go forever"},
+        {time:"1:53", text:"Hold me until I find the nerve (oh, oh-oh, oh)"},
+        {time:"2:09", text:"(Whoa-oh, oh, oh-oh, oh)"},
+        {time:"2:15", text:"(Whoa, oh-oh)"},
+        {time:"2:23", text:"(Oh, oh, oh)"},
+        {time:"2.26", text:"♪"},
+      ],
+
+      2: [
+        {time:"0:03", text:"So,"},
+        {time:"0:05.8", text:"it's probably nothing"},
+        {time:"0:11", text:"But it's been on my mind sometime and I can't let it go"},
+        {time:"0:18", text:"♪"},
+        {time:"0:21", text:"I know there's gotta be something"},
+        {time:"0:29", text:"That I could say in time, but I can't find the words"},
+        {time:"0:38", text:"♪"},
+        {time:"0:40", text:"Keep me, keep me on fire"},
+        {time:"0:47", text:"♪"},
+        {time:"0:49", text:"Keep me, keep me on fire"},
+        {time:"0:55", text:"♪"},
+        {time:"1:18.6", text:"A dose, a moment to live in"},
+        {time:"1:26.3", text:"And I'm hoping it stays a while in the space you were in"},
+        {time:"1:34", text:"♪"},
+        {time:"1:37", text:"And I froze, and I reckon I missed it"},
+        {time:"1:45", text:"When all of the rain came down in the shape of everything"},
+        {time:"1:52", text:"♪"},
+        {time:"1:55", text:"So keep me, keep me on fire"},
+        {time:"2:01", text:"♪"},
+        {time:"2:05", text:"Keep me, keep me on fire"},
+        {time:"2:11", text:"♪"}, 
+        {time:"2:14", text:"Keep me honest, keep me kind"},
+        {time:"2:19", text:"Keep me as your finish line"},
+        {time:"2:23", text:"Keep me, keep me on fire"},
+        {time:"2:31", text:"♪"}
+      ],
+
+      3: [
+        {time:"0:00", text:"♪"},
+        {time:"0:00.5", text:"I'll probably be a waste of your time, but who knows?"},
+        {time:"0:06", text:"♪"},
+        {time:"0:08.4", text:"Chances are I'll step out of line, but who knows?"},
+        {time:"0:16.5", text:"Lately, you've set up in my mind"},
+        {time:"0:19.4", text:"Yeah, girl, you and I'd like that"},
+        {time:"0:25", text:"♪"},
+        {time:"0:32", text:"Lately, I've been thinking that perhaps I am a coward"},
+        {time:"0:40", text:"Hiding in a disguise of an ever-giving flower"},
+        {time:"0:48", text:"Incompetent steward of all of that sweet, sweet power"},
+        {time:"0:55", text:"♪"},
+        {time:"1:04", text:"Yesterday was feeling so good, now it's gone"},
+        {time:"1:09", text:"♪"},
+        {time:"1:12", text:"I'd feel like that always if I could, is that wrong?"},
+        {time:"1:20", text:"Tell me 'bout the city you're from"},
+        {time:"1:23", text:"Is it hot? Does it snow there?"},
+        {time:"1:28", text:"♪"},
+        {time:"1:36", text:"Lately, I've been thinking 'bout my precarious future"},
+        {time:"1:44", text:"Will you be there with me by my side, my girl, my shooter?"},
+        {time:"1:52", text:"Who's to say who calculates? Not me, I'm no computer"},
+        {time:"2:00", text:"♪"},
+        {time:"2:07", text:"Is it a crime to be unsure? (Let me know, let me know, let me know, let me)"},
+        {time:"2:13", text:"In time, we'll find (let me know, let me know, let me know, let me)"},
+        {time:"2:17", text:"If it's sustainable"},
+        {time:"2:23", text:"You're pure, you're kind (let me know, let me know, let me know, let me)"},
+        {time:"2:27", text:"Mature, divine (let me know, let me know, let me know, let me)"},
+        {time:"2:30", text:"You might be too good for me, unattainable (let me know, let me know, let me know, let me)"},
+        {time:"2:38", text:"♪"},
+        {time:"3:11", text:"Maybe we get married one day, but who knows?"},
+        {time:"3:19", text:"Think I'll take that thought to the grave, but who knows?"},
+        {time:"3:27", text:"I know that I'll love you always"},
+        {time:"3:30", text:"Yeah, girl, you and I'd like that"},
+        {time:"3:34", text:"♪"}
+      ],
+
+      4: [
+        {time:"0:00", text:"♪"},
+        {time:"0:55", text:"It's making you cry every time"},
+        {time:"1:01.8", text:"You give your love to me this way"},
+        {time:"1:08.8", text:"Saying you'd wait for me to stay"},
+        {time:"1:16", text:"I know it hurts you"},
+        {time:"1:19", text:"But I need to tell you something"},
+        {time:"1:29.7", text:"My heart just can't be faithful for long"},
+        {time:"1:40", text:"I swear I'll only make you cry"},
+        {time:"1:49", text:"Maybe I'd change for you someday"},
+        {time:"1:56", text:"But I can't help the way I feel"},
+        {time:"2:02.5", text:"Wish I was good"},
+        {time:"2:00.2", text:"Wish that I could give you my love now"},
+        {time:"2:12.5", text:"But I need to tell you something"},
+        {time:"2:23.5", text:"My heart just can't be faithful for long"},
+        {time:"2:34", text:"I swear I'll only make you cry"},
+        {time:"2:42", text:"♪"},
+        {time:"3:07.8", text:"I need to tell you something"},
+        {time:"3:17.7", text:"My heart just can't be faithful for long"},
+        {time:"3:28", text:"I swear I'll only make you cry"},
+        {time:"3:36", text:"♪"},
+      ],
+
+      5: [
+        {time:"0:00", text:"I remember when I first noticed that you liked me back"},
+        {time:"0:05", text:"We were sitting down in a restaurant waiting for the check"},
+        {time:"0:10", text:"We had made love earlier that day with no strings attached"},
+        {time:"0:15", text:"But I could tell that something had changed, how you looked at me then"},
+        {time:"0:20", text:"Kristen, come right back"},
+        {time:"0:25", text:"I've been waiting for you"},
+        {time:"0:30", text:"To slip back in bed"},
+        {time:"0:35", text:"When you light the candle"},
+        {time:"0:40", text:"And on the Lower East Side, you're dancing with me now"},
+        {time:"0:45", text:"And I'm taking pictures of you with flowers on the wall"},
+        {time:"0:50", text:"Think I like you best when you're dressed in black from head to toe"},
+        {time:"0:55", text:"Think I like you best when you're just with me and no one else"},
+        {time:"1:00", text:"Kristen, come right back"},
+        {time:"1:05", text:"I've been waiting for you"},
+        {time:"1:10", text:"To slip back in bed"},
+        {time:"1:15", text:"When you light the candle"},
+        {time:"1:20", text:"And I'm kissing you, lying in my room"},
+        {time:"1:25", text:"Holding you until you fall asleep"},
+        {time:"1:30", text:"And it's just as good as I knew it would be"},
+        {time:"1:35", text:"Stay with me, I don't want you to leave"},
+        {time:"1:40", text:"Kristen, come right back"},
+        {time:"1:45", text:"I've been waiting for you"},
+        {time:"1:50", text:"To slip back in bed"},
+        {time:"1:55", text:"When you light the candle"},
+      ],
+
+      6: [
+        {time:"0:00", text:"You leapt from crumbling bridges watching cityscapes turn to dust"},
+        {time:"0:05", text:"Filming helicopters crashing in the ocean from way above"},
+        {time:"0:10", text:"Got the music in you baby,"},
+        {time:"0:15", text:"Tell me why"},
+        {time:"0:20", text:"Got the music in you baby,"},
+        {time:"0:25", text:"Tell me why"},
+        {time:"0:30", text:"You’ve been locked in here forever & you just can’t say goodbye"},
+        {time:"0:35", text:"Kisses on the foreheads of the lovers wrapped in your arms"},
+        {time:"0:40", text:"You’ve been hiding them in hollowed out pianos left in the dark…"},
+        {time:"0:45", text:"Your lips,"},
+        {time:"0:50", text:"My lips,"},
+        {time:"0:55", text:"Apocalypse"},
+        {time:"1:00", text:"Go & sneak us through the rivers,"},
+        {time:"1:05", text:"Flood is rising up on your knees"},
+        {time:"1:10", text:"Oh please…"},
+        {time:"1:15", text:"Come out & haunt me"},
+        {time:"1:20", text:"I know you want me"},
+        {time:"1:25", text:"Come out & haunt me"},
+        {time:"1:30", text:"Sharing all your secrets with each other since you were kids"},
+        {time:"1:35", text:"Sleeping soundly with the locket that she gave you clutched in your fist…"},
+        {time:"1:40", text:"When you’re all alone"},
+        {time:"1:45", text:"I will reach for you"},
+        {time:"1:50", text:"When you’re feeling low"},
+        {time:"1:55", text:"I will be there too"},
+      ],
+
+      7: [
+        {time:"0:00", text:"Did I drive you away?"},
+        {time:"0:05", text:"I know what you'll say"},
+        {time:"0:10", text:"You say, \"Oh, sing one we know\""},
+        {time:"0:15", text:"But I promise you this"},
+        {time:"0:20", text:"I'll always look out for you"},
+        {time:"0:25", text:"Yeah, that's what I'll do"},
+        {time:"0:30", text:"I say, \"Oh\""},
+        {time:"0:35", text:"I say, \"Oh\""},
+        {time:"0:40", text:"My heart is yours"},
+        {time:"0:45", text:"It's you that I hold on to"},
+        {time:"0:50", text:"Yeah, that's what I do"},
+        {time:"0:55", text:"And I know I was wrong"},
+        {time:"1:00", text:"But I won't let you down"},
+        {time:"1:05", text:"Oh, yeah, I will, yeah, I will, yes, I will"},
+        {time:"1:10", text:"I said, \"Oh\""},
+        {time:"1:15", text:"I cry, \"Oh\""},
+        {time:"1:20", text:"Yeah, I saw sparks"},
+        {time:"1:25", text:"Yeah, I saw sparks"},
+        {time:"1:30", text:"And I saw sparks"},
+        {time:"1:35", text:"Yeah, I saw sparks"},
+        {time:"1:40", text:"Sing it out"},
+        {time:"1:45", text:"La-la-la-la, oh-oh"},
+        {time:"1:50", text:"La-la-la-la, oh-oh"},
+        {time:"1:55", text:"La-la-la-la, oh-oh"},
+        {time:"2:00", text:"La-la-la-la, oh-oh"},
+      ],
+
+      8: [
+        {time:"0:00", text:"So what if I call?"},
+        {time:"0:05", text:"And you pick up the phone"},
+        {time:"0:10", text:"And I use this holiday"},
+        {time:"0:15", text:"To make my way to your ghost"},
+        {time:"0:20", text:"You walked in the party, your coat was untied"},
+        {time:"0:25", text:"Slamming the door 'cause it's colder outside"},
+        {time:"0:30", text:"Now I won't forget that moment like the blink of an eye"},
+        {time:"0:35", text:"You're off to the beach now 'til the weather gets nice"},
+        {time:"0:40", text:"But what if I call?"},
+        {time:"0:45", text:"And you pick up the phone"},
+        {time:"0:50", text:"And I use this holiday"},
+        {time:"0:55", text:"To make my way to your ghost"},
+        {time:"1:00", text:"Oh, what if you're lonely?"},
+        {time:"1:05", text:"And you know I am too"},
+        {time:"1:10", text:"And I get the chance to say"},
+        {time:"1:15", text:"I wish I didn't but I miss you"},
+        {time:"1:20", text:"I miss you"},
+        {time:"1:25", text:"You know it's true"},
+        {time:"1:30", text:"Yeah, I miss you"},
+        {time:"1:35", text:"You know it's true"},
+        {time:"1:40", text:"So what if I call?"},
+        {time:"1:45", text:"And you pick up the phone"},
+        {time:"1:50", text:"And I use this holiday"},
+        {time:"1:55", text:"To make my way to your ghost"},
+        {time:"2:00", text:"Oh, what if you're lonely"},
+        {time:"2:05", text:"And you know I am too"},
+        {time:"2:10", text:"And I get the chance to say"},
+        {time:"2:15", text:"I wish I didn't but I miss you"},
+        {time:"2:20", text:"I miss you"},
+      ],
+
+      9: [
+        {time:"0.00", text:"♪"},
+      ],
+
+      10: [
+        {time:"0:00", text:"Sunsets"},
+        {time:"0:05", text:"We wander through a foreign town"},
+        {time:"0:10", text:"Strangely there’s nobody else around"},
+        {time:"0:15", text:"So you open your dress & show me your tits"},
+        {time:"0:20", text:"On the swing set at the old playground"},
+        {time:"0:25", text:"& when you go away I still see you"},
+        {time:"0:30", text:"With sunlight on your face in my rear-view"},
+        {time:"0:35", text:"Sunsets"},
+        {time:"0:40", text:"I wanna hear your voice"},
+        {time:"0:45", text:"A love that nobody could destroy"},
+        {time:"0:50", text:"Took photographs like Brautigan’s book covers that we both adored…"},
+        {time:"0:55", text:"This always happens to me this way"},
+        {time:"1:00", text:"Recurring visions of such sweet days"},
+        {time:"1:05", text:"When you go away I still see you"},
+        {time:"1:10", text:"With sunlight on your face in my rear-view"},
+      ]
+    };
+
+    const timeToSeconds = value => {
+      if(typeof value === "number"){
+        return value;
+      }
+
+      const raw=String(value ?? "").trim();
+      if(!raw){
+        return 0;
+      }
+
+      if(raw.includes(":")){
+        const parts=raw.split(":").map(Number);
+        if(parts.length===2 && parts.every(Number.isFinite)){
+          return (parts[0]*60)+parts[1];
+        }
+      }
+
+      const decimal=Number(raw);
+      return Number.isFinite(decimal) ? decimal : 0;
     };
 
     const buildManualLines = (trackNumber,userLines) => {
-      const times=MANUAL_SYNC_TIMES[trackNumber];
-      if(!Array.isArray(times) || !Array.isArray(userLines) || !userLines.length){
+      const manual=MANUAL_SYNC_TIMES[trackNumber];
+
+      if(!Array.isArray(manual) || !manual.length){
         return null;
       }
-      const count=Math.min(times.length,userLines.length);
+
+      // Format baru: {time:"1:32", text:"..."}
+      if(manual.some(item => item && typeof item === "object")){
+        return manual.map(item => ({
+          time:timeToSeconds(item?.time),
+          text:String(item?.text ?? "")
+        }));
+      }
+
+      // Format lama: [1.20, 4.70, ...]
+      if(!Array.isArray(userLines) || !userLines.length){
+        return null;
+      }
+
+      const count=Math.min(manual.length,userLines.length);
       const lines=[];
+
       for(let i=0;i<count;i++){
-        lines.push({time:Number(times[i]),text:userLines[i]});
+        lines.push({
+          time:timeToSeconds(manual[i]),
+          text:userLines[i]
+        });
       }
-      if(userLines.length>count){
-        const base=lines.length?lines[lines.length-1].time:0;
-        for(let i=count;i<userLines.length;i++){
-          lines.push({time:base+(i-count+1)*.75,text:userLines[i]});
-        }
-      }
+
       for(let i=1;i<lines.length;i++){
         if(lines[i].time<=lines[i-1].time){
           lines[i].time=lines[i-1].time+.08;
         }
       }
+
       return lines;
     };
 
@@ -8666,333 +9872,325 @@ document.addEventListener("DOMContentLoaded", () => {
         return [];
       }
 
-      const usableApiLines =
+      const cleanApi =
         Array.isArray(apiLines)
-          ? apiLines.filter(line =>
-              line &&
-              Number.isFinite(Number(line.time)) &&
-              Number(line.time) >= 0
-            )
+          ? apiLines
+              .filter(line =>
+                line &&
+                Number.isFinite(Number(line.time)) &&
+                String(line.apiText || line.text || "").trim()
+              )
+              .map(line => ({
+                time:Number(line.time),
+                apiText:String(line.apiText || line.text || "").trim()
+              }))
           : [];
 
-      /*
-       * IMPORTANT:
-       * The user-provided lyric list is the source of truth for
-       * displayed text. LRCLIB only supplies timing anchors.
-       * No user lyric line is discarded.
-       */
+      const fallbackDuration =
+        Number.isFinite(duration) && duration > 0
+          ? duration
+          : Math.max(1,userLines.length * 2);
 
-      if(!usableApiLines.length){
+      const normal = value =>
+        String(value || "")
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/[’‘`´]/g,"'")
+          .replace(/&/g," and ")
+          .replace(/[^a-z0-9\s']/g," ")
+          .replace(/\s+/g," ")
+          .trim();
 
-        const totalDuration =
-          Number.isFinite(duration) && duration > 0
-            ? duration
-            : Math.max(1, userLines.length - 1);
+      const words = value =>
+        normal(value)
+          .split(" ")
+          .filter(Boolean);
 
-        const step =
-          userLines.length > 1
-            ? totalDuration / (userLines.length - 1)
-            : 0;
+      const tokenScore = (a,b) => {
+        const left=words(a);
+        const right=words(b);
 
-        return userLines.map((text,index) => ({
-          time:index * step,
-          text
-        }));
-
-      }
-
-      /*
-       * Find monotonic text/timestamp anchors. We are allowed to
-       * skip an API timestamp, but NEVER a user lyric line.
-       */
-      const anchors = [];
-      let userCursor = 0;
-
-      for(let apiIndex = 0; apiIndex < usableApiLines.length; apiIndex++){
-
-        if(userCursor >= userLines.length){
-          break;
+        if(!left.length || !right.length){
+          return 0;
         }
 
-        let bestUserIndex = -1;
-        let bestScore = -1;
+        const leftSet=new Set(left);
+        const rightSet=new Set(right);
+        let common=0;
 
-        const lookAhead =
-          Math.min(
-            userLines.length - 1,
-            userCursor + 7
-          );
+        leftSet.forEach(word=>{
+          if(rightSet.has(word)) common++;
+        });
 
-        for(
-          let candidate = userCursor;
-          candidate <= lookAhead;
-          candidate++
-        ){
+        const union=new Set([...leftSet,...rightSet]).size;
+        return union ? common/union : 0;
+      };
 
-          const score = similarity(
-            userLines[candidate],
-            usableApiLines[apiIndex].apiText
-          );
+      const containmentScore = (a,b) => {
+        const left=normal(a);
+        const right=normal(b);
 
-          if(score > bestScore){
-            bestScore = score;
-            bestUserIndex = candidate;
+        if(!left || !right){
+          return 0;
+        }
+
+        if(left===right){
+          return 1;
+        }
+
+        if(left.includes(right) || right.includes(left)){
+          const shortLen=Math.min(left.length,right.length);
+          const longLen=Math.max(left.length,right.length);
+          return longLen ? Math.min(1,0.72 + 0.28*(shortLen/longLen)) : 0;
+        }
+
+        const maxLen=Math.max(left.length,right.length,1);
+        return Math.max(
+          tokenScore(left,right),
+          1-(Math.abs(left.length-right.length)/maxLen)
+        ) * 0.55;
+      };
+
+      // When a user's lyric line is split into several fragments, the
+      // concatenated fragments should be matched against the corresponding
+      // LRC phrase as one group.
+      const groups=[];
+      let userIndex=0;
+      let apiIndex=0;
+
+      while(
+        userIndex < userLines.length &&
+        apiIndex < cleanApi.length
+      ){
+
+        let best={score:-1,span:1};
+
+        const maxSpan=Math.min(
+          6,
+          userLines.length-userIndex
+        );
+
+        for(let span=1; span<=maxSpan; span++){
+          const combined=userLines
+            .slice(userIndex,userIndex+span)
+            .join(" ");
+
+          const apiText=cleanApi[apiIndex].apiText;
+          let score=containmentScore(combined,apiText);
+
+          // Extra preference when the combined user text is an almost exact
+          // phrase of the API line, which is common for split LRC lines.
+          const nCombined=normal(combined);
+          const nApi=normal(apiText);
+          if(nCombined && nApi && (nCombined===nApi || nApi.includes(nCombined) || nCombined.includes(nApi))){
+            score += 0.34;
           }
 
+          // For a single line that clearly matches, don't let a longer span
+          // steal following lyric lines merely because of common words.
+          if(span===1 && score>0.72){
+            score += 0.12;
+          }
+
+          if(score>best.score){
+            best={score,span};
+          }
         }
 
-        if(
-          bestUserIndex >= userCursor &&
-          bestScore >= .28
-        ){
+        // If no good match exists, look ahead a few API lines for an anchor.
+        if(best.score < 0.34){
+          let lookBest=null;
 
-          anchors.push({
-            userIndex:bestUserIndex,
-            time:Number(usableApiLines[apiIndex].time)
+          for(let ahead=1; ahead<=4 && apiIndex+ahead<cleanApi.length; ahead++){
+            const score=containmentScore(
+              userLines[userIndex],
+              cleanApi[apiIndex+ahead].apiText
+            );
+
+            if(!lookBest || score>lookBest.score){
+              lookBest={ahead,score};
+            }
+          }
+
+          if(lookBest && lookBest.score>=0.48){
+            apiIndex += lookBest.ahead;
+            continue;
+          }
+        }
+
+        if(best.score>=0.34){
+          groups.push({
+            userStart:userIndex,
+            userEnd:userIndex+best.span-1,
+            apiIndex,
+            score:best.score
           });
-
-          userCursor = bestUserIndex + 1;
-
+          userIndex += best.span;
+          apiIndex += 1;
+        }else{
+          // Keep every user lyric line. Unmatched lines will be interpolated
+          // between the nearest real LRC anchors below.
+          userIndex += 1;
         }
-
       }
 
-      const cleanAnchors = [];
-      for(const anchor of anchors){
-
-        const previous =
-          cleanAnchors[cleanAnchors.length - 1];
-
-        if(
-          previous &&
-          anchor.userIndex <= previous.userIndex
-        ){
-          continue;
-        }
-
-        if(
-          previous &&
-          anchor.time < previous.time
-        ){
-          anchor.time = previous.time;
-        }
-
-        cleanAnchors.push(anchor);
-
-      }
-
-      const result = userLines.map(text => ({
+      const result=userLines.map(text=>({
         time:0,
         text
       }));
 
-      if(!cleanAnchors.length){
-
-        const totalDuration =
-          Number.isFinite(duration) && duration > 0
-            ? duration
-            : Math.max(
-                1,
-                Number(
-                  usableApiLines[usableApiLines.length - 1].time
-                )
-              );
-
-        const step =
-          userLines.length > 1
-            ? totalDuration / (userLines.length - 1)
+      if(!groups.length){
+        const step=
+          result.length>1
+            ? fallbackDuration/(result.length-1)
             : 0;
 
-        result.forEach((line,index) => {
-          line.time = index * step;
+        result.forEach((line,index)=>{
+          line.time=index*step;
         });
 
-      }else{
+        return result;
+      }
 
-        const first = cleanAnchors[0];
+      // Convert grouped LRC phrases to user-line timestamps. When a phrase
+      // is split into multiple displayed lines, use the text-length ratio to
+      // place each fragment inside that phrase's real time window.
+      for(let g=0; g<groups.length; g++){
+        const group=groups[g];
+        const startTime=cleanApi[group.apiIndex].time;
+        const nextAnchor=
+          cleanApi[group.apiIndex+1]?.time;
 
-        // User lines before the first real API anchor.
-        if(first.userIndex === 0){
+        let endTime=Number.isFinite(nextAnchor)
+          ? Math.max(startTime+0.12,nextAnchor-0.03)
+          : Math.max(startTime+1.6,fallbackDuration);
 
-          result[0].time = Math.max(0, first.time);
-
-        }else{
-
-          const count = first.userIndex;
-
-          for(let i = 0; i <= count; i++){
-
-            result[i].time =
-              first.time * (i / count);
-
-          }
-
-        }
-
-        // User lines between real API anchors.
-        for(
-          let a = 0;
-          a < cleanAnchors.length - 1;
-          a++
-        ){
-
-          const current = cleanAnchors[a];
-          const next = cleanAnchors[a + 1];
-
-          const gap =
-            next.userIndex - current.userIndex;
-
-          if(gap <= 0){
-            continue;
-          }
-
-          for(let offset = 0; offset <= gap; offset++){
-
-            const index =
-              current.userIndex + offset;
-
-            const ratio =
-              offset / gap;
-
-            result[index].time =
-              current.time +
-              (next.time - current.time) * ratio;
-
-          }
-
-        }
-
-        // User lines after the last API anchor.
-        const last =
-          cleanAnchors[cleanAnchors.length - 1];
-
-        const trailingCount =
-          userLines.length - 1 - last.userIndex;
-
-        if(trailingCount > 0){
-
-          const fallbackEnd =
-            Number.isFinite(duration) &&
-            duration > last.time
-              ? duration
-              : Math.max(
-                  last.time + trailingCount * 1.8,
-                  Number(
-                    usableApiLines[
-                      usableApiLines.length - 1
-                    ]?.time || last.time
-                  )
-                );
-
-          const span =
-            Math.max(
-              0,
-              fallbackEnd - last.time
+        if(g+1<groups.length){
+          const later=groups[g+1];
+          const laterTime=cleanApi[later.apiIndex].time;
+          if(Number.isFinite(laterTime)){
+            endTime=Math.max(
+              startTime+0.12,
+              Math.min(endTime,laterTime-0.03)
             );
-
-          for(
-            let offset = 1;
-            offset <= trailingCount;
-            offset++
-          ){
-
-            const index =
-              last.userIndex + offset;
-
-            result[index].time =
-              last.time +
-              span *
-              (offset / trailingCount);
-
           }
-
         }
 
+        const texts=userLines.slice(
+          group.userStart,
+          group.userEnd+1
+        );
+
+        const lengths=texts.map(text=>
+          Math.max(1,normal(text).length)
+        );
+
+        const total=lengths.reduce(
+          (sum,value)=>sum+value,
+          0
+        );
+
+        let cursor=0;
+
+        for(let offset=0; offset<lengths.length; offset++){
+          const index=group.userStart+offset;
+          const ratioStart=cursor/total;
+
+          result[index].time=
+            startTime+
+            (endTime-startTime)*ratioStart;
+
+          cursor += lengths[offset];
+        }
       }
 
-      /*
-       * Make every timestamp strictly increasing.
-       * This prevents renderAtTime() from jumping past a line
-       * when two lines happen to receive the same timestamp.
-       */
-      const minimumGap = .08;
+      // Lines before the first real anchor.
+      const first=groups[0];
+      if(first.userStart>0){
+        const firstTime=cleanApi[first.apiIndex].time;
+        const count=first.userStart;
+        const step=firstTime/Math.max(1,count+1);
 
-      for(let i = 1; i < result.length; i++){
+        for(let i=0;i<count;i++){
+          result[i].time=step*(i+1);
+        }
+      }
 
-        if(
-          !Number.isFinite(result[i].time) ||
-          result[i].time <= result[i - 1].time
-        ){
+      // Lines between anchor groups that weren't directly consumed.
+      for(let g=0; g<groups.length-1; g++){
+        const current=groups[g];
+        const next=groups[g+1];
+        const from=current.userEnd+1;
+        const to=next.userStart-1;
 
-          result[i].time =
-            result[i - 1].time + minimumGap;
-
+        if(from>to){
+          continue;
         }
 
+        const leftTime=result[current.userEnd].time;
+        const rightTime=cleanApi[next.apiIndex].time;
+        const count=to-from+1;
+        const span=Math.max(0.12,rightTime-leftTime);
+
+        for(let i=0;i<count;i++){
+          result[from+i].time=
+            leftTime+
+            span*((i+1)/(count+1));
+        }
       }
 
-      /*
-       * If interpolation overshoots the audio duration, compress
-       * the generated timeline while preserving every lyric line
-       * and its order.
-       */
+      // Lines after the last anchor.
+      const last=groups[groups.length-1];
+      if(last.userEnd<result.length-1){
+        const from=last.userEnd+1;
+        const count=result.length-1-from;
+        const leftTime=result[last.userEnd].time;
+        const rightTime=Math.max(
+          leftTime+0.12,
+          fallbackDuration-0.05
+        );
+        const span=Math.max(0.12,rightTime-leftTime);
+
+        for(let i=0;i<count;i++){
+          result[from+i].time=
+            leftTime+
+            span*((i+1)/(count+1));
+        }
+      }
+
+      // Strictly increasing, bounded timestamps.
+      const minimumGap=0.045;
+      for(let i=0;i<result.length;i++){
+        if(!Number.isFinite(result[i].time)){
+          result[i].time=
+            i===0
+              ? 0
+              : result[i-1].time+minimumGap;
+        }
+
+        if(i>0 && result[i].time<=result[i-1].time){
+          result[i].time=result[i-1].time+minimumGap;
+        }
+      }
+
       if(
         Number.isFinite(duration) &&
-        duration > 0 &&
-        result.length > 1 &&
-        result[result.length - 1].time > duration
+        duration>0 &&
+        result[result.length-1].time>=duration
       ){
+        const oldEnd=result[result.length-1].time;
+        const available=Math.max(
+          minimumGap*(result.length-1),
+          duration-0.05
+        );
 
-        const startTime =
-          Math.max(0, result[0].time);
-
-        const oldEnd =
-          result[result.length - 1].time;
-
-        const availableSpan =
-          Math.max(
-            minimumGap * (result.length - 1),
-            duration - startTime
-          );
-
-        const oldSpan =
-          Math.max(.001, oldEnd - startTime);
-
-        for(let i = 0; i < result.length; i++){
-
-          const ratio =
-            Math.max(
-              0,
-              Math.min(
-                1,
-                (result[i].time - startTime) / oldSpan
-              )
-            );
-
-          result[i].time =
-            startTime +
-            availableSpan * ratio;
-
+        for(let i=0;i<result.length;i++){
+          result[i].time=(result[i].time/oldEnd)*available;
         }
-
-        for(let i = 1; i < result.length; i++){
-
-          if(
-            result[i].time <=
-            result[i - 1].time
-          ){
-
-            result[i].time =
-              result[i - 1].time + minimumGap;
-
-          }
-
-        }
-
       }
 
       return result;
-
     };
 
     const renderEmpty = (
@@ -9010,6 +10208,8 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         currentEl.textContent = "...";
+
+        scheduleLyricFit();
       }
 
       if(nextEl){
@@ -9030,6 +10230,38 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       story.dataset.hasLyrics = "false";
+
+      /*
+         LOVE IN THE AIR — FULL LYRICS VIEW
+         -----------------------------------
+         Only this track explicitly sends an empty lyric state so the
+         View Lyrics panel cannot keep the previous song's lyrics.
+      */
+      if(
+        String(title || "")
+          .toLowerCase()
+          .includes("love in the air")
+      ){
+        window.dispatchEvent(
+          new CustomEvent(
+            "portfolio:lyric-update",
+            {
+              detail:{
+                index:-1,
+                lines:[],
+                title:title || "Love in the air",
+                artist:activeTrack?.dataset?.artist || "",
+                image:activeTrack?.dataset?.musicImage || "",
+                currentTime:
+                  Number.isFinite(audio.currentTime)
+                    ? audio.currentTime
+                    : 0,
+                paused:audio.paused
+              }
+            }
+          )
+        );
+      }
     };
 
     const fetchRealSyncedLyrics = async (
@@ -9296,6 +10528,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if(!alignedLines.length){
 
+        // Saat lagu dijeda setelah lirik pernah tampil, jangan hapus lirik terakhir.
+        if(audio.paused && activeLineIndex >= 0 && currentEl?.textContent){
+          if(stateEl){
+            stateEl.textContent = "PAUSED";
+          }
+          story.dataset.playing = "false";
+          story.dataset.hasLyrics = "true";
+          story.style.visibility = "visible";
+          story.style.opacity = "1";
+          currentEl.style.visibility = "visible";
+          currentEl.style.opacity = "1";
+          return;
+        }
+
         renderEmpty(
           title,
           !audio.paused
@@ -9304,6 +10550,51 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         return;
+      }
+
+      /*
+         MANUAL SYNC MUST FOLLOW THE REAL AUDIO CLOCK.
+         Do not apply the global tempo/localStorage value to manually
+         entered timestamps, otherwise a saved tempo setting can make
+         lyrics appear much too early/late even though the manual times
+         are correct.
+      */
+      const trackMatch =
+        (activeTrack.dataset.src || "")
+          .match(/lagu(\d+)\.mp3/i);
+
+      const activeTrackNumber =
+        trackMatch
+          ? Number(trackMatch[1])
+          : 1;
+
+      const hasManualSync =
+        Array.isArray(MANUAL_SYNC_TIMES[activeTrackNumber]) &&
+        MANUAL_SYNC_TIMES[activeTrackNumber].length > 0;
+
+      let lyricClock =
+        Number.isFinite(audio.currentTime)
+          ? audio.currentTime
+          : 0;
+
+      if(!hasManualSync){
+        let tempoRate = 1;
+
+        const rootRate = Number(root.dataset.musicTempo || "");
+        if(Number.isFinite(rootRate) && rootRate > 0){
+          tempoRate = rootRate;
+        }else{
+          try{
+            const storedRate = Number(
+              localStorage.getItem("portfolio-music-tempo")
+            );
+            if(Number.isFinite(storedRate) && storedRate > 0){
+              tempoRate = storedRate;
+            }
+          }catch(error){}
+        }
+
+        lyricClock *= tempoRate;
       }
 
       let index = -1;
@@ -9315,7 +10606,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ){
 
         if(
-          audio.currentTime >=
+          lyricClock >=
           alignedLines[i].time
         ){
           index = i;
@@ -9325,11 +10616,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       }
 
-      if(audio.paused){
-        index = -1;
-      }
-
       if(index < 0){
+
+        // PAUSE/STOP: tahan lirik terakhir yang sudah tampil.
+        // Hanya render kosong jika memang belum ada lirik yang pernah tampil.
+        if(audio.paused && activeLineIndex >= 0 && currentEl?.textContent){
+          if(stateEl){
+            stateEl.textContent = "PAUSED";
+          }
+          story.dataset.playing = "false";
+          story.dataset.hasLyrics = "true";
+          story.style.visibility = "visible";
+          story.style.opacity = "1";
+          currentEl.style.visibility = "visible";
+          currentEl.style.opacity = "1";
+          return;
+        }
 
         renderEmpty(
           title,
@@ -9344,36 +10646,69 @@ document.addEventListener("DOMContentLoaded", () => {
       const line =
         alignedLines[index];
 
-      if(
-        currentEl.textContent !==
-        line.text
-      ){
+      /*
+         The music-note marker is a FULL-LYRICS-only visual cue.
+         In the small card, keep instrumental sections looking like the
+         existing no-lyrics placeholder ("..."). The raw "♪" is preserved
+         in the portfolio:lyric-update event below so the View Lyrics screen
+         can render it as the instrumental marker.
+      */
+      const displayLineText =
+        String(line?.text || "").trim() === "♪"
+          ? "..."
+          : line.text;
+
+      if(currentEl.textContent !== displayLineText){
 
         currentEl.classList.remove(
-          "is-changing"
+          "is-changing",
+          "is-instrumental"
         );
 
         void currentEl.offsetWidth;
 
         currentEl.textContent =
-          line.text;
+          displayLineText;
+
+        /*
+           Visual-only fitting setelah lyric baru masuk.
+           Tidak menyentuh timing/audio sync.
+        */
+        scheduleLyricFit();
 
         currentEl.classList.add(
           "is-changing"
         );
 
+      }else{
+
+        currentEl.classList.remove(
+          "is-instrumental"
+        );
+        scheduleLyricFit();
+
       }
 
       if(prevEl){
-        prevEl.textContent =
+        const prevText =
           alignedLines[index - 1]?.text ||
           "...";
+
+        prevEl.textContent =
+          String(prevText).trim() === "♪"
+            ? "..."
+            : prevText;
       }
 
       if(nextEl){
-        nextEl.textContent =
+        const nextText =
           alignedLines[index + 1]?.text ||
           "...";
+
+        nextEl.textContent =
+          String(nextText).trim() === "♪"
+            ? "..."
+            : nextText;
       }
 
       if(counterEl){
@@ -9386,12 +10721,49 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if(stateEl){
-        stateEl.textContent = "PLAYING";
+        stateEl.textContent = audio.paused ? "PAUSED" : "PLAYING";
       }
 
       story.dataset.hasLyrics = "true";
-      story.dataset.playing = "true";
+      story.dataset.playing = audio.paused ? "false" : "true";
+
+      /* Failsafe: make the lyric layer visible even if an older CSS rule
+         left the story screen hidden. */
+      story.style.visibility = "visible";
+      story.style.opacity = "1";
+      currentEl.style.visibility = "visible";
+      currentEl.style.opacity = "1";
+
       activeLineIndex = index;
+
+      /*
+         Full Lyrics View memakai state sinkronisasi yang sudah ada.
+         Tidak membuat clock/timestamp baru.
+      */
+      window.dispatchEvent(
+        new CustomEvent(
+          "portfolio:lyric-update",
+          {
+            detail:{
+              index,
+              lines:alignedLines.map(line => ({
+                time:Number(line.time) || 0,
+                text:String(line.text || "")
+              })),
+              title,
+              artist:
+                activeTrack.dataset.artist || "",
+              image:
+                activeTrack.dataset.musicImage || "",
+              currentTime:
+                Number.isFinite(audio.currentTime)
+                  ? audio.currentTime
+                  : 0,
+              paused:audio.paused
+            }
+          }
+        )
+      );
 
     };
 
@@ -9432,30 +10804,40 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Wait for metadata if needed.
-      const duration =
+      // The uploaded MP3s are the reference timeline.
+      // If a tempo-rendered WAV is playing, its stretched duration must not
+      // be sent to LRCLIB, otherwise the lookup can select/misalign lyrics.
+      const trackMatch =
+        (track.dataset.src || "")
+          .match(/lagu(\d+)\.mp3/i);
+
+      const trackNumber =
+        trackMatch
+          ? Number(trackMatch[1])
+          : 1;
+
+      /*
+         IMPORTANT:
+         ORIGINAL_DURATIONS tidak tersedia di file ini. Mengaksesnya
+         secara langsung membuat ReferenceError dan menghentikan proses
+         sebelum timing manual dipasang. Pakai durasi audio yang sedang
+         diputar, dan fallback hanya bila tabel durasi memang ada.
+      */
+      let duration =
         Number.isFinite(audio.duration)
           ? audio.duration
           : 0;
 
-      if(duration <= 0){
+      if(typeof ORIGINAL_DURATIONS !== "undefined") {
+        const storedDuration =
+          Number(ORIGINAL_DURATIONS[trackNumber] || 0);
 
-        renderEmpty(
-          title,
-          "LOADING"
-        );
-
-        return;
+        if(Number.isFinite(storedDuration) && storedDuration > 0){
+          duration = storedDuration;
+        }
       }
 
-      const nMatch =
-        (track.dataset.src || "")
-          .match(/lagu(\d+)\.mp3/i);
-
-      const n =
-        nMatch
-          ? Number(nMatch[1])
-          : 1;
+      const n = trackNumber;
 
       const userLines =
         Array.isArray(userLyrics[n])
@@ -9474,6 +10856,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const manualLines = buildManualLines(n,userLines);
 
+      /* Manual timestamps do not need external sync or track duration. */
       if(manualLines){
         syncedLines = manualLines;
         alignedLines = manualLines;
@@ -9481,6 +10864,11 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
         renderAtTime();
+        return;
+      }
+
+      if(duration <= 0){
+        renderEmpty(title, "LOADING");
         return;
       }
 
@@ -9564,6 +10952,7 @@ document.addEventListener("DOMContentLoaded", () => {
     audio.addEventListener(
       "pause",
       () => {
+        // Jangan reset/hapus lirik saat tombol pause/stop ditekan.
         renderAtTime();
       }
     );
@@ -9574,6 +10963,34 @@ document.addEventListener("DOMContentLoaded", () => {
         renderAtTime();
       }
     );
+
+    window.addEventListener(
+      "resize",
+      scheduleLyricFit,
+      {passive:true}
+    );
+
+    window.addEventListener(
+      "orientationchange",
+      () => {
+        window.setTimeout(
+          scheduleLyricFit,
+          120
+        );
+      },
+      {passive:true}
+    );
+
+    if(
+      document.fonts &&
+      document.fonts.ready
+    ){
+      document.fonts.ready.then(
+        scheduleLyricFit
+      ).catch(
+        () => {}
+      );
+    }
 
     tracks.forEach(track => {
       track.addEventListener(
@@ -9642,3 +11059,1892 @@ document.addEventListener("DOMContentLoaded", () => {
 
 })();
 
+
+
+/* =========================================================
+   MUSIC VOLUME CONTROL — SLIDER + MUTE
+   ---------------------------------------------------------
+   Menggunakan player yang sama dari index.js ini.
+   - Geser slider untuk mengatur audio.volume (0..1)
+   - Klik ikon speaker untuk mute / unmute
+   - Volume terakhir disimpan di localStorage
+========================================================= */
+(function initMusicVolumeControl(){
+    "use strict";
+
+    const STORAGE_KEY = "portfolio-music-volume-v1";
+
+    const boot = () => {
+        const like = document.querySelector("#love.like-redesign");
+        if(!like){
+            return;
+        }
+
+        const audio = like.querySelector("[data-music-audio]");
+        const volumeWrap = like.querySelector(".like-music-volume");
+        const volumeIcon = volumeWrap?.querySelector("i");
+        const oldLine = volumeWrap?.querySelector(".like-music-volume-line");
+
+        if(!audio || !volumeWrap || !volumeIcon){
+            return;
+        }
+
+        /* Cegah init dua kali. */
+        if(volumeWrap.dataset.volumeReady === "true"){
+            return;
+        }
+        volumeWrap.dataset.volumeReady = "true";
+
+        /* Ganti garis dekoratif lama dengan slider yang benar-benar bisa digeser. */
+        let slider = volumeWrap.querySelector('input[type="range"].like-music-volume-line');
+
+        if(!slider){
+            slider = document.createElement("input");
+            slider.type = "range";
+            slider.className = "like-music-volume-line";
+            slider.min = "0";
+            slider.max = "1";
+            slider.step = "0.01";
+            slider.value = "0.68";
+            slider.setAttribute("aria-label", "Atur volume lagu");
+            slider.setAttribute("aria-valuemin", "0");
+            slider.setAttribute("aria-valuemax", "1");
+            slider.setAttribute("aria-valuenow", "0.68");
+
+            if(oldLine){
+                oldLine.replaceWith(slider);
+            }else{
+                volumeWrap.appendChild(slider);
+            }
+        }
+
+        /* Styling disisipkan lewat JS supaya cukup memakai index.js ini. */
+        const styleId = "music-volume-control-inline-style";
+        if(!document.getElementById(styleId)){
+            const style = document.createElement("style");
+            style.id = styleId;
+            style.textContent = `
+                #love.like-redesign .like-music-volume{
+                    display:flex !important;
+                    align-items:center !important;
+                    gap:9px !important;
+                }
+
+                #love.like-redesign .like-music-volume > i{
+                    width:16px;
+                    min-width:16px;
+                    text-align:center;
+                    cursor:pointer;
+                    color:rgba(243,241,236,.62);
+                    transition:transform .2s ease,color .2s ease;
+                    user-select:none;
+                }
+
+                #love.like-redesign .like-music-volume > i:hover{
+                    transform:scale(1.12);
+                    color:#f3f1ec;
+                }
+
+                #love.like-redesign input.like-music-volume-line{
+                    -webkit-appearance:none !important;
+                    appearance:none !important;
+                    display:block !important;
+                    width:72px !important;
+                    min-width:72px !important;
+                    height:14px !important;
+                    margin:0 !important;
+                    padding:0 !important;
+                    border:0 !important;
+                    outline:0 !important;
+                    background:transparent !important;
+                    cursor:pointer;
+                }
+
+                #love.like-redesign input.like-music-volume-line::-webkit-slider-runnable-track{
+                    height:3px;
+                    border-radius:999px;
+                    background:var(--music-volume-track,#555852);
+                }
+
+                #love.like-redesign input.like-music-volume-line::-moz-range-track{
+                    height:3px;
+                    border-radius:999px;
+                    background:var(--music-volume-track,#555852);
+                }
+
+                #love.like-redesign input.like-music-volume-line::-webkit-slider-thumb{
+                    -webkit-appearance:none;
+                    appearance:none;
+                    width:8px;
+                    height:8px;
+                    margin-top:-2.5px;
+                    border:0;
+                    border-radius:50%;
+                    background:#9eaf88;
+                }
+
+                #love.like-redesign input.like-music-volume-line::-moz-range-thumb{
+                    width:8px;
+                    height:8px;
+                    border:0;
+                    border-radius:50%;
+                    background:#9eaf88;
+                }
+
+                #love.like-redesign input.like-music-volume-line:focus-visible{
+                    outline:1px solid rgba(158,175,136,.45) !important;
+                    outline-offset:3px;
+                    border-radius:999px;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        const clampVolume = value => {
+            const n = Number(value);
+            if(!Number.isFinite(n)){
+                return .68;
+            }
+            return Math.min(1,Math.max(0,n));
+        };
+
+        const readStoredVolume = () => {
+            try{
+                const stored = Number(localStorage.getItem(STORAGE_KEY));
+                if(Number.isFinite(stored)){
+                    return clampVolume(stored);
+                }
+            }catch(error){}
+            return .68;
+        };
+
+        const setSliderTrack = (volume) => {
+            const percent = clampVolume(volume) * 100;
+            slider.style.setProperty(
+                "--music-volume-track",
+                `linear-gradient(90deg, #9eaf88 0 ${percent}%, rgba(255,255,255,.11) ${percent}% 100%)`
+            );
+            slider.value = String(clampVolume(volume));
+            slider.setAttribute("aria-valuenow",String(clampVolume(volume)));
+        };
+
+        let rememberedVolume = readStoredVolume();
+
+        const updateVolumeUI = () => {
+            const volume = clampVolume(audio.volume);
+            setSliderTrack(volume);
+
+            let iconClass = "bi bi-volume-up-fill";
+            if(audio.muted || volume <= 0){
+                iconClass = "bi bi-volume-mute-fill";
+            }else if(volume < .5){
+                iconClass = "bi bi-volume-down-fill";
+            }
+
+            volumeIcon.className = iconClass;
+            volumeIcon.setAttribute(
+                "aria-label",
+                audio.muted || volume <= 0
+                    ? "Aktifkan suara"
+                    : "Matikan suara"
+            );
+            volumeIcon.setAttribute("role","button");
+            volumeIcon.setAttribute("tabindex","0");
+            volumeWrap.setAttribute(
+                "aria-label",
+                `Volume ${Math.round(volume * 100)} persen`
+            );
+        };
+
+        const saveVolume = () => {
+            try{
+                localStorage.setItem(STORAGE_KEY,String(clampVolume(audio.volume)));
+            }catch(error){}
+        };
+
+        audio.volume = rememberedVolume;
+        audio.muted = false;
+        updateVolumeUI();
+
+        slider.addEventListener("input",() => {
+            const value = clampVolume(slider.value);
+            rememberedVolume = value > 0 ? value : rememberedVolume;
+            audio.volume = value;
+            audio.muted = false;
+            if(value > 0){
+                saveVolume();
+            }
+            updateVolumeUI();
+        });
+
+        const toggleMute = () => {
+            if(audio.muted || audio.volume <= 0){
+                const restore = rememberedVolume > 0
+                    ? rememberedVolume
+                    : .68;
+                audio.volume = restore;
+                audio.muted = false;
+                saveVolume();
+            }else{
+                rememberedVolume = audio.volume;
+                try{
+                    localStorage.setItem(STORAGE_KEY,String(rememberedVolume));
+                }catch(error){}
+                audio.muted = true;
+            }
+            updateVolumeUI();
+        };
+
+        volumeIcon.addEventListener("click",toggleMute);
+
+        volumeIcon.addEventListener("keydown",event => {
+            if(event.key === "Enter" || event.key === " "){
+                event.preventDefault();
+                toggleMute();
+            }
+        });
+
+        audio.addEventListener("volumechange",updateVolumeUI);
+        window.addEventListener("pageshow",updateVolumeUI);
+    };
+
+    if(document.readyState === "loading"){
+        document.addEventListener("DOMContentLoaded",boot,{once:true});
+    }else{
+        boot();
+    }
+
+})();
+
+
+/* =========================================================
+   FULL LYRICS VIEW — SPOTIFY STYLE
+   ---------------------------------------------------------
+   Modal/card penuh yang mengambil timing langsung dari
+   lyric controller existing.
+========================================================= */
+(function initFullLyricsView(){
+
+  "use strict";
+
+  const boot = () => {
+
+    const modal =
+      document.querySelector("[data-lyrics-modal]");
+
+    const openButton =
+      document.querySelector("[data-lyric-open]");
+
+    const list =
+      modal?.querySelector("[data-lyrics-modal-list]");
+
+    const titleEl =
+      modal?.querySelector("[data-lyrics-modal-title]");
+
+    const artistEl =
+      modal?.querySelector("[data-lyrics-modal-artist]");
+
+    const counterEl =
+      modal?.querySelector("[data-lyrics-modal-counter]");
+
+    const stateEl =
+      modal?.querySelector("[data-lyrics-modal-state]");
+
+    const closeButtons =
+      modal
+        ? [
+            ...modal.querySelectorAll(
+              "[data-lyrics-close]"
+            )
+          ]
+        : [];
+
+    const audio =
+      document.querySelector(
+        "#love.like-redesign [data-music-audio]"
+      );
+
+    if(
+      !modal ||
+      !openButton ||
+      !list ||
+      !audio
+    ){
+      return;
+    }
+
+    let lines = [];
+    let activeIndex = -1;
+    let lastFocused = null;
+    let hasState = false;
+
+    const setOpen = open => {
+
+      modal.classList.toggle(
+        "is-open",
+        open
+      );
+
+      modal.setAttribute(
+        "aria-hidden",
+        String(!open)
+      );
+
+      document.body.classList.toggle(
+        "music-lyrics-modal-open",
+        open
+      );
+
+      if(open){
+
+        window.setTimeout(
+          () => {
+            closeButtons[0]?.focus();
+          },
+          50
+        );
+
+      }
+
+    };
+
+    const close = () => {
+
+      setOpen(false);
+
+      if(
+        lastFocused &&
+        typeof lastFocused.focus ===
+          "function"
+      ){
+
+        try{
+          lastFocused.focus({
+            preventScroll:true
+          });
+        }catch(error){
+          try{
+            lastFocused.focus();
+          }catch(focusError){}
+        }
+
+      }
+
+    };
+
+    const updateCounter = () => {
+
+      if(!counterEl){
+        return;
+      }
+
+      const current =
+        activeIndex >= 0
+          ? activeIndex + 1
+          : 0;
+
+      counterEl.textContent =
+        `${String(current).padStart(2,"0")} / ${String(lines.length).padStart(2,"0")}`;
+
+    };
+
+    /*
+       LYRICS VIEW — SCROLL + HOVER STABILITY
+       ---------------------------------------
+       - Biarkan roda mouse/touch scroll tetap ditangani
+         oleh elemen lirik, bukan Lenis/body.
+       - Jangan membuat hover berubah-ubah saat pointer
+         tetap berada di atas satu baris.
+       - Underline hover dibuat via pseudo-element.
+    */
+    list.setAttribute(
+      "data-lenis-prevent",
+      ""
+    );
+
+    list.addEventListener(
+      "wheel",
+      event => {
+        event.stopPropagation();
+      },
+      {
+        passive:true
+      }
+    );
+
+    list.addEventListener(
+      "touchmove",
+      event => {
+        event.stopPropagation();
+      },
+      {
+        passive:true
+      }
+    );
+
+    const lyricHoverStyleId =
+      "lyrics-hover-scroll-stable";
+
+    if(
+      !document.getElementById(
+        lyricHoverStyleId
+      )
+    ){
+
+      const style =
+        document.createElement(
+          "style"
+        );
+
+      style.id =
+        lyricHoverStyleId;
+
+      style.textContent = `
+        .music-lyrics-body{
+          overflow-y:auto !important;
+          overscroll-behavior:contain !important;
+          -webkit-overflow-scrolling:touch !important;
+          touch-action:pan-y !important;
+        }
+
+        .music-lyrics-line{
+          position:relative !important;
+          display:block !important;
+          isolation:isolate;
+          outline:none !important;
+          -webkit-tap-highlight-color:transparent !important;
+          backface-visibility:hidden;
+        }
+
+        .music-lyrics-text{
+          position:relative;
+          display:inline-block;
+          max-width:100%;
+        }
+
+        .music-lyrics-text::after{
+          content:"";
+          position:absolute;
+          left:0;
+          right:0;
+          bottom:-3px;
+          width:auto;
+          height:1px;
+          background:#fff;
+          transform:scaleX(0);
+          transform-origin:left center;
+          opacity:0;
+          pointer-events:none;
+          transition:transform .18s ease, opacity .18s ease;
+        }
+
+        .music-lyrics-line:hover .music-lyrics-text::after,
+        .music-lyrics-line:focus-visible .music-lyrics-text::after{
+          transform:scaleX(1);
+          opacity:.82;
+        }
+
+        .music-lyrics-line:hover{
+          color:#f4f2ed !important;
+          opacity:1 !important;
+        }
+
+        .music-lyrics-line:focus,
+        .music-lyrics-line:focus-visible{
+          outline:none !important;
+          box-shadow:none !important;
+        }
+
+        .music-lyrics-line.is-active:hover{
+          transform:translateX(7px);
+        }
+
+        @media(max-width:700px){
+          .music-lyrics-line.is-active:hover{
+            transform:translateX(4px);
+          }
+        }
+      `;
+
+      document.head.appendChild(
+        style
+      );
+
+    }
+
+    const scrollToActive = smooth => {
+
+      if(activeIndex < 0){
+        return;
+      }
+
+      const item =
+        list.querySelector(
+          `[data-lyrics-index="${activeIndex}"]`
+        );
+
+      if(!item){
+        return;
+      }
+
+      item.scrollIntoView({
+        behavior:smooth ? "smooth" : "auto",
+        block:"center"
+      });
+
+    };
+
+    const refreshClasses = (
+      scroll = true
+    ) => {
+
+      const items =
+        [
+          ...list.querySelectorAll(
+            "[data-lyrics-index]"
+          )
+        ];
+
+      items.forEach(
+        (item,index) => {
+
+          item.classList.toggle(
+            "is-past",
+            index < activeIndex
+          );
+
+          item.classList.toggle(
+            "is-active",
+            index === activeIndex
+          );
+
+          item.classList.toggle(
+            "is-next",
+            index > activeIndex
+          );
+
+        }
+      );
+
+      updateCounter();
+
+      if(scroll){
+        requestAnimationFrame(
+          () => scrollToActive(true)
+        );
+      }
+
+    };
+
+    const renderList = () => {
+
+      list.innerHTML = "";
+
+      if(!lines.length){
+
+        const empty =
+          document.createElement("div");
+
+        empty.className =
+          "music-lyrics-empty";
+
+        const currentTitle =
+          String(titleEl?.textContent || "")
+            .trim()
+            .toLowerCase();
+
+        const isLoveInTheAir =
+          currentTitle.includes("love in the air");
+
+        empty.innerHTML =
+          isLoveInTheAir
+            ? `
+                <i class="bi bi-music-note-beamed"></i>
+                <strong>TIDAK ADA LYRIC UNTUK LAGU INI</strong>
+              `
+            : `
+                <i class="bi bi-music-note-beamed"></i>
+                <strong>Lirik belum tersedia</strong>
+                <span>Belum ada lirik tersinkronisasi untuk lagu ini.</span>
+              `;
+
+        list.appendChild(empty);
+
+        activeIndex = -1;
+        updateCounter();
+
+        return;
+      }
+
+      const fragment =
+        document.createDocumentFragment();
+
+      lines.forEach(
+        (line,index) => {
+
+          const button =
+            document.createElement("button");
+
+          button.type = "button";
+          button.className =
+            "music-lyrics-line";
+
+          button.dataset.lyricsIndex =
+            String(index);
+
+          button.dataset.time =
+            String(
+              Number(line.time) || 0
+            );
+
+          const lineText =
+            String(line.text || "•").trim();
+
+          if(lineText === "♪"){
+            button.dataset.instrumental = "true";
+          }
+
+          const textSpan =
+            document.createElement("span");
+
+          textSpan.className =
+            "music-lyrics-text";
+
+          textSpan.textContent =
+            lineText || "•";
+
+          button.appendChild(
+            textSpan
+          );
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              const time =
+                Number(
+                  button.dataset.time
+                );
+
+              if(
+                Number.isFinite(time)
+              ){
+
+                audio.currentTime =
+                  Math.max(
+                    0,
+                    time
+                  );
+
+                if(audio.paused){
+                  audio.play().catch(
+                    () => {}
+                  );
+                }
+
+              }
+
+              activeIndex =
+                index;
+
+              refreshClasses(
+                true
+              );
+
+            }
+          );
+
+          fragment.appendChild(
+            button
+          );
+
+        }
+      );
+
+      list.appendChild(
+        fragment
+      );
+
+      refreshClasses(false);
+
+    };
+
+    const applyState = detail => {
+
+      const previousActiveIndex =
+        activeIndex;
+
+      const previousLineCount =
+        lines.length;
+
+      hasState = true;
+
+      lines =
+        Array.isArray(
+          detail?.lines
+        )
+          ? detail.lines.filter(
+              line =>
+                line &&
+                String(
+                  line.text || ""
+                ).trim()
+            )
+          : [];
+
+      activeIndex =
+        Number.isInteger(
+          detail?.index
+        )
+          ? detail.index
+          : -1;
+
+      if(titleEl){
+        titleEl.textContent =
+          detail?.title ||
+          "Lagu";
+      }
+
+      if(artistEl){
+        artistEl.textContent =
+          detail?.artist ||
+          "";
+      }
+
+      if(stateEl){
+        stateEl.textContent =
+          detail?.paused
+            ? "PAUSED"
+            : "PLAYING";
+      }
+
+      if(
+        modal.classList.contains(
+          "is-open"
+        )
+      ){
+
+        /*
+           IMPORTANT:
+           Jangan rebuild seluruh daftar lirik setiap
+           timeupdate. Rebuild berulang membuat DOM
+           berganti terus saat cursor berada di atas teks,
+           sehingga hover terlihat berkedip.
+
+           Render ulang hanya saat jumlah baris berubah
+           / daftar belum ada. Selain itu cukup update
+           class active/past/next.
+        */
+        const renderedCount =
+          list.querySelectorAll(
+            "[data-lyrics-index]"
+          ).length;
+
+        if(
+          renderedCount !==
+            lines.length
+        ){
+
+          renderList();
+
+        }else{
+
+          refreshClasses(false);
+
+        }
+
+        /*
+           Auto-scroll hanya ketika active line benar-benar
+           berpindah. Jadi user tetap bisa scroll sendiri
+           tanpa list ditarik ulang pada setiap timeupdate.
+        */
+        if(
+          previousActiveIndex !==
+            activeIndex ||
+          previousLineCount !==
+            lines.length
+        ){
+
+          requestAnimationFrame(
+            () => scrollToActive(true)
+          );
+
+        }
+
+      }else{
+
+        updateCounter();
+
+      }
+
+    };
+
+    window.addEventListener(
+      "portfolio:lyric-update",
+      event => {
+        applyState(
+          event.detail || {}
+        );
+      }
+    );
+
+    openButton.addEventListener(
+      "click",
+      event => {
+
+        event.preventDefault();
+
+        lastFocused =
+          document.activeElement;
+
+        setOpen(true);
+
+        renderList();
+
+        if(
+          !hasState ||
+          !lines.length
+        ){
+
+          /*
+             State pertama biasanya sudah terkirim
+             oleh lyric controller. Kalau modal dibuka
+             sangat cepat, beri satu frame untuk menangkapnya.
+          */
+          requestAnimationFrame(
+            renderList
+          );
+
+        }
+
+        scrollToActive(false);
+
+      }
+    );
+
+    closeButtons.forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          event => {
+
+            event.preventDefault();
+            close();
+
+          }
+        );
+
+      }
+    );
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if(
+          event.key === "Escape" &&
+          modal.classList.contains(
+            "is-open"
+          )
+        ){
+
+          event.preventDefault();
+          close();
+
+        }
+
+      }
+    );
+
+    audio.addEventListener(
+      "play",
+      () => {
+
+        if(
+          modal.classList.contains(
+            "is-open"
+          ) &&
+          stateEl
+        ){
+
+          stateEl.textContent =
+            "PLAYING";
+
+        }
+
+      }
+    );
+
+    audio.addEventListener(
+      "pause",
+      () => {
+
+        if(
+          modal.classList.contains(
+            "is-open"
+          ) &&
+          stateEl
+        ){
+
+          stateEl.textContent =
+            "PAUSED";
+
+        }
+
+      }
+    );
+
+    audio.addEventListener(
+      "timeupdate",
+      () => {
+
+        if(
+          !lines.length
+        ){
+
+          return;
+
+        }
+
+        const currentTime =
+          Number.isFinite(
+            audio.currentTime
+          )
+            ? audio.currentTime
+            : 0;
+
+        let index = -1;
+
+        for(
+          let i=0;
+          i<lines.length;
+          i++
+        ){
+
+          if(
+            currentTime >=
+            Number(
+              lines[i].time || 0
+            )
+          ){
+
+            index = i;
+
+          }else{
+
+            break;
+
+          }
+
+        }
+
+        if(
+          index !== activeIndex
+        ){
+
+          activeIndex =
+            index;
+
+          if(
+            modal.classList.contains(
+              "is-open"
+            )
+          ){
+
+            refreshClasses(true);
+
+          }else{
+
+            updateCounter();
+
+          }
+
+        }
+
+      }
+    );
+
+  };
+
+  if(
+    document.readyState ===
+      "loading"
+  ){
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      boot,
+      {once:true}
+    );
+
+  }else{
+
+    boot();
+
+  }
+
+})();
+
+
+/* =========================================================
+   LYRICS FULLSCREEN — JS ONLY / UNDO-SAFE
+   ---------------------------------------------------------
+   Tambahan ini sengaja berdiri sendiri:
+   - TIDAK menghapus / mengganti lyric sync existing.
+   - TIDAK membutuhkan perubahan HTML terlebih dahulu.
+   - Tombol fullscreen dibuat otomatis di topbar lyrics.
+   - F11 membuka View Lyrics + mencoba masuk fullscreen.
+========================================================= */
+(function initLyricsFullscreenUndoSafe(){
+
+  "use strict";
+
+  const boot = () => {
+
+    const modal =
+      document.querySelector(
+        "[data-lyrics-modal]"
+      );
+
+    const openLyrics =
+      document.querySelector(
+        "[data-lyric-open]"
+      );
+
+    if(
+      !modal ||
+      !openLyrics
+    ){
+      return;
+    }
+
+    const dialog =
+      modal.querySelector(
+        ".music-lyrics-dialog"
+      );
+
+    const actions =
+      modal.querySelector(
+        ".music-lyrics-topbar-actions"
+      );
+
+    if(
+      !dialog ||
+      !actions
+    ){
+      return;
+    }
+
+    /*
+       Kalau tombol sudah ada dari HTML, pakai tombol itu.
+       Kalau belum ada, buat otomatis.
+    */
+    let button =
+      actions.querySelector(
+        "[data-lyrics-fullscreen]"
+      );
+
+    if(!button){
+
+      button =
+        document.createElement(
+          "button"
+        );
+
+      button.type = "button";
+
+      button.className =
+        "music-lyrics-fullscreen";
+
+      button.setAttribute(
+        "data-lyrics-fullscreen",
+        ""
+      );
+
+      button.setAttribute(
+        "aria-label",
+        "Masuk layar penuh"
+      );
+
+      button.setAttribute(
+        "title",
+        "Layar penuh"
+      );
+
+      button.innerHTML =
+        '<i class="bi bi-arrows-fullscreen" aria-hidden="true"></i>';
+
+      /*
+         Masukkan sebelum tombol X supaya urutannya:
+         counter → fullscreen → close
+      */
+      const closeButton =
+        actions.querySelector(
+          "[data-lyrics-close]"
+        );
+
+      if(closeButton){
+        actions.insertBefore(
+          button,
+          closeButton
+        );
+      }else{
+        actions.appendChild(
+          button
+        );
+      }
+
+    }
+
+    /*
+       Style dijalankan dari JS agar file ini tetap
+       mandiri walaupun CSS belum memiliki selector button.
+    */
+    const styleId =
+      "lyrics-fullscreen-undo-safe-style";
+
+    if(
+      !document.getElementById(
+        styleId
+      )
+    ){
+
+      const style =
+        document.createElement(
+          "style"
+        );
+
+      style.id = styleId;
+
+      style.textContent = `
+        .music-lyrics-fullscreen{
+          width:40px;
+          height:40px;
+          display:grid;
+          place-items:center;
+          flex:0 0 auto;
+          padding:0;
+          border:1px solid rgba(243,241,236,.14);
+          border-radius:50%;
+          background:rgba(255,255,255,.035);
+          color:rgba(243,241,236,.78);
+          cursor:pointer;
+          transition:
+            transform .25s ease,
+            background .25s ease,
+            border-color .25s ease,
+            color .25s ease;
+        }
+
+        .music-lyrics-fullscreen:hover{
+          background:rgba(255,255,255,.08);
+          border-color:rgba(243,241,236,.28);
+          color:#fff;
+          transform:translateY(-1px);
+        }
+
+        .music-lyrics-dialog:fullscreen{
+          width:100vw !important;
+          height:100vh !important;
+          max-width:none !important;
+          max-height:none !important;
+          border-radius:0 !important;
+        }
+
+        .music-lyrics-dialog:-webkit-full-screen{
+          width:100vw !important;
+          height:100vh !important;
+          max-width:none !important;
+          max-height:none !important;
+          border-radius:0 !important;
+        }
+
+        .music-lyrics-modal.is-css-fullscreen{
+          padding:0 !important;
+        }
+
+        .music-lyrics-modal.is-css-fullscreen
+        .music-lyrics-dialog{
+          width:100vw !important;
+          height:100vh !important;
+          max-width:none !important;
+          max-height:none !important;
+          border-radius:0 !important;
+          transform:none !important;
+        }
+
+        @media(max-width:700px){
+          .music-lyrics-fullscreen{
+            width:36px;
+            height:36px;
+          }
+        }
+      `;
+
+      document.head.appendChild(
+        style
+      );
+
+    }
+
+    const getFullscreenElement =
+      () =>
+        document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        null;
+
+    const updateButton =
+      isFullscreen => {
+
+        const icon =
+          button.querySelector(
+            "i"
+          );
+
+        if(icon){
+
+          icon.className =
+            isFullscreen
+              ? "bi bi-fullscreen-exit"
+              : "bi bi-arrows-fullscreen";
+
+        }
+
+        button.setAttribute(
+          "aria-label",
+          isFullscreen
+            ? "Keluar dari layar penuh"
+            : "Masuk layar penuh"
+        );
+
+        button.setAttribute(
+          "title",
+          isFullscreen
+            ? "Keluar layar penuh"
+            : "Layar penuh"
+        );
+
+      };
+
+    const enterFullscreen =
+      async () => {
+
+        try{
+
+          if(
+            getFullscreenElement()
+          ){
+
+            return;
+
+          }
+
+          if(
+            typeof dialog.requestFullscreen ===
+              "function"
+          ){
+
+            await dialog.requestFullscreen();
+
+          }else if(
+            typeof dialog.webkitRequestFullscreen ===
+              "function"
+          ){
+
+            dialog.webkitRequestFullscreen();
+
+          }else{
+
+            /*
+               Fallback jika browser tidak menyediakan
+               Fullscreen API.
+            */
+            modal.classList.add(
+              "is-css-fullscreen"
+            );
+
+          }
+
+        }catch(error){
+
+          modal.classList.add(
+            "is-css-fullscreen"
+          );
+
+        }
+
+        updateButton(
+          Boolean(
+            getFullscreenElement()
+          ) ||
+          modal.classList.contains(
+            "is-css-fullscreen"
+          )
+        );
+
+      };
+
+    const exitFullscreen =
+      async () => {
+
+        try{
+
+          if(
+            document.fullscreenElement &&
+            typeof document.exitFullscreen ===
+              "function"
+          ){
+
+            await document.exitFullscreen();
+
+          }else if(
+            document.webkitFullscreenElement &&
+            typeof document.webkitExitFullscreen ===
+              "function"
+          ){
+
+            document.webkitExitFullscreen();
+
+          }
+
+        }catch(error){}
+
+        modal.classList.remove(
+          "is-css-fullscreen"
+        );
+
+        updateButton(false);
+
+      };
+
+    const toggleFullscreen =
+      async () => {
+
+        if(
+          getFullscreenElement() ||
+          modal.classList.contains(
+            "is-css-fullscreen"
+          )
+        ){
+
+          await exitFullscreen();
+
+        }else{
+
+          await enterFullscreen();
+
+        }
+
+      };
+
+    /*
+       Tombol hanya mengatur fullscreen modal lyrics.
+       Tidak menyentuh audio, timestamp, atau daftar lirik.
+    */
+    button.addEventListener(
+      "click",
+      event => {
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        toggleFullscreen();
+
+      }
+    );
+
+    /*
+       F11:
+       - bila View Lyrics belum terbuka → buka dulu
+       - lalu masuk fullscreen ke card lyrics
+       - bila sudah fullscreen → keluar fullscreen
+    */
+    const handleF11 =
+      event => {
+
+        if(
+          event.key !== "F11"
+        ){
+          return;
+        }
+
+        const target =
+          event.target;
+
+        const tag =
+          target?.tagName ||
+          "";
+
+        const editable =
+          target?.isContentEditable ||
+          tag === "INPUT" ||
+          tag === "TEXTAREA" ||
+          tag === "SELECT";
+
+        if(editable){
+          return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        if(
+          getFullscreenElement() ||
+          modal.classList.contains(
+            "is-css-fullscreen"
+          )
+        ){
+
+          exitFullscreen();
+
+          return;
+
+        }
+
+        const isOpen =
+          modal.classList.contains(
+            "is-open"
+          );
+
+        const openAndFullscreen =
+          () => {
+
+            window.setTimeout(
+              () => {
+
+                enterFullscreen();
+
+              },
+              isOpen ? 0 : 80
+            );
+
+          };
+
+        if(!isOpen){
+
+          /*
+             Pakai sistem open lyrics yang existing
+             agar state/lyrics tidak dibuat ulang.
+          */
+          openLyrics.click();
+
+          openAndFullscreen();
+
+        }else{
+
+          openAndFullscreen();
+
+        }
+
+      };
+
+    document.addEventListener(
+      "keydown",
+      handleF11,
+      true
+    );
+
+    /*
+       Sebagian browser expose WebKit fullscreen event.
+       Dua event ini hanya sinkronisasi icon.
+    */
+    document.addEventListener(
+      "fullscreenchange",
+      () => {
+
+        updateButton(
+          Boolean(
+            getFullscreenElement()
+          ) ||
+          modal.classList.contains(
+            "is-css-fullscreen"
+          )
+        );
+
+      }
+    );
+
+    document.addEventListener(
+      "webkitfullscreenchange",
+      () => {
+
+        updateButton(
+          Boolean(
+            getFullscreenElement()
+          ) ||
+          modal.classList.contains(
+            "is-css-fullscreen"
+          )
+        );
+
+      }
+    );
+
+    /*
+       ESC:
+       - browser biasanya keluar fullscreen native
+       - fallback CSS perlu dibersihkan manual
+       - modal lyrics sendiri tetap ditutup oleh controller existing
+    */
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if(
+          event.key === "Escape" &&
+          modal.classList.contains(
+            "is-css-fullscreen"
+          )
+        ){
+
+          modal.classList.remove(
+            "is-css-fullscreen"
+          );
+
+          updateButton(false);
+
+        }
+
+      },
+      true
+    );
+
+    updateButton(
+      Boolean(
+        getFullscreenElement()
+      )
+    );
+
+  };
+
+  if(
+    document.readyState ===
+      "loading"
+  ){
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      boot,
+      {once:true}
+    );
+
+  }else{
+
+    boot();
+
+  }
+
+})();
+
+
+/* =========================================================
+   MOBILE APP NAVIGATION — ACTIVE STATE
+   ---------------------------------------------------------
+   Mobile-only. Tidak mengganti fungsi navbar desktop atau
+   sistem navigasi existing.
+========================================================= */
+(function initMobileAppNavigation(){
+
+  "use strict";
+
+  const boot = () => {
+
+    const nav =
+      document.querySelector(
+        ".mobile-bottom-nav"
+      );
+
+    if(!nav){
+      return;
+    }
+
+    const links =
+      [
+        ...nav.querySelectorAll(
+          "[data-mobile-nav-target]"
+        )
+      ];
+
+    const sections =
+      links
+        .map(
+          link =>
+            document.getElementById(
+              link.dataset.mobileNavTarget
+            )
+        )
+        .filter(Boolean);
+
+    if(!links.length){
+      return;
+    }
+
+    const setActive =
+      id => {
+
+        links.forEach(
+          link => {
+
+            const active =
+              link.dataset.mobileNavTarget ===
+              id;
+
+            link.classList.toggle(
+              "is-active",
+              active
+            );
+
+            if(active){
+              link.setAttribute(
+                "aria-current",
+                "page"
+              );
+            }else{
+              link.removeAttribute(
+                "aria-current"
+              );
+            }
+
+          }
+        );
+
+      };
+
+    /*
+       Active section memakai IntersectionObserver,
+       supaya bottom nav terasa seperti tab bar aplikasi.
+    */
+    if(
+      "IntersectionObserver" in window
+    ){
+
+      const observer =
+        new IntersectionObserver(
+          entries => {
+
+            const visible =
+              entries
+                .filter(
+                  entry =>
+                    entry.isIntersecting
+                )
+                .sort(
+                  (a,b) =>
+                    b.intersectionRatio -
+                    a.intersectionRatio
+                );
+
+            if(
+              visible.length
+            ){
+
+              setActive(
+                visible[0].target.id
+              );
+
+            }
+
+          },
+          {
+            root:null,
+            rootMargin:
+              "-25% 0px -55% 0px",
+            threshold:[
+              0,
+              .15,
+              .35,
+              .6
+            ]
+          }
+        );
+
+      sections.forEach(
+        section =>
+          observer.observe(
+            section
+          )
+      );
+
+    }
+
+    /*
+       Saat user menekan tab, biarkan smooth navigation
+       existing tetap menangani scrolling.
+    */
+    links.forEach(
+      link => {
+
+        link.addEventListener(
+          "click",
+          () => {
+
+            setActive(
+              link.dataset.mobileNavTarget
+            );
+
+          }
+        );
+
+      }
+    );
+
+    /*
+       Theme mengikuti section yang berada di sekitar
+       bagian bawah viewport. Hanya warna bottom bar yang
+       berubah; posisi/ukuran tetap.
+    */
+    const syncTheme =
+      () => {
+
+        const probeY =
+          Math.min(
+            window.innerHeight - 115,
+            window.innerHeight * .72
+          );
+
+        const darkSections =
+          [
+            "#about",
+            "#gaming",
+            "#music",
+            "#contact"
+          ]
+          .map(
+            selector =>
+              document.querySelector(
+                selector
+              )
+          )
+          .filter(Boolean);
+
+        const dark =
+          darkSections.some(
+            section => {
+
+              const rect =
+                section.getBoundingClientRect();
+
+              return (
+                rect.top <= probeY &&
+                rect.bottom > probeY
+              );
+
+            }
+          );
+
+        nav.classList.toggle(
+          "is-dark",
+          dark
+        );
+
+      };
+
+    window.addEventListener(
+      "scroll",
+      syncTheme,
+      {
+        passive:true
+      }
+    );
+
+    window.addEventListener(
+      "resize",
+      syncTheme
+    );
+
+    window.addEventListener(
+      "load",
+      syncTheme,
+      {once:true}
+    );
+
+    setActive("hero");
+    syncTheme();
+
+  };
+
+  if(
+    document.readyState ===
+      "loading"
+  ){
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      boot,
+      {once:true}
+    );
+
+  }else{
+
+    boot();
+
+  }
+
+})();
+
+
+
+/* =========================================================
+   HERO NAME REVEAL — VISIBILITY FALLBACK
+   ---------------------------------------------------------
+   Safety fallback only: if reduced-motion/loader timing causes
+   the letter tween to be skipped, the existing hero name still
+   remains visible rather than disappearing.
+========================================================= */
+
+
+/* =========================================================
+   MUSIC CARD / FULL LYRICS — INSTRUMENTAL MARKER SEPARATION
+   ---------------------------------------------------------
+   The internal lyric data may contain "♪" as an instrumental
+   marker. The small NOW PLAYING card must show "..." instead,
+   while the Full Lyrics modal keeps the original "♪".
+   This runs only on the card's current lyric element.
+========================================================= */
+(() => {
+  "use strict";
+
+  const isInstrumentalMarker = value =>
+    String(value ?? "").trim() === "♪";
+
+  const normalizeMusicCardCurrent = root => {
+    const current = root?.querySelector("[data-lyric-current]");
+    if (!current) return;
+
+    if (isInstrumentalMarker(current.textContent)) {
+      current.textContent = "...";
+    }
+  };
+
+  const boot = () => {
+    const screens = [
+      ...document.querySelectorAll(".like-music-story-screen")
+    ];
+
+    if (!screens.length) return;
+
+    screens.forEach(screen => {
+      normalizeMusicCardCurrent(screen);
+
+      const current = screen.querySelector("[data-lyric-current]");
+      if (!current) return;
+
+      const observer = new MutationObserver(() => {
+        normalizeMusicCardCurrent(screen);
+      });
+
+      observer.observe(current, {
+        characterData: true,
+        childList: true,
+        subtree: true
+      });
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot, { once: true });
+  } else {
+    boot();
+  }
+})();
